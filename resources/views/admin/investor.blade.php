@@ -13,9 +13,9 @@
             <table class="w-full border border-gray-300 text-center">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="border border-gray-300 px-4 py-2">Header 1</th>
-                        <th class="border border-gray-300 px-4 py-2">Header 2</th>
-                        <th class="border border-gray-300 px-4 py-2">Header 3</th>
+                        <th class="border border-gray-300 px-4 py-2">INVESTOR ID</th>
+                        <th class="border border-gray-300 px-4 py-2">NAME</th>
+                        <th class="border border-gray-300 px-4 py-2">ADDRESS</th>
                     </tr>
                 </thead>
                 <tbody>

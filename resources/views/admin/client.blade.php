@@ -2,19 +2,21 @@
 @section('title', 'Client')
 
 @section('content')
-<div class="bg-gray-100 flex items-center justify-center p-4">
+<div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
     <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <p class="fs-2 fw-bold text-center">CLIENT</p>
             <div class="flex justify-end mt-4 mb-3">
-                <button type="button" class="next-btn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Add Client</button>
+                <button id="openModal" class="bg-blue-500 text-white p-2 px-5 rounded-lg hover:bg-blue-700">
+                    Add Client
+                </button>
             </div>
             <table class="w-full border border-gray-300 text-center">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="border border-gray-300 px-4 py-2">Header 1</th>
-                        <th class="border border-gray-300 px-4 py-2">Header 2</th>
-                        <th class="border border-gray-300 px-4 py-2">Header 3</th>
+                        <th class="border border-gray-300 px-4 py-2">CLIENT ID</th>
+                        <th class="border border-gray-300 px-4 py-2">NAME</th>
+                        <th class="border border-gray-300 px-4 py-2">ADDRESS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,12 +46,41 @@
     </div>
 </div>
 
+@include('components.add_client_modal')
+
+
 <script>
 function rowClicked(row) {
     alert("Row clicked: " + row.innerText);
 }
 </script>
+<script>
+document.getElementById('openModal').addEventListener('click', function() {
+    document.getElementById('addClientModal').classList.remove('hidden');
+});
 
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('addClientModal').classList.add('hidden');
+});
+</script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const closeModalButton = document.getElementById('closeModal');
+        const modal = closeModalButton.closest('.bg-gray-100'); // Find the modal background container
+
+        // Close modal when the close button is clicked
+        closeModalButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal
+        });
+
+        // Optional: You can also close the modal when clicking outside the modal content
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.style.display = 'none'; // Hide the modal when clicking outside
+            }
+        });
+    });
+</script>
 
 @endsection
