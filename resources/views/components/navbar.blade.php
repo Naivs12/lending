@@ -21,7 +21,7 @@
         <!-- Submodule Links (Hidden by Default) -->
         <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
             <a href="{{route('admin.loan.loan')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
-                <span>New Loan</span>
+                <span>Loan</span>
             </a>
             <a href="{{route('admin.loan.release')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Release</span>
