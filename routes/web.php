@@ -11,6 +11,10 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
 
+Route::get('/admin/loan/release', [AdminController::class, 'release'])->name('admin.loan.release');
+
+Route::get('/admin/loan/review', [AdminController::class, 'review'])->name('admin.loan.review');
+
 Route::get('/admin/client', [AdminController::class, 'client'])->name('admin.client');
 
 Route::get('/admin/investor', [AdminController::class, 'investor'])->name('admin.investor');

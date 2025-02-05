@@ -10,7 +10,14 @@ class AdminController extends Controller
     {
         return view('admin.loan.loan');
     }
-    
+    public function release()
+    {
+        return view('admin.loan.release');
+    }
+    public function review()
+    {
+        return view('admin.loan.review');
+    }
     public function client()
     {
         return view('admin.client');

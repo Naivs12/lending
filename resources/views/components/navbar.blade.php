@@ -23,10 +23,10 @@
             <a href="{{route('admin.loan.loan')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>New Loan</span>
             </a>
-            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{route('admin.loan.release')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Release</span>
             </a>
-            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{route('admin.loan.review')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Review</span>
             </a>
         </div>
