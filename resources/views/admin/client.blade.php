@@ -64,23 +64,4 @@ document.getElementById('closeModal').addEventListener('click', function() {
 });
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const closeModalButton = document.getElementById('closeModal');
-        const modal = closeModalButton.closest('.bg-gray-100'); // Find the modal background container
-
-        // Close modal when the close button is clicked
-        closeModalButton.addEventListener('click', () => {
-            modal.style.display = 'none'; // Hide the modal
-        });
-
-        // Optional: You can also close the modal when clicking outside the modal content
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                modal.style.display = 'none'; // Hide the modal when clicking outside
-            }
-        });
-    });
-</script>
-
 @endsection
