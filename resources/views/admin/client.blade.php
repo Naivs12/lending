@@ -48,12 +48,6 @@
 
 @include('components.add_client_modal')
 
-
-<script>
-function rowClicked(row) {
-    alert("Row clicked: " + row.innerText);
-}
-</script>
 <script>
 document.getElementById('openModal').addEventListener('click', function() {
     document.getElementById('addClientModal').classList.remove('hidden');

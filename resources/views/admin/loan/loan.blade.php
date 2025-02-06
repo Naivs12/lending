@@ -55,4 +55,15 @@
         </div>
     </div>
 </div>
+
+@include('components.add_loan_modal')
+<script>
+document.getElementById('openModal').addEventListener('click', function() {
+    document.getElementById('addLoanModal').classList.remove('hidden');
+});
+
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('addLoanModal').classList.add('hidden');
+});
+</script>
 @endsection
