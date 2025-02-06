@@ -7,6 +7,9 @@
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <p class="fs-2 fw-bold text-center">CLIENT</p>
             <div class="flex justify-end mt-4 mb-3">
+                <!-- <button class="bg-blue-500 text-white p-2 px-5 rounded-lg hover:bg-blue-700 me-3">
+                    Upload Data
+                </button> -->
                 <button id="openModal" class="bg-blue-500 text-white p-2 px-5 rounded-lg hover:bg-blue-700">
                     Add Client
                 </button>
