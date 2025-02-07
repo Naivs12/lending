@@ -28,8 +28,8 @@ class AdminController extends Controller
         return view('admin.investor');
     }
 
-    public function payment()
+    public function payment_client()
     {
-        return view('admin.payment');
+        return view('admin.payment_info.client_info');
     }
 }
