@@ -57,6 +57,4 @@ document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('addClientModal').classList.add('hidden');
 });
 </script>
-
-<script>
 @endsection

@@ -11,7 +11,7 @@
                     Upload Data
                 </button> -->
                 <button id="openModal" class="bg-blue-500 text-white p-2 px-5 rounded-lg hover:bg-blue-700">
-                    Add Client
+                    Add Payment Info
                 </button>
             </div>
             <table class="w-full border border-gray-300 text-center">

@@ -32,4 +32,8 @@ class AdminController extends Controller
     {
         return view('admin.payment_info.client_info');
     }
+    public function payment_investor()
+    {
+        return view('admin.payment_info.investor_info');
+    }
 }

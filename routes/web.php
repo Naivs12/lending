@@ -19,6 +19,9 @@ Route::get('/admin/client', [AdminController::class, 'client'])->name('admin.cli
 
 Route::get('/admin/investor', [AdminController::class, 'investor'])->name('admin.investor');
 
-Route::get('/SystemAdminDashboard', [SystemAdminController::class, 'SystemAdminDashboard'])->name('system-admin.dashboard');
-
 Route::get('/admin/payment_info/client', [AdminController::class, 'payment_client'])->name('admin.payment_info.client_info');
+
+Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_investor'])->name('admin.payment_info.investor_info');
+
+Route::get('/SystemAdminDashboard', [SystemAdminController::class, 'SystemAdminDashboard'])->name('layout.system-admin');
+
