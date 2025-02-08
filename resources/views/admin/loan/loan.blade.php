@@ -10,7 +10,7 @@
             <div class="flex justify-start mb-3 mt-3">
                 <div class="grid grid-cols-5 gap-2 ms-1 me-1">
                         <div class="flex flex-col">
-                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Search">
+                            <input type="text" id="search" name="search" class="text-xs p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Search">
                         </div>
                         <div class="flex">
                             <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
