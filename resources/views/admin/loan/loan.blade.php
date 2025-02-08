@@ -150,7 +150,7 @@
                     </button>
                         <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
                         <button id="nextPage"
-                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">11></button>
+                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">2></button>
             </div>
         </div>
     </div>
