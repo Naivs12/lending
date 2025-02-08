@@ -5,29 +5,29 @@
 <div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
     <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
-           <div>
-            <h1 class="text-3xl font-semibold mb-1">LOAN</h1>
-            <div class="w-full bg-blue-800 h-1 rounded-full"></div>
-           </div>
-           
-            <div class="flex justify-start mb-3 mt-3">
-                <div class="grid grid-cols-5 gap-2 ms-1 me-1">
-                        <div class="flex flex-col">
-                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Search">
-                        </div>
-                        <div class="flex">
-                            <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
+            <div>
+                <h1 class="text-3xl font-semibold mb-1">LOAN</h1>
+                <div class="w-full bg-gray-600 h-1 rounded-full"></div>
+            </div>   
+            <div class="flex justify-start mb-3 mt-3 w-full">
+                <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
+                    <div class="flex flex-col col-span-3">
+                        <input type="text" id="search" name="search"
+                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
+                            placeholder="Search">
+                    </div>
+                    <div class="flex">
+                        <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-end w-full">
                     <button id="openModal"
-                        class=" flex flex-row-reverse w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20"
-                            fill="currentColor">
+                        class="flex flex-row w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
                                 clip-rule="evenodd" />
@@ -36,7 +36,8 @@
                     </button>
                 </div>
             </div>
-          
+
+
             <table class="w-full border border-gray-300 text-center">
                 <thead class="bg-gray-200 text-xs">
                     <tr>
@@ -60,16 +61,6 @@
                         <td class="px-4 py-2">6 Months</td>
                         <td class="px-4 py-2">10%</td>
                         <td class="px-4 py-2">2025-03-15</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1002</td>
-                        <td class="px-4 py-2">CL-5002</td>
-                        <td class="px-4 py-2">Jane Smith</td>
-                        <td class="px-4 py-2">₱15,500</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-04-10</td>
                     </tr>
                    
                     <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
@@ -153,10 +144,7 @@
                     </button>
                         <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
                         <button id="nextPage"
-
-                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">2></button>
-
-            
+                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
             </div>
         </div>
     </div>
