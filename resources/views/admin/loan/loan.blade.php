@@ -1,229 +1,170 @@
 @extends('layout.admin')
-@section('title', 'Loan')
+@section('title', 'Loan | Loan')
 
 @section('content')
-<div class="bg-gray-100 flex items-center justify-center">
-    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-5xl">
-        <h2 class="text-2xl font-semibold mb-6 text-center fw-bold">CLIENT PERSONAL INFORMATION</h2>
-        <div class="slider-container relative">
-
-            <div class="slide">
-
-                <p class="fs-5 fw-bold  mb-3">Personal Details</p>
-
-                <form action="/submit" method="POST" class="space-y-3">
-                    @csrf
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex flex-col">
-                            <label for="first_name" class="text-gray-700 font-medium">First Name</label>
-                            <input type="text" id="first_name" name="first_name" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="middle_name" class="text-gray-700 font-medium">Middle Name</label>
-                            <input type="text" id="middle_name" name="middle_name" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="last_name" class="text-gray-700 font-medium">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols gap-4">
-                        <div class="flex flex-col">
-                            <label for="address" class="text-gray-700 font-medium">Address</label>
-                            <input type="text" id="address" name="address" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex flex-col">
-                            <label for="age" class="text-gray-700 font-medium">Age</label>
-                            <input type="number" id="age" name="age" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                        </div>
-                        <div class="flex flex-col ">
-                            <label for="birthday" class="text-gray-700 font-medium">Birthday</label>
-                            <input type="date" id="birthday" name="birthday" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="gender" class="text-gray-700 font-medium">Gender</label>
-                            <select id="gender" name="gender" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex flex-col">
-                            <label for="contact_number" class="text-gray-700 font-medium">Contact Number</label>
-                            <input type="tel" id="contact_number" name="contact_number" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="facebook" class="text-gray-700 font-medium">Facebook / Messenger</label>
-                            <input type="url" id="facebook" name="facebook" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                    </div>
-                    
-                    <p class="fs-5 fw-bold mt-4 mb-3">Contact Person</p>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        
-                        <div class="flex flex-col">
-                            <label for="co-borrower" class="text-gray-700 font-medium">Co-Borrower</label>
-                            <input type="text" id="co-borrower" name="co-borrower" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="relationship_co-borrower" class="text-gray-700 font-medium">Relationship with Co-Borrower</label>
-                            <input type="text" id="relationship_co-borrower" name="relationship_co-borrower" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-end mt-4">
-                        <button type="button" class="next-btn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Next</button>
-                    </div>
-                </form>
+<div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
+    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
+        <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
+            <div class="">
+                <h1 class="text-3xl font-semibold uppercase mb-2" >Loan</h1>
+                <div class="bg-blue-900 w-full h-1 rounded-full" ></div>
             </div>
 
-            <!-- Second Slide -->
-            <div class="slide" style="display: none;">
-
-                <p class="fs-5 fw-bold mb-3">Monthly Details</p>
-
-                <form action="/submit" method="POST" class="space-y-3">
-                    @csrf
-                    <div class="grid grid-cols-3 gap-4" id="payment-grid">
-                        <div class="flex flex-col">
-                            <label for="monthly_income" class="text-gray-700 font-medium">Monthly Income</label>
-                            <input type="text" id="monthly_income" name="monthly_income" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-
-                        <div class="flex flex-col">
-                            <label for="source_payment" class="text-gray-700 font-medium">Source of Payment</label>
-                            <select id="source_payment" name="source_payment" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                                <option value="employment">Employment</option>
-                                <option value="allowance">Allowance</option>
-                                <option value="remittance">Remittance</option>
-                                <option value="others">Others</option>
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col" id="other_specify">
-                            <label for="specify_others" class="text-gray-700 font-medium">Specify</label>
-                            <input type="text" id="specify_others" name="specify_others" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" disabled  placeholder="If 'Others' is selected!">
-                        </div>
-
+            <div class="flex w-full justify-start mb-3 mt-3">
+                <div class="flex flex-row justify-between w-full gap-2 ms-1 me-1">
+                    <div class="flex w-2/3 flex-col">
+                        <input type="text" id="amount" name="amount"
+                            class="p-2 border border-gray-300 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+                            placeholder="Search">
                     </div>
+                    
+                   
+                </div>
+                <div class="flex justify-end">
+                    <button id="openModal"
+                        class=" flex flex-row-reverse w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Add Loan
+                    </button>
+                </div>
+            </div>
+          
+            <table class="w-full border border-gray-300 text-center">
+                <thead class="bg-gray-200 text-xs">
+                    <tr>
+                        <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
+                        <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
+                        <th class="border border-gray-300 px-2 py-3">NAME</th>
+                        <th class="border border-gray-300 px-2 py-3">AMOUNT</th>
+                        <th class="border border-gray-300 px-2 py-3">PAYMENT</th>
+                        <th class="border border-gray-300 px-2 py-3">TERMS/MONTH</th>
+                        <th class="border border-gray-300 px-2 py-3">INTEREST PER MONTH</th>
+                        <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
+                    </tr>
+                </thead>
+                <tbody id="loanTableBody" class="text-xs">
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1001</td>
+                        <td class="px-4 py-2">CL-5001</td>
+                        <td class="px-4 py-2">John Doe</td>
+                        <td class="px-4 py-2">₱10,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-03-15</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1002</td>
+                        <td class="px-4 py-2">CL-5002</td>
+                        <td class="px-4 py-2">Jane Smith</td>
+                        <td class="px-4 py-2">₱15,500</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-04-10</td>
+                    </tr>
+                   
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1004</td>
+                        <td class="px-4 py-2">CL-5004</td>
+                        <td class="px-4 py-2">Emily Davis</td>
+                        <td class="px-4 py-2">₱20,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-06-20</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1005</td>
+                        <td class="px-4 py-2">CL-5005</td>
+                        <td class="px-4 py-2">Chris Brown</td>
+                        <td class="px-4 py-2">₱12,500</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-07-08</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1006</td>
+                        <td class="px-4 py-2">CL-5006</td>
+                        <td class="px-4 py-2">Sarah Wilson</td>
+                        <td class="px-4 py-2">₱5,500</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-08-12</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1007</td>
+                        <td class="px-4 py-2">CL-5007</td>
+                        <td class="px-4 py-2">David Martinez</td>
+                        <td class="px-4 py-2">₱18,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-09-30</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1008</td>
+                        <td class="px-4 py-2">CL-5008</td>
+                        <td class="px-4 py-2">Laura Thompson</td>
+                        <td class="px-4 py-2">₱25,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-10-18</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1008</td>
+                        <td class="px-4 py-2">CL-5008</td>
+                        <td class="px-4 py-2">Laura Thompson</td>
+                        <td class="px-4 py-2">₱25,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-10-18</td>
+                    </tr>
+                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">LN-1008</td>
+                        <td class="px-4 py-2">CL-5008</td>
+                        <td class="px-4 py-2">Laura Thompson</td>
+                        <td class="px-4 py-2">₱25,000</td>
+                        <td class="px-4 py-2">Weekly</td>
+                        <td class="px-4 py-2">6 Months</td>
+                        <td class="px-4 py-2">10%</td>
+                        <td class="px-4 py-2">2025-10-18</td>
+                    </tr>
 
-                    <p class="fs-5 fw-bold mt-5 mb-3">Expenses</p>
+                </tbody>
+            </table>
 
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex flex-col">
-                            <label for="household_num" class="text-gray-700 font-medium">No. of Household Member</label>
-                            <input type="number" id="household_num" name="household_num" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="food" class="text-gray-700 font-medium">Food</label>
-                            <input type="number" id="food" name="food" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="transpo" class="text-gray-700 font-medium">Transportation</label>
-                            <input type="number" id="transpo" name="transpo" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex flex-col">
-                            <label for="school_expenses" class="text-gray-700 font-medium">School Expenses</label>
-                            <input type="number" id="school_expenses" name="school_expenses" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="house" class="text-gray-700 font-medium">House</label>
-                            <select id="house" name="house" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                                <option value="owned">Owned</option>
-                                <option value="rented">Rented</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col" id="other_specify_house">
-                            <label for="specify_others_house" class="text-gray-700 font-medium">Monthly Rent</label>
-                            <input type="number" id="specify_others_house" name="specify_others" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" disabled  placeholder="If 'Rented' is selected!">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex flex-col">
-                            <label for="electricity" class="text-gray-700 font-medium">Electricity</label>
-                            <input type="number" id="electricity" name="electricity" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="water" class="text-gray-700 font-medium">Water</label>
-                            <input type="number" id="water" name="water" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                        <div class="flex flex-col">
-                            <label for="other" class="text-gray-700 font-medium">Others</label>
-                            <input type="number" id="other" name="other" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="PHP">
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end mt-4">
-                    <button type="button" class="next-btn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Submit</button>
-                    </div>
-                </form>
+           
+            <div class="flex justify-end items-center mt-3">
+                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400">
+                    <
+                    </button>
+                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
+                        <button id="nextPage"
+                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    // JavaScript for slider functionality
-    const nextBtn = document.querySelector('.next-btn');
-    const slides = document.querySelectorAll('.slide');
+@include('components.add_loan_modal')
 
-    nextBtn.addEventListener('click', () => {
-        // Hide the first slide
-        slides[0].style.display = 'none';
-        // Show the second slide
-        slides[1].style.display = 'block';
+<script>
+    document.getElementById('openModal').addEventListener('click', function () {
+        document.getElementById('addLoanModal').classList.remove('hidden');
     });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const sourcePayment = document.getElementById('source_payment');
-        const otherSpecify = document.getElementById('other_specify');
-        const specifyInput = otherSpecify.querySelector('input');
 
-        // Function to show or hide the 'Specify' textbox based on the selection
-        function toggleOtherSpecify() {
-            if (sourcePayment.value === 'others') {
-                specifyInput.removeAttribute('disabled'); // Enable input
-            } else {
-                specifyInput.setAttribute('disabled', 'disabled'); // Disable input (make it non-clickable)
-            }
-        }
-
-        // Initialize on page load in case 'Others' is already selected
-        toggleOtherSpecify();
-
-        // Add event listener to dropdown change event
-        sourcePayment.addEventListener('change', toggleOtherSpecify);
+    document.getElementById('closeModal').addEventListener('click', function () {
+        document.getElementById('addLoanModal').classList.add('hidden');
     });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const houseID = document.getElementById('house');
-        const otherSpecifyHouse = document.getElementById('other_specify_house');
-        const specifyInputHouse = otherSpecifyHouse.querySelector('input');
-
-        function toggleHouseSpecify(){
-            if (houseID.value === 'rented'){
-                specifyInputHouse.removeAttribute('disabled');
-            } else {
-                specifyInputHouse.setAttribute('disabled', 'disabled');
-            }
-        }
-
-        toggleHouseSpecify();
-
-        houseID.addEventListener('change', toggleHouseSpecify);
-    })
 </script>
 @endsection

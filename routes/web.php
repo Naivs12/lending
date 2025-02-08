@@ -11,10 +11,17 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
 
+Route::get('/admin/loan/release', [AdminController::class, 'release'])->name('admin.loan.release');
+
+Route::get('/admin/loan/review', [AdminController::class, 'review'])->name('admin.loan.review');
+
 Route::get('/admin/client', [AdminController::class, 'client'])->name('admin.client');
 
 Route::get('/admin/investor', [AdminController::class, 'investor'])->name('admin.investor');
 
-Route::get('/SystemAdminDashboard', [SystemAdminController::class, 'SystemAdminDashboard'])->name('system-admin.dashboard');
+Route::get('/admin/payment_info/client', [AdminController::class, 'payment_client'])->name('admin.payment_info.client_info');
 
-Route::get('/admin/payment', [AdminController::class, 'payment'])->name('admin.payment');
+Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_investor'])->name('admin.payment_info.investor_info');
+
+Route::get('/SystemAdminDashboard', [SystemAdminController::class, 'SystemAdminDashboard'])->name('layout.system-admin');
+

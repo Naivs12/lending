@@ -8,6 +8,6 @@ class SystemAdminController extends Controller
 {
     public function SystemAdminDashboard()
     {
-        return view('system-admin.dashboard');
+        return view('layout.system-admin');
     }
 }

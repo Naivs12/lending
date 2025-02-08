@@ -1,6 +1,6 @@
-@extends("layout.default")
-@section("title", "Login")
-@section("content")
+@extends('layout.login')
+@section('title','Login')
+@section('content')
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm border-2 border-gray-300 rounded-lg p-6">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
