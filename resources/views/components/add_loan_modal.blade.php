@@ -17,12 +17,24 @@
                             <label for="client_id" class="text-gray-700 font-medium">Client ID</label>
                             <input type="number" id="client_id" name="client_id" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Select Client ID / Name">
                         </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
                         <div class="flex flex-col">
                             <label for="amount" class="text-gray-700 font-medium">Amount</label>
                             <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="PHP">
                         </div>
                         <div class="flex flex-col">
-                            <label for="due_date" class="text-gray-700 font-medium">Due Date</label>
+                            <label for="amount" class="text-gray-700 font-medium">Interest Per Month</label>
+                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="%">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="flex flex-col">
+                            <label for="amount" class="text-gray-700 font-medium">Terms/Month</label>
+                            <input type="text" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Ex. 1 Month">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="due_date" class="text-gray-700 font-medium">Payment</label>
                             <select id="due_date" name="due_date" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
                                 <option value="weekly">Weekly</option>
                                 <option value="two_weeks">2 Weeks</option>
@@ -30,6 +42,9 @@
                                 <option value="interest_only">Interest Only</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+
                         <div class="flex flex-col">
                             <label for="client_id" class="text-gray-700 font-medium">Date of Release</label>
                             <input type="date" id="age" name="age" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
