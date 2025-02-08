@@ -5,20 +5,23 @@
 <div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
     <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
-            <div class="">
-                <h1 class="text-3xl font-semibold uppercase mb-2" >Loan</h1>
-                <div class="bg-blue-900 w-full h-1 rounded-full" ></div>
-            </div>
-
-            <div class="flex w-full justify-start mb-3 mt-3">
-                <div class="flex flex-row justify-between w-full gap-2 ms-1 me-1">
-                    <div class="flex w-2/3 flex-col">
-                        <input type="text" id="amount" name="amount"
-                            class="p-2 border border-gray-300 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                            placeholder="Search">
-                    </div>
-                    
-                   
+           <div>
+            <h1 class="text-3xl font-semibold mb-1">LOAN</h1>
+            <div class="w-full bg-blue-800 h-1 rounded-full"></div>
+           </div>
+           
+            <div class="flex justify-start mb-3 mt-3">
+                <div class="grid grid-cols-5 gap-2 ms-1 me-1">
+                        <div class="flex flex-col">
+                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Search">
+                        </div>
+                        <div class="flex">
+                            <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
                 </div>
                 <div class="flex justify-end">
                     <button id="openModal"
@@ -150,7 +153,10 @@
                     </button>
                         <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
                         <button id="nextPage"
+
                             class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">2></button>
+
+            
             </div>
         </div>
     </div>
