@@ -7,7 +7,7 @@
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <div>
                 <h1 class="text-3xl font-semibold mb-1">LOAN</h1>
-                <div class="w-full bg-gray-600 h-1 rounded-full"></div>
+                <div class="w-full bg-gray-500 h-1 rounded-full"></div>
             </div>   
             <div class="flex justify-start mb-3 mt-3 w-full">
                 <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
@@ -136,16 +136,13 @@
 
                 </tbody>
             </table>
-
-           
+            
             <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400">
-                    <
-                    </button>
+                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
                         <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                        <button id="nextPage"
-                            class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
             </div>
+
         </div>
     </div>
 </div>
