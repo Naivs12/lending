@@ -1,13 +1,11 @@
-@extends('layout.admin')
-@section('title', 'Payment | Client Info')
+@extends('layout.system-admin')
+@section('title', 'Payment | Investor Info')
 
 @section('content')
-<div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
-    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
+    <div class="m-6 h-full" id="main_content">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
-
-            <div>
-                <h1 class="text-3xl font-semibold mb-1">CLIENT PAYMENT INFO</h1>
+        <div>
+                <h1 class="text-3xl font-bold mb-1">PAYMENT TO INVESTOR INFO</h1>
                 <div class="w-full bg-gray-500 h-1 rounded-full"></div>
             </div> 
 
@@ -37,85 +35,67 @@
                     </button>
                 </div>
             </div>
-            
             <table class="w-full border border-gray-300 text-center text-xs">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
+                        <th class="border border-gray-300 px-2 py-3">INVESTOR ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
-                        <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
-                        <th class="border border-gray-300 px-2 py-3">TERM</th>
                         <th class="border border-gray-300 px-2 py-3">DUE DATE</th>
                         <th class="border border-gray-300 px-2 py-3">PAYMENT DATE</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-101</td>
+                        <td class="px-4 py-2">INV-001</td>
                         <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">123 Main St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-07-01</td>
-                        <td class="px-4 py-2">2024-06-30</td>
+                        <td class="px-4 py-2">2024-07-15</td>
+                        <td class="px-4 py-2">2024-07-10</td>
                     </tr>
                     <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-102</td>
+                        <td class="px-4 py-2">INV-002</td>
                         <td class="px-4 py-2">Jane Smith</td>
-                        <td class="px-4 py-2">456 Elm St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-12-01</td>
-                        <td class="px-4 py-2">2024-11-30</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-103</td>
-                        <td class="px-4 py-2">Alice Johnson</td>
-                        <td class="px-4 py-2">789 Oak St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-10-15</td>
-                        <td class="px-4 py-2">2024-09-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-104</td>
-                        <td class="px-4 py-2">Bob Brown</td>
-                        <td class="px-4 py-2">654 Pine St</td>
-                        <td class="px-4 py-2">1 / 6</td>
                         <td class="px-4 py-2">2024-08-20</td>
-                        <td class="px-4 py-2">2024-07-20</td>
+                        <td class="px-4 py-2">2024-08-15</td>
                     </tr>
                     <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-105</td>
-                        <td class="px-4 py-2">Emma White</td>
-                        <td class="px-4 py-2">789 Maple St</td>
-                        <td class="px-4 py-2">1 / 6</td>
+                        <td class="px-4 py-2">INV-003</td>
+                        <td class="px-4 py-2">Alice Johnson</td>
+                        <td class="px-4 py-2">2024-09-10</td>
                         <td class="px-4 py-2">2024-09-05</td>
-                        <td class="px-4 py-2">2024-08-05</td>
                     </tr>
                     <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-106</td>
+                        <td class="px-4 py-2">INV-004</td>
+                        <td class="px-4 py-2">Bob Brown</td>
+                        <td class="px-4 py-2">2024-10-05</td>
+                        <td class="px-4 py-2">2024-10-01</td>
+                    </tr>
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">INV-005</td>
+                        <td class="px-4 py-2">Emma White</td>
+                        <td class="px-4 py-2">2024-11-12</td>
+                        <td class="px-4 py-2">2024-11-08</td>
+                    </tr>
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">INV-006</td>
                         <td class="px-4 py-2">Liam Green</td>
-                        <td class="px-4 py-2">321 Cedar St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-11-10</td>
-                        <td class="px-4 py-2">2024-10-10</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-107</td>
-                        <td class="px-4 py-2">Sophia Black</td>
-                        <td class="px-4 py-2">147 Birch St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-12-15</td>
-                        <td class="px-4 py-2">2024-11-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-108</td>
-                        <td class="px-4 py-2">Oliver Gray</td>
-                        <td class="px-4 py-2">852 Redwood St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2025-01-20</td>
                         <td class="px-4 py-2">2024-12-20</td>
+                        <td class="px-4 py-2">2024-12-15</td>
+                    </tr>
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">INV-007</td>
+                        <td class="px-4 py-2">Sophia Black</td>
+                        <td class="px-4 py-2">2025-01-25</td>
+                        <td class="px-4 py-2">2025-01-20</td>
+                    </tr>
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
+                        <td class="px-4 py-2">INV-008</td>
+                        <td class="px-4 py-2">Oliver Gray</td>
+                        <td class="px-4 py-2">2025-02-10</td>
+                        <td class="px-4 py-2">2025-02-05</td>
                     </tr>
                 </tbody>
             </table>
+            
             <div class="flex justify-end items-center mt-3">
                 <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
                         <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
@@ -124,5 +104,4 @@
             
         </div>
     </div>
-</div>
 @endsection

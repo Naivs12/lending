@@ -23,5 +23,18 @@ Route::get('/admin/payment_info/client', [AdminController::class, 'payment_clien
 
 Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_investor'])->name('admin.payment_info.investor_info');
 
-Route::get('/SystemAdminDashboard', [SystemAdminController::class, 'SystemAdminDashboard'])->name('layout.system-admin');
+// System ADmin
 
+Route::get('/system-admin/loan/loan', [SystemAdminController::class, 'loan'])->name('system-admin.loan.loan');
+
+Route::get('/system-admin/loan/release', [SystemAdminController::class, 'release'])->name('system-admin.loan.release');
+
+Route::get('/system-admin/loan/review', [SystemAdminController::class, 'review'])->name('system-admin.loan.review');
+
+Route::get('/system-admin/client', [SystemAdminController::class, 'client'])->name('system-admin.client');
+
+Route::get('/system-admin/investor', [SystemAdminController::class, 'investor'])->name('system-admin.investor');
+
+Route::get('/system-admin/payment_info/client', [SystemAdminController::class, 'payment_client'])->name('system-admin.payment_info.client_info');
+
+Route::get('/system-admin/payment_info/investor', [SystemAdminController::class, 'payment_investor'])->name('system-admin.payment_info.investor_info');

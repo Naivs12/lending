@@ -6,8 +6,34 @@ use Illuminate\Http\Request;
 
 class SystemAdminController extends Controller
 {
-    public function SystemAdminDashboard()
+    public function loan()
     {
-        return view('layout.system-admin');
+        return view('system-admin.loan.loan');
+    }
+    public function release()
+    {
+        return view('system-admin.loan.release');
+    }
+    public function review()
+    {
+        return view('system-admin.loan.review');
+    }
+    public function client()
+    {
+        return view('system-admin.client');
+    }
+    
+    public function investor()
+    {
+        return view('system-admin.investor');
+    }
+
+    public function payment_client()
+    {
+        return view('system-admin.payment_info.client_info');
+    }
+    public function payment_investor()
+    {
+        return view('system-admin.payment_info.investor_info');
     }
 }

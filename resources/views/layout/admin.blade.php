@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
     <div class="flex h-screen">
         <!-- Include Sidebar Component -->
         @include('components.navbar')

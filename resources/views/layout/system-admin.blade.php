@@ -23,7 +23,7 @@
         @include('components.sysad_navbar')
 
         <!-- Main Content Area -->
-        <div class="flex-1 bg-gray-100 p-6">
+        <div class="flex-1 bg-white p-6">
             @yield('content')
         </div>
     </div>

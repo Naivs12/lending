@@ -20,13 +20,13 @@
 
         <!-- Submodule Links (Hidden by Default) -->
         <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
-            <a href="{{route('admin.loan.loan')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{route('system-admin.loan.loan')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Loan</span>
             </a>
-            <a href="{{route('admin.loan.release')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{route('system-admin.loan.release')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Release</span>
             </a>
-            <a href="{{route('admin.loan.review')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{route('system-admin.loan.review')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Review</span>
             </a>
         </div>
@@ -46,23 +46,23 @@
 
         <!-- Submodule Links (Hidden by Default) -->
         <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
-            <a href="{{ route('admin.payment_info.client_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{ route('system-admin.payment_info.client_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Client</span>
             </a>
-            <a href="{{ route('admin.payment_info.investor_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{ route('system-admin.payment_info.investor_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Investor</span>
             </a>
         </div>
     </div>
 
-    <a href="{{ route('admin.client') }}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 space-x-2">
+    <a href="{{ route('system-admin.client') }}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 space-x-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A5 5 0 0112 20a5 5 0 016.879-2.196M12 14a4 4 0 110-8 4 4 0 010 8z"></path>
         </svg>
         <span>Client</span>
     </a>
 
-    <a href="{{ route('admin.investor') }}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 space-x-2">
+    <a href="{{ route('system-admin.investor') }}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 space-x-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m4 18V3m-8 18V3"></path>
         </svg>
