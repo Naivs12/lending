@@ -2,12 +2,10 @@
 @section('title', 'Payment | Client Info')
 
 @section('content')
-<div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
-    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
+    <div class="m-6 h-full" id="main_content">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
-
             <div>
-                <h1 class="text-3xl font-semibold mb-1">CLIENT PAYMENT INFO</h1>
+                <h1 class="text-3xl font-bold mb-1">CLIENT PAYMENT INFO</h1>
                 <div class="w-full bg-gray-500 h-1 rounded-full"></div>
             </div> 
 
@@ -124,5 +122,4 @@
             
         </div>
     </div>
-</div>
 @endsection

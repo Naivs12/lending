@@ -32,7 +32,7 @@
                                 d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Add Info
+                        Add Client
                     </button>
                 </div>
             </div>

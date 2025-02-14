@@ -4,7 +4,6 @@
 @section('content')
     <div class="m-6 h-full">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
-
             <div>
                 <h1 class="text-3xl font-bold mb-1">REVIEW</h1>
                 <div class="w-full bg-gray-500 h-1 rounded-full"></div>

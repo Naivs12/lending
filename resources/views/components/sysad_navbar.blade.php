@@ -1,7 +1,7 @@
 <nav class="w-64 bg-gray-800 text-white flex flex-col p-4 space-y-4">
-    <div class="flex items-center space-x-2 mx-3.5 my-4 mb-5">
-        <!-- <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company Logo"> -->
-        <span class="text-lg font-semibold">Your Company</span>
+    <div class="flex items-center mx-4 my-4 space-x-3">
+        <img class="h-10 w-auto" src="{{ asset('storage/images/logo.png') }}" alt="JLC">
+        <span class="text-sm text-center font-bold">Joelen's Lending Corporation</span>
     </div>
 
     <!-- Loan Module with Clickable Toggle -->
@@ -68,6 +68,31 @@
         </svg>
         <span>Investor</span>
     </a>
+
+    <div x-data="{ open: false }">
+        <button @click="open = !open" class="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-700 space-x-2 focus:outline-none">
+            <div class="flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m4 18V3m-8 18V3"></path>
+                </svg>
+                <span>Maintenance</span>
+            </div>
+            <svg :class="{'rotate-90': open}" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+
+        <!-- Submodule Links (Hidden by Default) -->
+        <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
+            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+                <span>Branch</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+                <span>Archive</span>
+            </a>
+        </div>
+    </div>
+
 
     <div class="mt-auto">
         <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-red-600 space-x-2">

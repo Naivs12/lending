@@ -1,7 +1,7 @@
 <nav class="w-64 bg-gray-800 text-white flex flex-col p-4 space-y-4">
-    <div class="flex items-center space-x-2 mx-3.5 my-4 mb-5">
-        <!-- <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company Logo"> -->
-        <span class="text-lg font-semibold">Your Company</span>
+    <div class="flex items-center mx-4 my-4 space-x-3">
+        <img class="h-10 w-auto" src="{{ asset('storage/images/logo.png') }}" alt="JLC">
+        <span class="text-sm text-center font-bold">Joelen's Lending Corporation</span>
     </div>
 
     <!-- Loan Module with Clickable Toggle -->

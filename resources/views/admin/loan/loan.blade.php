@@ -2,40 +2,41 @@
 @section('title', 'Loan | Loan')
 
 @section('content')
-<div class="bg-gray-100 flex items-center justify-center p-4" id="main_content">
-    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-[1000px] h-[600px] overflow-hidden mt-3">
+    <div class="m-6 h-full" id="main_content">  
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <div>
-                <h1 class="text-3xl font-semibold mb-1">LOAN</h1>
+                <h1 class="text-3xl font-bold mb-1">LOAN</h1>
                 <div class="w-full bg-gray-500 h-1 rounded-full"></div>
-            </div>   
-            <div class="flex justify-start mb-3 mt-3 w-full">
-                <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
-                    <div class="flex flex-col col-span-3">
-                        <input type="text" id="search" name="search"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
-                            placeholder="Search">
-                    </div>
-                    <div class="flex">
-                        <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="flex justify-end w-full">
-                    <button id="openModal" class="flex flex-row w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Add Loan
-                    </button>
-                </div>
-            </div>
+            </div>  
 
+            <div class="flex items-center gap-x-2 mb-3 mt-3 w-full">
+                <!-- Add Loan Button -->
+                <button id="openModal"
+                    class="flex items-center gap-2 bg-white text-gray-600 border border-gray-400 py-2 px-4 rounded-full shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Add Loan
+                </button>
+
+                <!-- Search Input -->
+                <div class="flex items-center flex-grow">
+                    <input type="text" id="search" name="search"
+                        class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
+                        placeholder="Search">
+                </div>
+
+                <!-- Search Button -->
+                <button class="bg-white text-gray-600 border border-gray-400 py-2 px-3 rounded-full shadow-sm flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
 
             <table class="w-full border border-gray-300 text-center">
                 <thead class="bg-gray-200 text-xs">
@@ -144,7 +145,7 @@
 
         </div>
     </div>
-</div>
+
 
 @include('components.add_loan_modal')
 
