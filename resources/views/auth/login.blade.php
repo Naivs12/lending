@@ -4,8 +4,8 @@
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm border-2 border-gray-300 rounded-lg p-6">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">SIGN IN</h2>
+                <img class="mx-auto h-10 w-auto mt-3" src="{{ asset('storage/images/logo.png') }}" alt="Your Company">
+                <h2 class="mt-3 text-center text-2xl font-bold tracking-tight text-gray-900">SIGN IN</h2>
             </div>
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -34,4 +34,11 @@
             </div>
         </div>
     </div>
+
+@if (session('error'))
+    <div class="text-red-600 text-sm text-center mt-3">
+        {{ session('error') }}
+    </div>
+@endif
+
 @endsection

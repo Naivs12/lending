@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SystemAdminController;
 use App\Http\Controllers\AdminController;
 
 
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+
+
 
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
 
