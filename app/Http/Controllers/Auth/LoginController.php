@@ -29,7 +29,7 @@ class LoginController extends Controller
         Auth::login($user);
     
         // Redirect based on role
-        return $user->role === 'admin' ? redirect()->route('admin.loan.loan') : redirect()->route('/login');
+        return $user->role === 'admin' ? redirect()->route('system-admin.loan.loan') : redirect()->route('/login');
 
         
         // $request->validate([
@@ -50,7 +50,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->role === 'admin') {
-            return redirect()->intended('/admin/loan/loan'); // Redirect admin
+            return redirect()->intended('/system-admin/loan/loan'); // Redirect admin
         }
         return redirect()->intended('/home'); // Redirect normal users
     }

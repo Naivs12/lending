@@ -4,13 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SystemAdminController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BranchController;
 
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-
-
 
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
 
@@ -41,3 +40,14 @@ Route::get('/system-admin/investor', [SystemAdminController::class, 'investor'])
 Route::get('/system-admin/payment_info/client', [SystemAdminController::class, 'payment_client'])->name('system-admin.payment_info.client_info');
 
 Route::get('/system-admin/payment_info/investor', [SystemAdminController::class, 'payment_investor'])->name('system-admin.payment_info.investor_info');
+
+Route::get('/system-admin/maintenance/users', [SystemAdminController::class, 'users'])->name('system-admin.maintenance.users');
+
+Route::get('/system-admin/maintenance/branch', [BranchController::class, 'index'])->name('system-admin.maintenance.branch');
+
+// Branch
+
+Route::post('/branch/store', [BranchController::class, 'store']);
+Route::delete('/branch/{id}', [BranchController::class, 'destroy'])->name('branch.destroy');
+
+

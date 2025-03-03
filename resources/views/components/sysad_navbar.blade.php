@@ -84,7 +84,10 @@
 
         <!-- Submodule Links (Hidden by Default) -->
         <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
-            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+            <a href="{{ route('system-admin.maintenance.users')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+                <span>Users</span>
+            </a>
+            <a href="{{ route('system-admin.maintenance.branch')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
                 <span>Branch</span>
             </a>
             <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">

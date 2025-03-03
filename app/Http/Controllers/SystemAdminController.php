@@ -36,4 +36,12 @@ class SystemAdminController extends Controller
     {
         return view('system-admin.payment_info.investor_info');
     }
+    public function users()
+    {
+        return view('system-admin.maintenance.users');
+    }
+    public function branch()
+    {
+        return view('system-admin.maintenance.branch');
+    }
 }

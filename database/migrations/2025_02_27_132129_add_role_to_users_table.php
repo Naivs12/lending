@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user')->after('email_verified_at'); // Add role column
+            $table->string('role')->default('user')->after('email'); // Add role column
         });
     }
 
