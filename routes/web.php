@@ -5,12 +5,16 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SystemAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\UserController;
 
+use App\Http\Middleware\SystemAdminMiddleware;
+use App\Http\Middleware\AdminMiddleware;
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
+Route::middleware([AdminMiddleware::class])->group(function () {
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
 
 Route::get('/admin/loan/release', [AdminController::class, 'release'])->name('admin.loan.release');
@@ -25,8 +29,11 @@ Route::get('/admin/payment_info/client', [AdminController::class, 'payment_clien
 
 Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_investor'])->name('admin.payment_info.investor_info');
 
+});
 // System ADmin
 
+
+Route::middleware([SystemAdminMiddleware::class])->group(function () {
 Route::get('/system-admin/loan/loan', [SystemAdminController::class, 'loan'])->name('system-admin.loan.loan');
 
 Route::get('/system-admin/loan/release', [SystemAdminController::class, 'release'])->name('system-admin.loan.release');
@@ -43,11 +50,18 @@ Route::get('/system-admin/payment_info/investor', [SystemAdminController::class,
 
 Route::get('/system-admin/maintenance/users', [SystemAdminController::class, 'users'])->name('system-admin.maintenance.users');
 
-Route::get('/system-admin/maintenance/branch', [BranchController::class, 'index'])->name('system-admin.maintenance.branch');
-
 // Branch
-
-Route::post('/branch/store', [BranchController::class, 'store']);
+Route::get('/system-admin/maintenance/branch', [BranchController::class, 'index'])->name('system-admin.maintenance.branch');
+Route::post('/branch/submit', [BranchController::class, 'store']);
 Route::delete('/branch/{id}', [BranchController::class, 'destroy'])->name('branch.destroy');
+
+//user
+Route::get('/system-admin/maintenance/users', [UserController::class, 'index'])->name('system-admin.maintenance.users');
+Route::post('/users/submit', [UserController::class, 'store'])->name('users.submit');
+
+});
+
+
+
 
 

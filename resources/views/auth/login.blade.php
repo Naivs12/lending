@@ -9,21 +9,26 @@
             </div>
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                {{-- Show error message for invalid credentials --}}
+                @if(session('error'))
+                    <div class="mb-4 text-sm text-center text-red-600 bg-red-100 border border-red-400 rounded-md p-2">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <form class="space-y-6" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-900">Username</label>
+                        <label for="username" class="block text-sm font-medium text-gray-900">Username</label>
                         <div class="mt-2">
-                            <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm">
+                            <input type="text" name="username" id="username" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm">
                         </div>
                     </div>
 
                     <div>
-                        <div class="flex items-center justify-between">
-                            <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
-                        </div>
+                        <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
                         <div class="mt-2">
-                            <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm">
+                            <input type="password" name="password" id="password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm">
                         </div>
                     </div>
 
@@ -34,11 +39,4 @@
             </div>
         </div>
     </div>
-
-@if (session('error'))
-    <div class="text-red-600 text-sm text-center mt-3">
-        {{ session('error') }}
-    </div>
-@endif
-
 @endsection

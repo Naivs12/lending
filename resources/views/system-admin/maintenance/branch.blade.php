@@ -81,51 +81,6 @@
     </div>
 
 @include('components.add_branch_modal')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function editBranch(id) {
-        Swal.fire({
-            title: "Edit Branch",
-            text: "Editing branch ID: " + id,
-            icon: "info",
-        });
-    }
-
-    function deleteBranch(branchId) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to undo this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`/branch/${branchId}`, {
-                    method: "DELETE",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        Swal.fire("Deleted!", data.message, "success").then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire("Error!", data.error, "error");
-                    }
-                })
-                .catch(error => {
-                    Swal.fire("Error!", "Something went wrong.", "error");
-                });
-            }
-        });
-    }
-</script>
 
 <script>
 document.getElementById('openModal').addEventListener('click', function() {

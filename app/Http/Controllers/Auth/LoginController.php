@@ -17,50 +17,30 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    // Handle login authentication
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+    
+        // Find user by username
+        $user = User::where('username', $request->username)->first();
+    
+        // FOR TESTING ONLY: Compare raw password (remove this in production)
         if (!$user || $request->password !== $user->password) {
-            return back()->withErrors(['email' => 'Invalid email or password.']);
+            return redirect()->back()->with('error', 'Invalid username or password.');
         }
     
+        // Log in the user
         Auth::login($user);
-    
+
         // Redirect based on role
-        return $user->role === 'admin' ? redirect()->route('system-admin.loan.loan') : redirect()->route('/login');
-
-        
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required'
-        // ]);
-
-        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        //     Log::info('User authenticated: ' . Auth::user()->email); // Debug log
-        //     return $this->authenticated($request, Auth::user());
-        // }
-
-        // Log::warning('Login failed for email: ' . $request->email);
-        // return redirect()->back()->with('error', 'Invalid email or password.');
+        return match ($user->role) {
+            'system-admin' => redirect()->route('system-admin.loan.loan'),
+            'admin' => redirect()->route('admin.loan.loan'),
+            default => redirect()->route('login'), // Redirect other users back to login
+        };
     }
-
-    // Redirect user after authentication
-    protected function authenticated(Request $request, $user)
-    {
-        if ($user->role === 'admin') {
-            return redirect()->intended('/system-admin/loan/loan'); // Redirect admin
-        }
-        return redirect()->intended('/home'); // Redirect normal users
-    }
-
-
-    // // Logout function
-    // public function logout()
-    // {
-    //     Auth::logout();
-    //     return redirect('/login');
-    // }
 }
 

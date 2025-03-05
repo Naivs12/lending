@@ -37,11 +37,10 @@
                 </div>
             </div>
 
+            @if($users->count() > 0)
             <table class="w-full border border-gray-300 text-center text-xs">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="border border-gray-300 px-2 py-3">ID</th>
-                        <th class="border border-gray-300 px-2 py-3">BRANCH NAME</th>
                         <th class="border border-gray-300 px-2 py-3">USERNAME</th>
                         <th class="border border-gray-300 px-2 py-3">PASSWORD</th>
                         <th class="border border-gray-300 px-2 py-3">ROLE</th>
@@ -49,13 +48,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(range(1, 10) as $index)
+                    @foreach($users as $user)
                     <tr class="cursor-pointer hover:bg-gray-100">
-                        <td class="px-4 py-2">C-00{{ $index }}</td>
-                        <td class="px-4 py-2">Client {{ $index }}</td>
-                        <td class="px-4 py-2">Address {{ $index }}</td>
-                        <td></td>
-                        <td></td>
+                        <td class="px-4 py-2">{{$user->username}}</td>
+                        <td class="px-4 py-2">{{$user->password}}</td>
+                        <td class="px-4 py-2">{{$user->role}}</td>
                         <td class="px-4 py-2 flex justify-center space-x-2">
                             <button class="bg-yellow-500 text-white px-3 py-1 rounded-full shadow-sm hover:bg-yellow-600">
                                 Edit
@@ -69,11 +66,13 @@
                 </tbody>
             </table>
 
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+            <!-- Pagination Links -->
+            <div class="mt-2 flex justify-end text-xs">
+                {!! $users->links('vendor.pagination.tailwind') !!}
             </div>
+            @else
+                <p class="text-center text-gray-500">No users found.</p>
+            @endif
 
         </div>
     </div>
@@ -87,5 +86,7 @@ document.getElementById('openModal').addEventListener('click', function() {
 document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('addUserModal').classList.add('hidden');
 });
+
+
 </script>
 @endsection

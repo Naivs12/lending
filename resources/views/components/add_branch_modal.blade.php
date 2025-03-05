@@ -10,7 +10,7 @@
 
             <div class="slide"  style="display: block;">
 
-                <form id="addBranchForm" action="/branch/store" method="POST" class="space-y-3">
+                <form id="addBranchForm" action="/branch/submit" method="POST" class="space-y-3">
                     @csrf
                     <div class="grid grid-cols-1 gap-4">
                         <div class="flex flex-col">
@@ -34,6 +34,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(document).ready(function() {
     $('#addBranchForm').submit(function(e) {
@@ -50,7 +51,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/branch/store',
+                    url: '/branch/submit',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -80,4 +81,48 @@ $(document).ready(function() {
         $('#addBranchModal').addClass('hidden');
     });
 });
+</script>
+<script>
+    function editBranch(id) {
+        Swal.fire({
+            title: "Edit Branch",
+            text: "Editing branch ID: " + id,
+            icon: "info",
+        });
+    }
+
+    function deleteBranch(branchId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to undo this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/branch/${branchId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        Swal.fire("Deleted!", data.message, "success").then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire("Error!", data.error, "error");
+                    }
+                })
+                .catch(error => {
+                    Swal.fire("Error!", "Something went wrong.", "error");
+                });
+            }
+        });
+    }
 </script>
