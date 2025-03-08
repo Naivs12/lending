@@ -11,8 +11,8 @@ use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/', [LoginController::class, 'login']);
 
 Route::middleware([AdminMiddleware::class])->group(function () {
 Route::get('/admin/loan/loan', [AdminController::class, 'loan'])->name('admin.loan.loan');
@@ -57,7 +57,20 @@ Route::delete('/branch/{id}', [BranchController::class, 'destroy'])->name('branc
 
 //user
 Route::get('/system-admin/maintenance/users', [UserController::class, 'index'])->name('system-admin.maintenance.users');
-Route::post('/users/submit', [UserController::class, 'store'])->name('users.submit');
+//add user
+Route::post('/users/submit', [UserController::class, 'create_user'])->name('users.submit');
+//edit user
+Route::get('/users/edit/{id}', function ($id) {
+    $user = User::find($id);
+    if ($user) {
+        return response()->json(['success' => true, 'user' => $user]);
+    }
+    return response()->json(['success' => false]);
+});
+
+Route::post('/users/update', [UserController::class, 'edit_user'])->name('users.update');
+Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
+
 
 });
 

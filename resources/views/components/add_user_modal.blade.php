@@ -79,13 +79,42 @@
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {
+        $("#confirm_password").on("input", function () {
+            let password = $("#password").val();
+            let confirmPassword = $(this).val();
+
+            if (password !== confirmPassword) {
+                $(this).addClass("border-red-500"); // Add red border
+                if (!$("#passwordMismatch").length) {
+                    $(this).after('<p id="passwordMismatch" class="text-red-500 text-xs mt-1">Passwords do not match</p>');
+                }
+            } else {
+                $(this).removeClass("border-red-500"); // Remove red border
+                $("#passwordMismatch").remove(); // Remove error message
+            }
+        });
+
         $(".next-btn").on("click", function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); // Prevent form submission
+
+            let password = $("#password").val();
+            let confirmPassword = $("#confirm_password").val();
+
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Passwords do not match.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                return;
+            }
 
             Swal.fire({
                 title: "Are you sure?",
@@ -97,10 +126,10 @@
                 confirmButtonText: "Yes, add user"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let formData = new FormData($("form")[0]);
+                    let formData = new FormData($("#addUserForm")[0]);
 
                     $.ajax({
-                        url: "/users/submit", // Your backend route
+                        url: "/users/submit", 
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -115,14 +144,14 @@
                                 icon: "success",
                                 confirmButtonText: "OK"
                             }).then(() => {
-                                location.reload(); // Reload page after success
+                                location.reload(); 
                             });
                         },
                         error: function (xhr) {
                             let errors = xhr.responseJSON.errors;
                             let errorMessage = "";
                             $.each(errors, function (key, value) {
-                                errorMessage += value[0] + "\n"; // Show all validation errors
+                                errorMessage += value[0] + "\n"; 
                             });
 
                             Swal.fire({
@@ -138,6 +167,7 @@
         });
     });
 </script>
+
 
 <script>
     function togglePasswordVisibility(inputId, iconId) {

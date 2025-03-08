@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class LoginController extends Controller
@@ -27,14 +28,14 @@ class LoginController extends Controller
         // Find user by username
         $user = User::where('username', $request->username)->first();
     
-        // FOR TESTING ONLY: Compare raw password (remove this in production)
-        if (!$user || $request->password !== $user->password) {
+        // Check if user exists and verify hashed password
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return redirect()->back()->with('error', 'Invalid username or password.');
         }
     
         // Log in the user
         Auth::login($user);
-
+    
         // Redirect based on role
         return match ($user->role) {
             'system-admin' => redirect()->route('system-admin.loan.loan'),
