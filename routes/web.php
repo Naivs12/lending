@@ -6,6 +6,7 @@ use App\Http\Controllers\SystemAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientController;
 
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
@@ -40,7 +41,6 @@ Route::get('/system-admin/loan/release', [SystemAdminController::class, 'release
 
 Route::get('/system-admin/loan/review', [SystemAdminController::class, 'review'])->name('system-admin.loan.review');
 
-Route::get('/system-admin/client', [SystemAdminController::class, 'client'])->name('system-admin.client');
 
 Route::get('/system-admin/investor', [SystemAdminController::class, 'investor'])->name('system-admin.investor');
 
@@ -57,8 +57,10 @@ Route::delete('/branch/{id}', [BranchController::class, 'destroy'])->name('branc
 
 //user
 Route::get('/system-admin/maintenance/users', [UserController::class, 'index'])->name('system-admin.maintenance.users');
+
 //add user
 Route::post('/users/submit', [UserController::class, 'create_user'])->name('users.submit');
+
 //edit user
 Route::get('/users/edit/{id}', function ($id) {
     $user = User::find($id);
@@ -67,12 +69,17 @@ Route::get('/users/edit/{id}', function ($id) {
     }
     return response()->json(['success' => false]);
 });
-
 Route::post('/users/update', [UserController::class, 'edit_user'])->name('users.update');
 Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
 
-
+//client
+Route::get('/system-admin/client', [ClientController::class, 'index'])->name('system-admin.client');
+//add client
+Route::middleware(['auth'])->group(function () {
+    Route::post('/client/submit', [ClientController::class, 'store']);
 });
+});
+
 
 
 

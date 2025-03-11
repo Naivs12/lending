@@ -11,7 +11,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $fillable = ['name', 'username', 'password', 'role', 'branch_id'];
-
+    public $timestamps = true;
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'branch_id');

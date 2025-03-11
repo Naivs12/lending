@@ -43,33 +43,18 @@
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
-                        <th class="border border-gray-300 px-2 py-3">ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(range(1, 10) as $index)
-                    <tr class="cursor-pointer hover:bg-gray-100">
-                        <td class="px-4 py-2">C-00{{ $index }}</td>
-                        <td class="px-4 py-2">Client {{ $index }}</td>
-                        <td class="px-4 py-2">Address {{ $index }}</td>
-                        <td class="px-4 py-2 flex justify-center space-x-2">
-                            <button class="bg-yellow-500 text-white px-3 py-1 rounded-full shadow-sm hover:bg-yellow-600">
-                                Edit
-                            </button>
-                            <button class="bg-red-600 text-white px-3 py-1 rounded-full shadow-sm hover:bg-red-700">
-                                Delete
-                            </button>
-                        </td>
+                @foreach($clients as $client)
+                    <tr class="cursor-pointer hover:bg-gray-100 user-row">
+                        <td class="px-4 py-2">{{ $client->client_id }}</td>
+                        <td class="px-4 py-2">{{ $client->name }}</td>
+                        <td class="px-4 py-2">{{ $client->address }}</td>
                     </tr>
-                    @endforeach
+                @endforeach
                 </tbody>
             </table>
-
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
-            </div>
 
         </div>
     </div>
