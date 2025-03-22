@@ -50,6 +50,8 @@ Route::get('/system-admin/payment_info/investor', [SystemAdminController::class,
 
 Route::get('/system-admin/maintenance/users', [SystemAdminController::class, 'users'])->name('system-admin.maintenance.users');
 
+Route::get('/system-admin/client-detail', [SystemAdminController::class, 'client_detail'])->name('system-admin.client-detail');
+
 // Branch
 Route::get('/system-admin/maintenance/branch', [BranchController::class, 'index'])->name('system-admin.maintenance.branch');
 Route::post('/branch/submit', [BranchController::class, 'store']);
@@ -74,10 +76,14 @@ Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
 
 //client
 Route::get('/system-admin/client', [ClientController::class, 'index'])->name('system-admin.client');
+
 //add client
 Route::middleware(['auth'])->group(function () {
     Route::post('/client/submit', [ClientController::class, 'store']);
 });
+
+Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
+Route::delete('/delete-client/{id}', [ClientController::class, 'delete_client']);
 });
 
 

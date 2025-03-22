@@ -44,4 +44,9 @@ class SystemAdminController extends Controller
     {
         return view('system-admin.maintenance.branch');
     }
+
+    public function client_detail()
+    {
+        return view('system-admin.client_detail');
+    }
 }

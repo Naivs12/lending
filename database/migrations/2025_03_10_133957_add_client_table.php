@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('client_id')->unique();
             $table->string('name');
             $table->string('address');
+            $table->string('age');
             $table->date('birthday');
             $table->string('gender');
             $table->string('contact_number'); // Fix: Use string instead of int for phone numbers

@@ -197,6 +197,7 @@
         });
     });
 </script>
+
 <script>
     $(document).on('click', '#deleteUser', function () {
     let userId = $('#editUserModal input[name="user_id"]').val(); // Get user ID from modal input

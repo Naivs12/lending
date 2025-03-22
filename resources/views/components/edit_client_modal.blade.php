@@ -1,4 +1,4 @@
-<div id="addClientModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80">
+<div id="editClientModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80">
     <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-5xl">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-semibold text-center fw-bold w-full">CLIENT PERSONAL INFORMATION</h2>
@@ -10,7 +10,7 @@
             <div class="slide" style="display: block;">
                 <p class="fs-5 fw-bold  mb-3">Personal Details</p>
 
-                <form id="clientForm" action="/client/submit" class="space-y-3">
+                <form id="editClientForm" class="space-y-3">
                     @csrf
                     <div class="grid grid-cols-3 gap-4">
                         <div class="flex flex-col">
@@ -84,70 +84,3 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    $(document).ready(function() {
-        $("#clientForm").submit(function(event) {
-            event.preventDefault(); // Prevent normal form submission
-
-            // Get form data
-            var formData = $(this).serialize();
-
-            // Check if any required field is empty
-            var isValid = true;
-            $("#clientForm input, #clientForm select").each(function() {
-                if ($(this).prop("required") && $(this).val().trim() === "") {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Please check your inputs and fill out all required fields!"
-                });
-                return;
-            }
-
-            // AJAX request
-            $.ajax({
-                url: "/client/submit", // Update this with your correct route
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ensure CSRF token is included
-                },
-                success: function(response) {
-                    if (response.success) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Success!",
-                            text: "Client added successfully!",
-                        }).then(() => {
-                            location.reload(); // Reload page after success
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Error",
-                            text: response.message || "Something went wrong!"
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "Failed to submit data. Please try again!"
-                    });
-                }
-            });
-        });
-    });
-</script>
-

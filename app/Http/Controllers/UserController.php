@@ -77,16 +77,15 @@ class UserController extends Controller
     public function delete_user($id)
     {
         try {
-            $user = User::find($id);
-            if (!$user) {
+            $deleted = User::destroy($id);
+    
+            if (!$deleted) {
                 return response()->json(['success' => false, 'message' => 'User not found!'], 404);
             }
-
-            $user->delete();
-
+    
             return response()->json(['success' => true, 'message' => 'User deleted successfully!']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
         }
     }
 

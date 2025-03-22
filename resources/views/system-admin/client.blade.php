@@ -6,7 +6,7 @@
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
 
             <div>
-                <h1 class="text-3xl font-bold mb-1">CLIENT INFORMATION</h1>
+                <h1 class="text-3xl font-bold mb-1">CLIENT</h1>
                 <div class="w-full bg-gray-500 h-1 rounded-full"></div>
             </div> 
 
@@ -46,13 +46,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($clients as $client)
-                    <tr class="cursor-pointer hover:bg-gray-100 user-row">
-                        <td class="px-4 py-2">{{ $client->client_id }}</td>
-                        <td class="px-4 py-2">{{ $client->name }}</td>
-                        <td class="px-4 py-2">{{ $client->address }}</td>
-                    </tr>
-                @endforeach
+                    @if($clients->isEmpty())
+                        <tr>
+                            <td colspan="3" class="px-4 py-2 text-gray-500 text-sm">No clients found.</td>
+                        </tr>
+                    @else
+                        @foreach($clients as $client)
+                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToClientDetail('{{ $client->client_id }}')">
+                                <td class="px-4 py-2">{{ $client->client_id }}</td>
+                                <td class="px-4 py-2">{{ $client->name }}</td>
+                                <td class="px-4 py-2">{{ $client->address }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
 
@@ -60,6 +66,7 @@
     </div>
 
 @include('components.add_client_modal')
+
 
 <script>
 document.getElementById('openModal').addEventListener('click', function() {
@@ -70,5 +77,9 @@ document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('addClientModal').classList.add('hidden');
 });
 </script>
-
+<script>
+    function redirectToClientDetail(clientId) {
+        window.location.href = "/client-detail/" + clientId;
+    }
+</script>
 @endsection
