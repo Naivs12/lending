@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) { // Fix: table name should be plural for convention
             $table->id();
             $table->string('client_id')->unique();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
             $table->string('address');
             $table->string('age');
             $table->date('birthday');

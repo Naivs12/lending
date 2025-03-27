@@ -71,7 +71,7 @@ Route::get('/users/edit/{id}', function ($id) {
     }
     return response()->json(['success' => false]);
 });
-Route::post('/users/update', [UserController::class, 'edit_user'])->name('users.update');
+Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
 Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
 
 //client
@@ -79,11 +79,15 @@ Route::get('/system-admin/client', [ClientController::class, 'index'])->name('sy
 
 //add client
 Route::middleware(['auth'])->group(function () {
-    Route::post('/client/submit', [ClientController::class, 'store']);
+    Route::post('/client/submit', [ClientController::class, 'store'])->name('client.submit');
 });
+
 
 Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
 Route::delete('/delete-client/{id}', [ClientController::class, 'delete_client']);
+
+//edit client
+Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
 });
 
 

@@ -54,7 +54,11 @@
                         @foreach($clients as $client)
                             <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToClientDetail('{{ $client->client_id }}')">
                                 <td class="px-4 py-2">{{ $client->client_id }}</td>
-                                <td class="px-4 py-2">{{ $client->name }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $client->first_name }} 
+                                    @if($client->middle_name) {{ $client->middle_name }} @endif 
+                                    {{ $client->last_name }}
+                                </td>
                                 <td class="px-4 py-2">{{ $client->address }}</td>
                             </tr>
                         @endforeach

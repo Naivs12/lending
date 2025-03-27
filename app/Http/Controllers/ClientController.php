@@ -37,9 +37,6 @@ class ClientController extends Controller
         ]);
 
         $branch_id = Auth::user()->branch_id;
-
-        $name = trim("{$request->first_name} {$request->middle_name} {$request->last_name}");
-
         // Generate client_id starting from CL-0000001
         $lastClient = Client::orderBy('client_id', 'desc')->first();
 
@@ -54,7 +51,9 @@ class ClientController extends Controller
 
         Client::create([
             'client_id' => $newClientId,
-            'name' => $name,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
             'address' => $request->address,
             'age' => $request->age,
             'birthday' => $request->birthday,
@@ -88,5 +87,54 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
         }
-    }    
+    }
+    public function update(Request $request)
+    {
+        try {
+            // Validate request data
+            $request->validate([
+                'editClientId' => 'required|exists:clients,id', // Use id instead of client_id
+                'edit_first_name' => 'required|string|max:255',
+                'edit_middle_name' => 'nullable|string|max:255',
+                'edit_last_name' => 'required|string|max:255',
+                'edit_address' => 'required|string',
+                'edit_age' => 'required|integer',
+                'edit_birthday' => 'required|date',
+                'edit_gender' => 'required|string',
+                'edit_contact_number' => 'required|numeric',
+                'edit_soc_med' => 'nullable|url',
+                'edit_co_borrower' => 'nullable|string',
+                'edit_relationship_co' => 'nullable|string',
+            ]);
+    
+
+            $client = Client::where('id', $request->editClientId)->first();
+    
+            if (!$client) {
+                return response()->json(['success' => false, 'message' => 'Client not found!'], 404);
+            }
+            
+            // Update client details
+            $client->id = $request->editClientId;
+            $client->first_name = $request->edit_first_name;
+            $client->middle_name = $request->edit_middle_name;
+            $client->last_name = $request->edit_last_name;
+            $client->address = $request->edit_address;
+            $client->age = $request->edit_age;
+            $client->birthday = $request->edit_birthday;
+            $client->gender = $request->edit_gender;
+            $client->contact_number = $request->edit_contact_number;
+            $client->soc_med = $request->edit_soc_med;
+            $client->co_borrower = $request->edit_co_borrower;
+            $client->relationship_co = $request->edit_relationship_co;
+    
+            $client->save();
+    
+            return response()->json(['success' => true, 'message' => 'User updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    
+    
 }

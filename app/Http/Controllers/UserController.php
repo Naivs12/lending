@@ -40,7 +40,7 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User added successfully!');
     }
 
-    public function edit_user(Request $request)
+    public function update(Request $request)
     {
         try {
             // Validate request data
