@@ -36,7 +36,6 @@
                     </button>
                 </div>
             </div>
-
             <table class="w-full border border-gray-300 text-center text-xs">
                 <thead class="bg-gray-200">
                     <tr>
@@ -65,7 +64,10 @@
                     @endif
                 </tbody>
             </table>
-
+             <!-- Pagination Links -->
+             <div class="mt-2 flex justify-end text-xs">
+                {!! $clients->links('vendor.pagination.tailwind') !!}
+            </div>
         </div>
     </div>
 

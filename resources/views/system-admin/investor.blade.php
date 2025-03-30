@@ -37,40 +37,40 @@
                     </button>
                 </div>
             </div>
-
             <table class="w-full border border-gray-300 text-center text-xs">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
+                        <th class="border border-gray-300 px-2 py-3">INVESTOR ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
-                        <th class="border border-gray-300 px-2 py-3">ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(range(1, 10) as $index)
-                    <tr class="cursor-pointer hover:bg-gray-100">
-                        <td class="px-4 py-2">INV-00{{ $index }}</td>
-                        <td class="px-4 py-2">INVESTOR {{ $index }}</td>
-                        <td class="px-4 py-2">Address {{ $index }}</td>
-                        <td class="px-4 py-2 flex justify-center space-x-2">
-                            <button class="bg-yellow-500 text-white px-3 py-1 rounded-full shadow-sm hover:bg-yellow-600">
-                                Edit
-                            </button>
-                            <button class="bg-red-600 text-white px-3 py-1 rounded-full shadow-sm hover:bg-red-700">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
+                    @if($investors->isEmpty())
+                        <tr>
+                            <td colspan="3" class="px-4 py-2 text-gray-500 text-sm">No investors found.</td>
+                        </tr>
+                    @else
+                        @foreach($investors as $investor)
+                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToInvestorDetail('{{ $investor->investor_id }}')">
+                                <td class="px-4 py-2">{{ $investor->investor_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $investor->first_name }} 
+                                    @if($investor->middle_name) {{ $investor->middle_name }} @endif 
+                                    {{ $investor->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $investor->address }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
-
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+            <!-- Pagination Links -->
+            <div class="mt-2 flex justify-end text-xs">
+                {!! $investors->links('vendor.pagination.tailwind') !!}
             </div>
+             
+        
 
         </div>
     </div>
@@ -78,11 +78,16 @@
 @include('components.add_investor_modal')
 <script>
 document.getElementById('openModal').addEventListener('click', function() {
-    document.getElementById('addClientModal').classList.remove('hidden');
+    document.getElementById('addInvestorModal').classList.remove('hidden');
 });
 
 document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('addClientModal').classList.add('hidden');
+    document.getElementById('addInvestorModal').classList.add('hidden');
 });
+</script>
+<script>
+    function redirectToInvestorDetail(investorId) {
+        window.location.href = "/investor-detail/" + investorId;
+    }
 </script>
 @endsection

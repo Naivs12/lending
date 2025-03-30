@@ -45,54 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-001</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">2024-07-15</td>
-                        <td class="px-4 py-2">2024-07-10</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-002</td>
-                        <td class="px-4 py-2">Jane Smith</td>
-                        <td class="px-4 py-2">2024-08-20</td>
-                        <td class="px-4 py-2">2024-08-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-003</td>
-                        <td class="px-4 py-2">Alice Johnson</td>
-                        <td class="px-4 py-2">2024-09-10</td>
-                        <td class="px-4 py-2">2024-09-05</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-004</td>
-                        <td class="px-4 py-2">Bob Brown</td>
-                        <td class="px-4 py-2">2024-10-05</td>
-                        <td class="px-4 py-2">2024-10-01</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-005</td>
-                        <td class="px-4 py-2">Emma White</td>
-                        <td class="px-4 py-2">2024-11-12</td>
-                        <td class="px-4 py-2">2024-11-08</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-006</td>
-                        <td class="px-4 py-2">Liam Green</td>
-                        <td class="px-4 py-2">2024-12-20</td>
-                        <td class="px-4 py-2">2024-12-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-007</td>
-                        <td class="px-4 py-2">Sophia Black</td>
-                        <td class="px-4 py-2">2025-01-25</td>
-                        <td class="px-4 py-2">2025-01-20</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">INV-008</td>
-                        <td class="px-4 py-2">Oliver Gray</td>
-                        <td class="px-4 py-2">2025-02-10</td>
-                        <td class="px-4 py-2">2025-02-05</td>
-                    </tr>
+                    
                 </tbody>
             </table>
             

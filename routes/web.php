@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\InvestorController;
 
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
@@ -51,6 +52,7 @@ Route::get('/system-admin/payment_info/investor', [SystemAdminController::class,
 Route::get('/system-admin/maintenance/users', [SystemAdminController::class, 'users'])->name('system-admin.maintenance.users');
 
 Route::get('/system-admin/client-detail', [SystemAdminController::class, 'client_detail'])->name('system-admin.client-detail');
+Route::get('/system-admin/investor-detail', [SystemAdminController::class, 'investor_detail'])->name('system-admin.investor-detail');
 
 // Branch
 Route::get('/system-admin/maintenance/branch', [BranchController::class, 'index'])->name('system-admin.maintenance.branch');
@@ -88,6 +90,12 @@ Route::delete('/delete-client/{id}', [ClientController::class, 'delete_client'])
 
 //edit client
 Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
+
+Route::get('/system-admin/investor', [InvestorController::class, 'index'])->name('system-admin.investor');
+Route::post('/investor/submit', [InvestorController::class, 'add_investor'])->name('investor.submit');
+
+
+Route::get('/investor-detail/{investor_id}', [InvestorController::class, 'show_investor_details'])->name('investor_detail');
 });
 
 

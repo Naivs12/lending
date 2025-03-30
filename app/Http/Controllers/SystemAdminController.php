@@ -49,4 +49,8 @@ class SystemAdminController extends Controller
     {
         return view('system-admin.client_detail');
     }
+    public function investor_detail()
+    {
+        return view('system-admin.investor_detail');
+    }
 }

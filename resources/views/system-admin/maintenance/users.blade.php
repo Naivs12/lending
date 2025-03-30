@@ -46,6 +46,9 @@
             </div>
 
             @if($users->count() > 0)
+            <div>
+                
+            </div>
             <table class="w-full border border-gray-300 text-center text-xs">
                 <thead class="bg-gray-200">
                     <tr>

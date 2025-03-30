@@ -62,7 +62,7 @@ class ClientController extends Controller
             'soc_med' => $request->facebook,
             'co_borrower' => $request->co_borrower,
             'relationship_co' => $request->relationship_co_borrower,
-            'branch_id' => $branch_id,
+            'branch_id' => $branch_id
         ]);
 
         return response()->json(['success' => true, 'message' => 'Client added successfully!']);

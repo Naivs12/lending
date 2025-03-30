@@ -91,7 +91,10 @@
                 <span>Branch</span>
             </a>
             <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
-                <span>Archive</span>
+                <span>Archived</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700">
+                <span>Blocklist</span>
             </a>
         </div>
     </div>

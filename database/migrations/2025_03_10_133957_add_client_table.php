@@ -26,8 +26,10 @@ return new class extends Migration
             $table->string('co_borrower')->nullable();
             $table->string('relationship_co')->nullable();
             $table->string('branch_id'); // Changed from branch to branch_id
-            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade'); // Foreign key
             $table->timestamps(); // Adds created_at and updated_at columns
+
+            // Foreign key
+            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade'); 
         });
     }
 
