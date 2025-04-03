@@ -14,7 +14,7 @@ class ClientController extends Controller
         $branches = Branch::all(); // Fetch all branches
             
         if ($clients->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.maintenance.user', ['page' => 1]);
+            return redirect()->route('system-admin.investor', ['page' => 1]);
         }
 
         return view('system-admin.client', compact('clients', 'branches'));

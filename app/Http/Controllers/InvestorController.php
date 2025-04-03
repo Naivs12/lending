@@ -12,7 +12,7 @@ class InvestorController extends Controller
         $investors = Investor::paginate(10); 
             
         if ($investors->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.maintenance.user', ['page' => 1]);
+            return redirect()->route('system-admin.investor', ['page' => 1]);
         }
 
         return view('system-admin.investor', compact('investors'));

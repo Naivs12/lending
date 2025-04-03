@@ -13,15 +13,17 @@ return new class extends Migration
             $table->id();
             $table->string('loan_id')->unique();
             $table->string('client_id');
+            $table->string('branch_id');
             $table->integer('amount');
-            $table->string('payment');
-            $table->string('payment_term');
+            $table->enum('payment_schedule', ['weekly', 'two_weeks', 'monthly', 'interest_only']);
+            $table->string('term');
             $table->integer('interest');
             $table->date('date_release');
             $table->string('status');
             $table->timestamps();
 
             // Foreign Keys
+            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade');
             $table->foreign('client_id')->references('client_id')->on('clients')->onDelete('cascade');
         });
 

@@ -50,98 +50,36 @@
                         
                     </tr>
                 </thead>
-                <tbody id="loanTableBody" class="text-xs">
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1001</td>
-                        <td class="px-4 py-2">CL-5001</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">₱10,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-03-15</td>
-                    </tr>
-                   
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1004</td>
-                        <td class="px-4 py-2">CL-5004</td>
-                        <td class="px-4 py-2">Emily Davis</td>
-                        <td class="px-4 py-2">₱20,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-06-20</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1005</td>
-                        <td class="px-4 py-2">CL-5005</td>
-                        <td class="px-4 py-2">Chris Brown</td>
-                        <td class="px-4 py-2">₱12,500</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-07-08</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1006</td>
-                        <td class="px-4 py-2">CL-5006</td>
-                        <td class="px-4 py-2">Sarah Wilson</td>
-                        <td class="px-4 py-2">₱5,500</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-08-12</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1007</td>
-                        <td class="px-4 py-2">CL-5007</td>
-                        <td class="px-4 py-2">David Martinez</td>
-                        <td class="px-4 py-2">₱18,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-09-30</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-
+                <tbody class="text-xs">
+                    @if($loans->isEmpty())
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-gray-500 text-sm">No loan found.</td>
+                        </tr>
+                    @else
+                        @foreach($loans as $loan)
+                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
+                                <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $loan->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $loan->client->first_name }} 
+                                    @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
+                                    {{ $loan->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $loan->amount }}</td>
+                                <td class="px-4 py-2">{{ $loan->payment }}</td>
+                                <td class="px-4 py-2">{{ $loan->term }}</td>
+                                <td class="px-4 py-2">{{ $loan->interest }}</td>
+                                <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
-            
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+            <!-- Pagination Links -->
+             <div class="mt-2 flex justify-end text-xs">
+                {!! $loans->links('vendor.pagination.tailwind') !!}
             </div>
-
+        
         </div>
 </div>
 

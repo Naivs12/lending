@@ -26,8 +26,8 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|unique:users,username',
             'password' => 'required|min:6',
-            'name' => 'required',
-            'branch_id' => 'required', // Ensure branch_id is selected
+            'name' => 'required|string',
+            'branch_id' => 'required|string' // Ensure branch_id is selected
         ]);
 
         User::create([
