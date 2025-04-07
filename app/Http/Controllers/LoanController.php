@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoanController extends Controller
 {
-    public function index(Request $request)
+    public function index_loan(Request $request)
     {
         $loans = Loan::with('client')
-            ->where('status', 'review')
+            ->where('status', 'released')
             ->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
@@ -21,6 +21,31 @@ class LoanController extends Controller
         }
 
         return view('system-admin.loan.loan', compact('loans'));
+    }
+    public function index_review(Request $request)
+    {
+        $loans = Loan::with('client')
+            ->where('status', 'review')
+            ->paginate(10);
+
+        if ($loans->isEmpty() && $request->page > 1) {
+            return redirect()->route('system-admin.loan.review', ['page' => 1]);
+        }
+
+        return view('system-admin.loan.loan', compact('loans'));
+    }
+
+    public function index_release(Request $request)
+    {
+        $loans = Loan::with('client')
+            ->where('status', 'release')
+            ->paginate(10);
+
+        if ($loans->isEmpty() && $request->page > 1) {
+            return redirect()->route('system-admin.loan.loan', ['page' => 1]);
+        }
+
+        return view('system-admin.loan.release', compact('loans'));
     }
 
     public function create_loan(Request $request)

@@ -38,26 +38,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 1; $i <= 10; $i++)
-                    <tr class="cursor-pointer hover:bg-gray-100">
-                        <td class="px-4 py-2">L-00{{ $i }}</td>
-                        <td class="px-4 py-2">C-10{{ $i }}</td>
-                        <td class="px-4 py-2">Client {{ $i }}</td>
-                        <td class="px-4 py-2">${{ rand(2000, 10000) }}.00</td>
-                        <td class="px-4 py-2">2024-02-{{ 10 + $i }}</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600">Approve</button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600">Decline</button>
-                        </td>
-                    </tr>
-                    @endfor
+                @if($loans->isEmpty())
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-gray-500 text-sm">No loan found.</td>
+                        </tr>
+                    @else
+                        @foreach($loans as $loan)
+                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
+                                <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $loan->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $loan->client->first_name }} 
+                                    @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
+                                    {{ $loan->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $loan->amount }}</td>
+                                <td class="px-4 py-2">{{ $loan->payment }}</td>
+                                <td class="px-4 py-2">{{ $loan->term }}</td>
+                                <td class="px-4 py-2">{{ $loan->interest }}</td>
+                                <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
 
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                <button id="nextPage" class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+            <!-- Pagination Links -->
+            <div class="mt-2 flex justify-end text-xs">
+                {!! $loans->links('vendor.pagination.tailwind') !!}
             </div>
 
         </div>

@@ -37,215 +37,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">L-001</td>
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">$1,000</td>
-                        <td class="px-4 py-2">2024-02-01</td>
-                        <td class="px-4 py-2">
-                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
+                @if($loans->isEmpty())
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-gray-500 text-sm">No loan found.</td>
+                        </tr>
+                    @else
+                        @foreach($loans as $loan)
+                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
+                                <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $loan->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $loan->client->first_name }} 
+                                    @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
+                                    {{ $loan->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $loan->amount }}</td>>
+                                <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                                <td class="px-4 py-2">
+                                    <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </button>
+                                    <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    
                 </tbody>
             </table>
 
-
-
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+            <!-- Pagination Links -->
+            <div class="mt-2 flex justify-end text-xs">
+                {!! $loans->links('vendor.pagination.tailwind') !!}
             </div>
 
         </div>

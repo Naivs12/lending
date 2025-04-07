@@ -38,8 +38,7 @@ Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_inv
 
 Route::middleware([SystemAdminMiddleware::class])->group(function () {
 
-Route::get('/system-admin/loan/release', [SystemAdminController::class, 'release'])->name('system-admin.loan.release');
-Route::get('/system-admin/loan/review', [SystemAdminController::class, 'review'])->name('system-admin.loan.review');
+
 Route::get('/system-admin/investor', [SystemAdminController::class, 'investor'])->name('system-admin.investor');
 Route::get('/system-admin/payment_info/client', [SystemAdminController::class, 'payment_client'])->name('system-admin.payment_info.client_info');
 Route::get('/system-admin/payment_info/investor', [SystemAdminController::class, 'payment_investor'])->name('system-admin.payment_info.investor_info');
@@ -90,10 +89,14 @@ Route::post('/investor/submit', [InvestorController::class, 'add_investor'])->na
 
 Route::get('/investor-detail/{investor_id}', [InvestorController::class, 'show_investor_details'])->name('investor_detail');
 
-Route::get('/system-admin/loan/loan', [LoanController::class, 'index'])->name('system-admin.loan.loan');
+Route::get('/system-admin/loan/loan', [LoanController::class, 'index_loan'])->name('system-admin.loan.loan');
+
 Route::get('/clients/search', [LoanController::class, 'search'])->name('clients.search');
 
 Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.submit');
+
+Route::get('/system-admin/loan/release', [LoanController::class, 'index_release'])->name('system-admin.loan.release');
+Route::get('/system-admin/loan/review', [LoanController::class, 'index_review'])->name('system-admin.loan.review');
 
 });
 
