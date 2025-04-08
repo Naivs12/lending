@@ -13,7 +13,7 @@ class LoanController extends Controller
     public function index_loan(Request $request)
     {
         $loans = Loan::with('client')
-            ->where('status', 'released')
+            ->where('status', 'loan')
             ->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
@@ -32,7 +32,7 @@ class LoanController extends Controller
             return redirect()->route('system-admin.loan.review', ['page' => 1]);
         }
 
-        return view('system-admin.loan.loan', compact('loans'));
+        return view('system-admin.loan.review', compact('loans'));
     }
 
     public function index_release(Request $request)
@@ -42,11 +42,31 @@ class LoanController extends Controller
             ->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.loan.loan', ['page' => 1]);
+            return redirect()->route('system-admin.loan.release', ['page' => 1]);
         }
 
         return view('system-admin.loan.release', compact('loans'));
     }
+
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'loan_id' => 'required|string',
+            'status' => 'required|string'
+        ]);
+
+        $loan = Loan::where('loan_id', $request->loan_id)->first();
+
+        if (!$loan) {
+            return response()->json(['success' => false, 'message' => 'Loan not found']);
+        }
+
+        $loan->status = $request->status;
+        $loan->save();
+
+        return response()->json(['success' => true]);
+    }
+
 
     public function create_loan(Request $request)
     {

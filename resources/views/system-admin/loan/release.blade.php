@@ -51,7 +51,7 @@
                                     @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                     {{ $loan->client->last_name }}
                                 </td>
-                                <td class="px-4 py-2">{{ $loan->amount }}</td>>
+                                <td class="px-4 py-2">{{ $loan->amount }}</td>
                                 <td class="px-4 py-2">{{ $loan->date_release }}</td>
                                 <td class="px-4 py-2">
                                     <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
@@ -72,6 +72,7 @@
                     
                 </tbody>
             </table>
+
 
             <!-- Pagination Links -->
             <div class="mt-2 flex justify-end text-xs">
