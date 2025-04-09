@@ -98,6 +98,8 @@ Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.
 Route::get('/system-admin/loan/release', [LoanController::class, 'index_release'])->name('system-admin.loan.release');
 Route::get('/system-admin/loan/review', [LoanController::class, 'index_review'])->name('system-admin.loan.review');
 Route::post('/update-loan-status', [LoanController::class, 'updateStatus']);
+Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search');
+
 
 
 });

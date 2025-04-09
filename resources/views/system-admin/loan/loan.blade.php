@@ -10,32 +10,34 @@
             </div>   
             <div class="flex justify-start mb-3 mt-3 w-full">
 
-                <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
-                    <div class="flex flex-col col-span-4">
-                        <input type="text" id="search" name="search"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
-                            placeholder="Search">
-                    </div>
+                <form method="GET" action="{{ route('system-admin.loan.loan') }}" class="w-full">
+                    <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
+                        <div class="flex flex-col col-span-4">
+                            <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
+                        </div>
 
-                    <div class="flex flex-col col-span-2">
-                        <select id="branchFilter" name="branch"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
-                            <option value="">All Branches</option>
-                            <!-- Populate options here -->
-                        </select>
-                    </div>
+                        <div class="flex flex-col col-span-2">
+                            <select name="branch" onchange="this.form.submit()"
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                                <option value="">All Branches</option>
+                                @foreach($branches as $branch)
+                                    <option value="{{ $branch->branch_id }}" {{ request('branch') == $branch->branch_id ? 'selected' : '' }}>
+                                        {{ $branch->branch_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <!-- Name Sort -->
-                    <div class="flex flex-col col-span-2">
-                        <select id="nameSort"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
-                            <option value="">Sort</option>
-                            <option value="asc">Name - Asc</option>
-                            <option value="desc">Name - Desc</option>
-                        </select>
+                        <div class="flex flex-col col-span-2">
+                            <select name="nameSort" onchange="this.form.submit()"
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                                <option value="">Sort</option>
+                                <option value="asc" {{ request('nameSort') == 'asc' ? 'selected' : '' }}>Name - Asc</option>
+                                <option value="desc" {{ request('nameSort') == 'desc' ? 'selected' : '' }}>Name - Desc</option>
+                            </select>
+                        </div>
                     </div>
-
-                </div>
+                </form>
 
                 <div class="flex justify-end w-full">
                     <button id="openModal" class="flex flex-row w-[10em] text-sm gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
@@ -49,7 +51,6 @@
                 </div>
             </div>
 
-
             <table class="w-full border border-gray-300 text-center">
                 <thead class="bg-gray-200 text-xs">
                     <tr>
@@ -61,13 +62,12 @@
                         <th class="border border-gray-300 px-2 py-3">TERMS/MONTH</th>
                         <th class="border border-gray-300 px-2 py-3">INTEREST PER MONTH</th>
                         <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
-                        
                     </tr>
                 </thead>
                 <tbody class="text-xs">
                     @if($loans->isEmpty())
                         <tr>
-                            <td colspan="8" class="px-4 py-2 text-gray-500 text-sm">No loan found.</td>
+                            <td colspan="8" class="px-4 py-2 text-center text-gray-500">No results found.</td>
                         </tr>
                     @else
                         @foreach($loans as $loan)
@@ -91,12 +91,12 @@
             </table>
 
             <!-- Pagination Links -->
-             <div class="mt-2 flex justify-end text-xs">
+            <div class="mt-2 flex justify-end text-xs">
                 {!! $loans->links('vendor.pagination.tailwind') !!}
             </div>
         
         </div>
-</div>
+    </div>
 
 @include('components.add_loan_modal')
 
@@ -110,5 +110,52 @@
     });
 </script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const $searchInput = $('#client-search');
+        const $suggestions = $('#suggestions');
+        const $tableRows = $('table tbody tr');
+        const $noResultsMessage = $('.no-results-message');
+
+        // Hide suggestions and filter table on input
+        $searchInput.on('input', function () {
+            let query = $(this).val().toLowerCase(); // Convert to lowercase for case-insensitive search
+            let resultsFound = false;
+
+            if (query.length < 2) {
+                $suggestions.hide(); // Hide suggestions when typing less than 2 characters
+            } else {
+                $suggestions.hide(); // Hide suggestions
+            }
+
+            // Filter table rows based on the search query
+            $tableRows.each(function () {
+                let rowText = $(this).text().toLowerCase(); // Get row text in lowercase
+                if (rowText.includes(query)) {
+                    $(this).show(); // Show matching rows
+                    resultsFound = true;
+                } else {
+                    $(this).hide(); // Hide non-matching rows
+                }
+            });
+
+            // If no results, display the "No results found" row
+            if (!resultsFound) {
+                $('table tbody').append('<tr><td colspan="8" class="px-4 py-2 text-center text-gray-500">No results found.</td></tr>');
+            } else {
+                $('table tbody tr:has(td:contains("No results found"))').remove(); // Remove "No results" row if results are found
+            }
+        });
+
+        // Hide suggestion if clicked outside
+        $(document).click(function (e) {
+            if (!$(e.target).closest('#suggestions, #client-search').length) {
+                $suggestions.hide();
+            }
+        });
+    });
+</script>
 
 @endsection

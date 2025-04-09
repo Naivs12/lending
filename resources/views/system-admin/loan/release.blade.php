@@ -53,18 +53,22 @@
                                 </td>
                                 <td class="px-4 py-2">{{ $loan->amount }}</td>
                                 <td class="px-4 py-2">{{ $loan->date_release }}</td>
-                                <td class="px-4 py-2">
-                                    <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700" onclick="approveLoan(event, this)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                    </button>
-                                    <button class="bg-red-500 text-white px-2 py-1 rounded ml-2 hover:bg-red-700" onclick="rejectLoan(event, this)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                        </svg>
-                                    </button>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    <div class="flex items-center justify-center space-x-2 h-full">
+                                        <button class="group bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 flex items-center transition-all duration-300 ease-in-out" onclick="approveLoan(event, this)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ms-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                            <span class="ml-2 max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">Accept</span>
+                                        </button>
+                                        <button class="group bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 flex items-center transition-all duration-300 ease-in-out" onclick="denyLoan(event, this)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ms-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            </svg>
+                                            <span class="ml-2 max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">Deny</span>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -81,5 +85,57 @@
 
         </div>
     </div>
-        
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function approveLoan(event, button) {
+        event.stopPropagation(); // Prevent row click
+
+        const row = button.closest('tr');
+        const loanId = row.querySelector('td').textContent.trim();
+
+        Swal.fire({
+            title: 'Release Loan?',
+            text: `Are you sure you want to continue?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateLoanStatus(loanId, 'loan');
+            }
+        });
+    }
+
+
+    function updateLoanStatus(loanId, status) {
+        fetch('/update-loan-status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ loan_id: loanId, status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire(
+                    'Success!',
+                    `Loan has been marked as ${status}.`,
+                    'success'
+                ).then(() => {
+                    location.reload();
+                });
+            } else {
+                Swal.fire('Error', 'Failed to update loan status.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('Error', 'An unexpected error occurred.', 'error');
+        });
+    }
+</script>
 @endsection

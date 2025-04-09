@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Loan;
+use App\Models\Branch;
 use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -12,16 +13,34 @@ class LoanController extends Controller
 {
     public function index_loan(Request $request)
     {
-        $loans = Loan::with('client')
-            ->where('status', 'loan')
-            ->paginate(10);
+        $branches = Branch::all();
+        $query = Loan::with('client')->where('status', 'loan');
+
+        // Check if branch filter is applied
+        if ($request->has('branch') && $request->branch != '') {
+            $query->where('loans.branch_id', $request->branch);
+
+        }
+
+        // Check if name sort is applied
+        if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
+            $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
+                ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
+                ->select('loans.*');
+        }
+
+        $loans = $query->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
             return redirect()->route('system-admin.loan.loan', ['page' => 1]);
         }
 
-        return view('system-admin.loan.loan', compact('loans'));
+        return view('system-admin.loan.loan', compact('loans', 'branches'));
     }
+
+    
+    
+
     public function index_review(Request $request)
     {
         $loans = Loan::with('client')
@@ -133,4 +152,5 @@ class LoanController extends Controller
 
         return response()->json($clients);
     }
+    
 }

@@ -13,7 +13,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="flex flex-col relative">
                             <label for="client_input" class="text-gray-700 font-medium">Client ID</label>
-                            <input type="text" id="client_input" name="client_id_display" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Select Client ID / Name">
+                            <input type="text" id="client_input" name="client_id_display" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Select Client ID / Name" required>
                             <input type="hidden" id="client_id" name="client_id">
                             <div id="client_suggestions" class="text-xs absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg mt-1 max-h-40 overflow-y-auto z-50 hidden"></div>
                         </div>
@@ -22,18 +22,18 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="flex flex-col">
                             <label for="amount" class="text-gray-700 font-medium">Amount</label>
-                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="PHP">
+                            <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="PHP" required>
                         </div>
                         <div class="flex flex-col">
                             <label for="interest" class="text-gray-700 font-medium">Interest Per Month</label>
-                            <input type="number" id="interest" name="interest" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="%">
+                            <input type="number" id="interest" name="interest" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="%" required>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4">
                         <div class="flex flex-col">
                             <label for="terms" class="text-gray-700 font-medium">Terms/Month</label>
-                            <input type="text" id="terms" name="terms" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Ex. 1 Month">
+                            <input type="text" id="terms" name="terms" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Ex. 1 Month" required>
                         </div>
                         <div class="flex flex-col">
                             <label for="payment_schedule" class="text-gray-700 font-medium">Payment Schedule</label>
@@ -49,7 +49,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="flex flex-col">
                             <label for="date_release" class="text-gray-700 font-medium">Date of Release</label>
-                            <input type="date" id="date_release" name="date_release" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
+                            <input type="date" id="date_release" name="date_release" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" required>
                         </div>  
                     </div>
 
