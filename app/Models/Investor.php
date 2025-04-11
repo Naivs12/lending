@@ -22,6 +22,7 @@ class Investor extends Model
         'address',
         'contact_number',
         'payment_percent',
-        'amount_invest'     
+        'amount_invest',
+        'branch_id'  
     ];
 }

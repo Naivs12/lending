@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('contact_number'); // Fix: Use string instead of int for phone numbers
             $table->integer('amount_invest');
             $table->integer('payment_percent');
+            $table->string('branch_id'); // Changed from branch to branch_id
             $table->timestamps(); // Adds created_at and updated_at columns
+
+            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade'); 
         });
     }
 

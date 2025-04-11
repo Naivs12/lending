@@ -34,14 +34,23 @@
                         </svg>
                         Filter
                     </button> -->
-                    <button id="openModal" class="flex flex-row w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Add User
-                    </button>
+                    <div class="flex justify-end w-full">
+                        <button id="openModal"
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium 
+                                text-white bg-[#028051] border border-green-600 rounded-full 
+                                hover:bg-[#e7bb34] hover:border-[#e7bb34] transition duration-200">
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-white transition duration-200"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                            ADD USER
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -50,7 +59,7 @@
                 
             </div>
             <table class="w-full border border-gray-300 text-center text-xs">
-                <thead class="bg-gray-200">
+                <thead class="bg-[#028051] text-xs text-white">
                     <tr>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">USERNAME</th>
@@ -60,7 +69,7 @@
                 </thead>
                 <tbody> 
                 @foreach($users as $user)
-                    <tr class="cursor-pointer hover:bg-gray-100 user-row"
+                    <tr class="cursor-pointer hover:bg-yellow-300 user-row"
                         data-id="{{ $user->id }}"
                         data-name="{{ $user->name }}"
                         data-username="{{ $user->username }}"

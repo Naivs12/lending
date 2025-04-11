@@ -11,7 +11,7 @@
             </div> 
 
             <div class="flex justify-start mb-3 mt-3 w-full">
-                <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
+                <!-- <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
                     <div class="flex flex-col col-span-3">
                         <input type="text" id="search" name="search"
                             class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
@@ -24,22 +24,29 @@
                             </svg>
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="flex justify-end w-full">
-                    <button id="openModal" class="flex flex-row w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                     <button id="openModal"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium 
+                            text-white bg-[#028051] border border-green-600 rounded-full 
+                            hover:bg-[#e7bb34] hover:border-[#e7bb34] transition duration-200">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-white transition duration-200"
+                            viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
-                                clip-rule="evenodd" />
+                               clip-rule="evenodd" />
                         </svg>
-                        Add Branch
+
+                        ADD BRANCH
                     </button>
                 </div>
             </div>
 
             @if($branches->count() > 0)
             <table class="w-full border border-gray-300 text-center text-xs">
-                <thead class="bg-gray-200">
+                <thead class="bg-[#028051] text-xs text-white">
                     <tr>
                         <th class="border border-gray-300 px-2 py-3">BRANCH ID</th>
                         <th class="border border-gray-300 px-2 py-3">BRANCH NAME</th>

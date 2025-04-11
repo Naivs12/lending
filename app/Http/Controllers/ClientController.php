@@ -9,16 +9,34 @@ use App\Models\Branch;
 
 class ClientController extends Controller
 {
-    public function index(Request $request) {
-        $clients = Client::paginate(10); 
-        $branches = Branch::all(); // Fetch all branches
-            
-        if ($clients->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.investor', ['page' => 1]);
-        }
+    public function index(Request $request)
+{
+    $branches = Branch::all(); // Fetch all branches
 
-        return view('system-admin.client', compact('clients', 'branches'));
+    // Start the query
+    $query = Client::query();
+
+    // Filter by branch if selected
+    if ($request->has('branch') && $request->branch != '') {
+        $query->where('branch_id', $request->branch);
     }
+
+    // Sort by name if requested
+    if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
+        $query->orderByRaw("CONCAT(first_name, ' ', last_name) " . $request->nameSort);
+    }
+
+    // Paginate the result
+    $clients = $query->paginate(10);
+
+    // Redirect to first page if current page is empty
+    if ($clients->isEmpty() && $request->page > 1) {
+        return redirect()->route('system-admin.client', ['page' => 1]);
+    }
+
+    return view('system-admin.client', compact('clients', 'branches'));
+}
+
 
     public function store(Request $request)
     {
@@ -135,6 +153,47 @@ class ClientController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
-    
-    
+
+
+    public function index_admin(Request $request)
+    {
+        $user = Auth::user(); // Get the logged-in user
+        $branchId = $user->branch_id; // Assume your User model has branch_id
+
+        $query = Client::where('branch_id', $branchId); // Filter clients by user's branch
+
+        // Search filter
+        $search = $request->input('query');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', '%' . $search . '%')
+                ->orWhere('last_name', 'like', '%' . $search . '%')
+                ->orWhere('middle_name', 'like', '%' . $search . '%')
+                ->orWhere('client_id', 'like', '%' . $search . '%')
+                ->orWhere('address', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Sort by name
+        $nameSort = $request->input('nameSort');
+        if ($nameSort == 'asc' || $nameSort == 'desc') {
+            $query->orderBy('first_name', $nameSort)->orderBy('last_name', $nameSort);
+        }
+
+        // Paginate results
+        $clients = $query->paginate(10);
+
+        // Redirect if page is empty but not the first
+        if ($clients->isEmpty() && $request->input('page', 1) > 1) {
+            return redirect()->route('admin.client', ['page' => 1]);
+        }
+
+        // Fetch all branches (optional, if needed in view)
+        $branches = Branch::all();
+
+        return view('admin.client', compact('clients', 'branches'));
+    }
+
+
+
 }

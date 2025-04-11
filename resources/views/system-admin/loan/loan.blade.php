@@ -6,7 +6,7 @@
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <div>
                 <h1 class="text-3xl font-bold mb-1">LOAN</h1>
-                <div class="w-full bg-gray-500 h-1 rounded-full"></div>
+                <div class="w-full bg-gray-800 h-1 rounded-full"></div>
             </div>   
             <div class="flex justify-start mb-3 mt-3 w-full">
 
@@ -40,19 +40,26 @@
                 </form>
 
                 <div class="flex justify-end w-full">
-                    <button id="openModal" class="flex flex-row w-[10em] text-sm gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <button id="openModal"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium 
+                            text-white bg-[#028051] border border-green-600 rounded-full 
+                            hover:bg-[#e7bb34] hover:border-[#e7bb34] transition duration-200">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-white transition duration-200"
+                            viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Add Loan
+
+                        ADD LOAN
                     </button>
                 </div>
             </div>
 
             <table class="w-full border border-gray-300 text-center">
-                <thead class="bg-gray-200 text-xs">
+                <thead class="bg-[#028051] text-xs text-white">
                     <tr>
                         <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>

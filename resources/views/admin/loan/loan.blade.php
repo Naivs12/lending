@@ -6,40 +6,50 @@
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <div>
                 <h1 class="text-3xl font-bold mb-1">LOAN</h1>
-                <div class="w-full bg-gray-500 h-1 rounded-full"></div>
-            </div>  
+                <div class="w-full bg-gray-800 h-1 rounded-full"></div>
+            </div> 
+            <div class="flex justify-start mb-3 mt-3 w-full">
+                <form method="GET" action="{{ route('admin.loan.loan') }}" class="w-full">
+                    <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
+                        <div class="flex flex-col col-span-4">
+                            <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
+                        </div>
 
-            <div class="flex items-center gap-x-2 mb-3 mt-3 w-full">
-                <!-- Add Loan Button -->
-                <button id="openModal"
-                    class="flex items-center gap-2 bg-white text-gray-600 border border-gray-400 py-2 px-4 rounded-full shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Add Loan
-                </button>
+                        <div class="flex flex-col col-span-2">
+                            <select name="nameSort" onchange="this.form.submit()"
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                                <option value="">Sort</option>
+                                <option value="asc" {{ request('nameSort') == 'asc' ? 'selected' : '' }}>Name - Asc</option>
+                                <option value="desc" {{ request('nameSort') == 'desc' ? 'selected' : '' }}>Name - Desc</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
 
-                <!-- Search Input -->
-                <div class="flex items-center flex-grow">
-                    <input type="text" id="search" name="search"
-                        class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
-                        placeholder="Search">
+                <div class="flex justify-end w-full">
+                    <button id="openModal"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium 
+                            text-white bg-[#028051] border border-green-600 rounded-full 
+                            hover:bg-[#e7bb34] hover:border-[#e7bb34] transition duration-200">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-white transition duration-200"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+
+                        ADD LOAN
+                    </button>
                 </div>
 
-                <!-- Search Button -->
-                <button class="bg-white text-gray-600 border border-gray-400 py-2 px-3 rounded-full shadow-sm flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </button>
+
+
             </div>
 
-            <table class="w-full border border-gray-300 text-center">
-                <thead class="bg-gray-200 text-xs">
+            <table class="w-full border border-gray-300 text-center text-xs">
+                <thead class="bg-[#028051] text-xs text-white">
                     <tr>
                         <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
@@ -51,96 +61,35 @@
                         <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
                     </tr>
                 </thead>
-                <tbody id="loanTableBody" class="text-xs">
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1001</td>
-                        <td class="px-4 py-2">CL-5001</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">₱10,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-03-15</td>
-                    </tr>
-                   
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1004</td>
-                        <td class="px-4 py-2">CL-5004</td>
-                        <td class="px-4 py-2">Emily Davis</td>
-                        <td class="px-4 py-2">₱20,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-06-20</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1005</td>
-                        <td class="px-4 py-2">CL-5005</td>
-                        <td class="px-4 py-2">Chris Brown</td>
-                        <td class="px-4 py-2">₱12,500</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-07-08</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1006</td>
-                        <td class="px-4 py-2">CL-5006</td>
-                        <td class="px-4 py-2">Sarah Wilson</td>
-                        <td class="px-4 py-2">₱5,500</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-08-12</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1007</td>
-                        <td class="px-4 py-2">CL-5007</td>
-                        <td class="px-4 py-2">David Martinez</td>
-                        <td class="px-4 py-2">₱18,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-09-30</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-                    <tr class="cursor-pointer border hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">LN-1008</td>
-                        <td class="px-4 py-2">CL-5008</td>
-                        <td class="px-4 py-2">Laura Thompson</td>
-                        <td class="px-4 py-2">₱25,000</td>
-                        <td class="px-4 py-2">Weekly</td>
-                        <td class="px-4 py-2">6 Months</td>
-                        <td class="px-4 py-2">10%</td>
-                        <td class="px-4 py-2">2025-10-18</td>
-                    </tr>
-
+                <tbody class="text-xs">
+                    @if($loans->isEmpty())
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-center text-gray-500">No results found.</td>
+                        </tr>
+                    @else
+                        @foreach($loans as $loan)
+                            <tr>
+                                <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $loan->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $loan->client->first_name }} 
+                                    @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
+                                    {{ $loan->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $loan->amount }}</td>
+                                <td class="px-4 py-2">{{ $loan->payment }}</td>
+                                <td class="px-4 py-2">{{ $loan->term }}</td>
+                                <td class="px-4 py-2">{{ $loan->interest }}</td>
+                                <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
             
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
+             <!-- Pagination Links -->
+             <div class="mt-2 flex justify-end text-xs">
+                {!! $loans->links('vendor.pagination.tailwind') !!}
             </div>
 
         </div>
@@ -156,6 +105,54 @@
 
     document.getElementById('closeModal').addEventListener('click', function () {
         document.getElementById('addLoanModal').classList.add('hidden');
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const $searchInput = $('#client-search');
+        const $suggestions = $('#suggestions');
+        const $tableRows = $('table tbody tr');
+        const $noResultsMessage = $('.no-results-message');
+
+        // Hide suggestions and filter table on input
+        $searchInput.on('input', function () {
+            let query = $(this).val().toLowerCase(); // Convert to lowercase for case-insensitive search
+            let resultsFound = false;
+
+            if (query.length < 2) {
+                $suggestions.hide(); // Hide suggestions when typing less than 2 characters
+            } else {
+                $suggestions.hide(); // Hide suggestions
+            }
+
+            // Filter table rows based on the search query
+            $tableRows.each(function () {
+                let rowText = $(this).text().toLowerCase(); // Get row text in lowercase
+                if (rowText.includes(query)) {
+                    $(this).show(); // Show matching rows
+                    resultsFound = true;
+                } else {
+                    $(this).hide(); // Hide non-matching rows
+                }
+            });
+
+            // If no results, display the "No results found" row
+            if (!resultsFound) {
+                $('table tbody').append('<tr><td colspan="8" class="px-4 py-2 text-center text-gray-500">No results found.</td></tr>');
+            } else {
+                $('table tbody tr:has(td:contains("No results found"))').remove(); // Remove "No results" row if results are found
+            }
+        });
+
+        // Hide suggestion if clicked outside
+        $(document).click(function (e) {
+            if (!$(e.target).closest('#suggestions, #client-search').length) {
+                $suggestions.hide();
+            }
+        });
     });
 </script>
 @endsection

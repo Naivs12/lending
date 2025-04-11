@@ -20,10 +20,14 @@
 </head>
 <body>
 @if(Auth::check() && Auth::user()->role === 'system-admin')
-    <div class="flex h-screen">
+<div class="flex h-screen">
         @include('components.sysad_navbar')
 
-        <div class="flex-1 bg-white p-6">
+        <div class="flex-1 bg-white p-6 relative">
+            <!-- Add silhouette effect for the logo -->
+            <div class="absolute inset-3 bg-cover bg-center opacity-10" style="background-image: url('{{ asset('storage/images/logo.png') }}'); filter: blur(6px);"></div>
+            
+            <!-- Content goes here -->
             @yield('content')
         </div>
     </div>
