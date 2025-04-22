@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Loan extends Model
+class ClientPayment extends Model
 {
-    use HasFactory;
 
-    protected $table = 'loans';
+    protected $table = 'transactions';
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
@@ -17,13 +15,13 @@ class Loan extends Model
     protected $fillable = [
         'loan_id',
         'client_id',
-        'amount',
-        'payment',
+        'branch_id',
         'term',
-        'interest',
-        'date_release',
-        'status',
-        'branch_id'
+        'amount',
+        'amount_due',
+        'payment_date',
+        'due_date'
+        
     ];
 
     public function branch()
@@ -34,5 +32,9 @@ class Loan extends Model
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id', 'client_id');
+    }
+    public function loan()
+    {
+        return $this->belongsTo(Loan::class, 'loan_id', 'loan_id');
     }
 }

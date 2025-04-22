@@ -48,7 +48,7 @@
             <a href="{{ route('admin.payment_info.client_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-yellow-300 {{ Request::routeIs('admin.payment_info.client_info') ? 'bg-yellow-300' : '' }}">
                 <span>Client</span>
             </a>
-            <a href="{{ route('admin.payment_info.investor_info')}}" class="flex items-center px-3 py-2 rounded-md hover:bg-yellow-300 {{ Request::routeIs('admin.payment_info.investor_info') ? 'bg-yellow-300' : '' }}">
+            <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-yellow-300 {{ Request::routeIs('admin.payment_info.investor_info') ? 'bg-yellow-300' : '' }}">
                 <span>Investor</span>
             </a>
         </div>

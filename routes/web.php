@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\ClientPaymentController;
 
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
@@ -25,10 +26,8 @@ Route::get('/admin/loan/release', [LoanController::class, 'index_release_admin']
 Route::get('/admin/loan/review', [LoanController::class, 'index_review_admin'])->name('admin.loan.review');
 Route::get('/admin/client', [ClientController::class, 'index_admin'])->name('admin.client');
 Route::get('/admin/investor', [InvestorController::class, 'index_investor'])->name('admin.investor');
+Route::get('/admin/payment_info/client', [ClientPaymentController::class, 'index'])->name('admin.payment_info.client_info');
 
-Route::get('/admin/payment_info/client', [AdminController::class, 'payment_client'])->name('admin.payment_info.client_info');
-
-Route::get('/admin/payment_info/investor', [AdminController::class, 'payment_investor'])->name('admin.payment_info.investor_info');
 
 });
 // System ADmin
