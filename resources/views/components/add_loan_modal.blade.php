@@ -25,7 +25,7 @@
                             <input type="number" id="amount" name="amount" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="PHP" required>
                         </div>
                         <div class="flex flex-col">
-                            <label for="interest" class="text-gray-700 font-medium">Interest Per Month</label>
+                            <label for="interest" class="text-gray-700 font-medium">Interest</label>
                             <input type="number" id="interest" name="interest" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="%" required>
                         </div>
                     </div>
@@ -33,8 +33,14 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="flex flex-col">
                             <label for="terms" class="text-gray-700 font-medium">Terms/Month</label>
-                            <input type="text" id="terms" name="terms" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="Ex. 1 Month" required>
+                            <select id="terms" name="terms" required
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}">{{ $i }} Month{{ $i > 1 ? 's' : '' }}</option>
+                                @endfor
+                            </select>
                         </div>
+
                         <div class="flex flex-col">
                             <label for="payment_schedule" class="text-gray-700 font-medium">Payment Schedule</label>
                             <select id="payment_schedule" name="payment_schedule" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">

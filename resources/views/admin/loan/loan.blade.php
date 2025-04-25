@@ -55,8 +55,7 @@
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">AMOUNT</th>
-                        <th class="border border-gray-300 px-2 py-3">PAYMENT</th>
-                        <th class="border border-gray-300 px-2 py-3">TERMS/MONTH</th>
+                        <th class="border border-gray-300 px-2 py-3">TERMS</th>
                         <th class="border border-gray-300 px-2 py-3">INTEREST PER MONTH</th>
                         <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
                     </tr>
@@ -76,10 +75,9 @@
                                     @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                     {{ $loan->client->last_name }}
                                 </td>
-                                <td class="px-4 py-2">{{ $loan->amount }}</td>
-                                <td class="px-4 py-2">{{ $loan->payment }}</td>
-                                <td class="px-4 py-2">{{ $loan->term }}</td>
-                                <td class="px-4 py-2">{{ $loan->interest }}</td>
+                                <td class="px-4 py-2">{{ number_format($loan->loan_amount, 2) }}</td>
+                                <td class="px-4 py-2">{{ $loan->progress }} / {{$loan->total_progress }}</td>
+                                <td class="px-4 py-2">{{ $loan->interest }}%</td>
                                 <td class="px-4 py-2">{{ $loan->date_release }}</td>
                             </tr>
                         @endforeach

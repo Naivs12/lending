@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class LoanController extends Controller
 {
@@ -221,64 +222,115 @@ class LoanController extends Controller
             'client_id' => 'required|string',
             'amount' => 'required|numeric|min:1',
             'interest' => 'required|numeric|min:0',
-            'terms' => 'required|string',
+            'terms' => 'required|numeric|min:1|max:12',
             'payment_schedule' => 'required|in:weekly,two_weeks,monthly,interest_only',
             'date_release' => 'required|date',
         ]);
-
+    
         $lastLoan = Loan::orderBy('loan_id', 'desc')->first();
-        $status = 'Review';
-        $branch_id = Auth::user()->branch_id;
-
-        if ($lastLoan) {
-            $numericPart = (int) substr($lastLoan->loan_id, 2); // Extract numeric part after 'L-'
-            $newLoanId = 'L-' . str_pad($numericPart + 1, 7, '0', STR_PAD_LEFT);
-        } else {
-            $newLoanId = 'L-0000001';
+        $newLoanId = $lastLoan 
+            ? 'L-' . str_pad((int) substr($lastLoan->loan_id, 2) + 1, 7, '0', STR_PAD_LEFT)
+            : 'L-0000001';
+    
+        $terms = (int) $request->terms;
+    
+        // Total payment count
+        switch ($request->payment_schedule) {
+            case 'weekly':
+                $totalProgress = $terms * 4;
+                break;
+            case 'two_weeks':
+                $totalProgress = $terms * 2;
+                break;
+            case 'monthly':
+            case 'interest_only':
+                $totalProgress = $terms;
+                break;
+            default:
+                $totalProgress = 0;
         }
+
+        
+        $totalAmountWInterest = $request->amount + ($request->amount * ($request->interest / 100));
+        $paymentPerTerm = $totalAmountWInterest / $terms;
 
         $loan = Loan::create([
             'loan_id' => $newLoanId,
             'client_id' => $request->client_id,
-            'branch_id' => $branch_id,
-            'amount' => $request->amount,
-            'payment_schedule' => $request->payment_schedule,
-            'term' => $request->terms,
+            'branch_id' => auth()->user()->branch_id,
+            'loan_amount' => $request->amount,
+            'tot_amnt_w_int' => $totalAmountWInterest,
+            'pay_per_term' => $paymentPerTerm, 
+            'rem_balance' => $totalAmountWInterest,
+            'tot_amnt_pd' => 0,
             'interest' => $request->interest,
+            'payment_schedule' => $request->payment_schedule,
+            'term' => $terms,
             'date_release' => $request->date_release,
-            'status' => $status,
+            'status' => 'Review',
+            'progress' => 0,
+            'total_progress' => $totalProgress,
         ]);
-
+    
         return response()->json([
             'success' => true,
-            'message' => 'Loan successfully added!',
+            'message' => 'Loan created successfully.',
             'loan' => $loan,
         ], 201);
     }
+    
+    
 
+    
+    
     public function search(Request $request)
     {
         $query = $request->query('query');
-
+        $branchId = auth()->user()->branch_id; // Get the current user's branch ID
+    
         if (!$query) {
             return response()->json([]);
         }
-
-        // Query by client_id or full name (handles cases with or without middle names)
+    
+        // Query by client_id or full name, filtered by branch_id
         $clients = Client::select('client_id', 'first_name', 'middle_name', 'last_name')
-            ->where('client_id', 'LIKE', "%{$query}%")
-            ->orWhere(DB::raw("CONCAT_WS(' ', first_name, middle_name, last_name)"), 'LIKE', "%{$query}%")
-            ->orWhere(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'LIKE', "%{$query}%")
+            ->where('branch_id', $branchId)
+            ->where(function ($q) use ($query) {
+                $q->where('client_id', 'LIKE', "%{$query}%")
+                  ->orWhere(DB::raw("CONCAT_WS(' ', first_name, middle_name, last_name)"), 'LIKE', "%{$query}%")
+                  ->orWhere(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'LIKE', "%{$query}%");
+            })
             ->limit(5)
             ->get();
-
-        // Format the client names properly
+    
+        // Format the full name
         $clients = $clients->map(function ($client) {
             $client->full_name = trim("{$client->first_name} " . ($client->middle_name ? "{$client->middle_name} " : "") . "{$client->last_name}");
             return $client;
         });
-
+    
         return response()->json($clients);
     }
-    
+    public function search_loan(Request $request)
+{
+    $query = $request->input('query');
+    $clientId = $request->input('client_id');
+
+    $loans = Loan::where('status', 'loan')
+                 ->where('client_id', $clientId) // ensure loans are filtered by selected client
+                 ->where(function($q) use ($query) {
+                     $q->where('loan_id', 'LIKE', "%$query%");
+                 })
+                 ->get(['loan_id']);
+
+    // Format the display text
+    $loans = $loans->map(function ($loan) {
+        $loan->formatted = "{$loan->loan_id}";
+        return $loan;
+    });
+
+    return response()->json($loans);
+}
+
+
 }

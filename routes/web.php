@@ -11,6 +11,7 @@ use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ClientPaymentController;
 
+
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -27,6 +28,7 @@ Route::get('/admin/loan/review', [LoanController::class, 'index_review_admin'])-
 Route::get('/admin/client', [ClientController::class, 'index_admin'])->name('admin.client');
 Route::get('/admin/investor', [InvestorController::class, 'index_investor'])->name('admin.investor');
 Route::get('/admin/payment_info/client', [ClientPaymentController::class, 'index'])->name('admin.payment_info.client_info');
+Route::post('/client-payment/create', [ClientPaymentController::class, 'create_payment'])->name('client.payment.create');
 
 
 });
@@ -76,7 +78,7 @@ Route::get('/investor-detail/{investor_id}', [InvestorController::class, 'show_i
 
 
 Route::get('/system-admin/loan/loan', [LoanController::class, 'index_loan'])->name('system-admin.loan.loan');
-Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.submit');
+
 Route::get('/system-admin/loan/release', [LoanController::class, 'index_release'])->name('system-admin.loan.release');
 Route::get('/system-admin/loan/review', [LoanController::class, 'index_review'])->name('system-admin.loan.review');
 Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search');
@@ -84,11 +86,14 @@ Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search
 
 Route::post('/update-loan-status', [LoanController::class, 'updateStatus']);
 Route::get('/clients/search', [LoanController::class, 'search'])->name('clients.search');
+Route::get('/search/loans', [LoanController::class, 'search_loan'])->name('loans.search');
+
 //add client
 Route::middleware(['auth'])->group(function () {
     Route::post('/client/submit', [ClientController::class, 'store'])->name('client.submit');
     Route::post('/investor/submit', [InvestorController::class, 'add_investor'])->name('investor.submit');
 });
 
+Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.submit');
 
 
