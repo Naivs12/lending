@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branch;
+use Cloudinary\Cloudinary;
+use Cloudinary\Transformation\Image;
+use Cloudinary\Api\Upload\UploadApi;
 
 class ClientController extends Controller
 {
@@ -96,11 +99,11 @@ class ClientController extends Controller
     {
         try {
             $deleted = Client::destroy($id);
-    
+
             if (!$deleted) {
                 return response()->json(['success' => false, 'message' => 'User not found!'], 404);
             }
-    
+
             return response()->json(['success' => true, 'message' => 'User deleted successfully!']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
@@ -124,14 +127,14 @@ class ClientController extends Controller
                 'edit_co_borrower' => 'nullable|string',
                 'edit_relationship_co' => 'nullable|string',
             ]);
-    
+
 
             $client = Client::where('id', $request->editClientId)->first();
-    
+
             if (!$client) {
                 return response()->json(['success' => false, 'message' => 'Client not found!'], 404);
             }
-            
+
             // Update client details
             $client->id = $request->editClientId;
             $client->first_name = $request->edit_first_name;
@@ -145,9 +148,9 @@ class ClientController extends Controller
             $client->soc_med = $request->edit_soc_med;
             $client->co_borrower = $request->edit_co_borrower;
             $client->relationship_co = $request->edit_relationship_co;
-    
+
             $client->save();
-    
+
             return response()->json(['success' => true, 'message' => 'User updated successfully!']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -192,6 +195,24 @@ class ClientController extends Controller
         $branches = Branch::all();
 
         return view('admin.client', compact('clients', 'branches'));
+    }
+
+    public function upload(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'client_id' => 'required|exists:clients,client_id',
+        ]);
+
+        $image = $request->file('image');
+
+        $file = $this->uploadFile($image);
+
+        Client::where('client_id', $request->client_id)
+            ->update(['image' => $file]);
+
+        return response()->json('Done uploading..');
     }
 
 
