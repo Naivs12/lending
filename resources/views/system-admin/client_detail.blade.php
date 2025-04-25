@@ -7,12 +7,16 @@
             <!-- Top Section: Profile Picture & Personal Details -->
             <div class="flex">
                 <!-- Profile Picture Container -->
-                <div class="p-5 flex flex-col items-center justify-center w-1/4">
-                    <label for="upload_image" class="cursor-pointer">
-                        <img id="client_image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a4 4 0 1 1-4 4 4 4 0 0 1 4-4zm0 14.5a7.47 7.47 0 0 1-6-3c.05-2 4-3.1 6-3.1s5.95 1.1 6 3.1a7.47 7.47 0 0 1-6 3z'/%3E%3C/svg%3E" 
-                            alt="Default Profile" class="w-48 h-48 border border-black-700">
-                    </label>
-                    <input type="file" id="upload_image" class="hidden" accept="image/*">
+                <div class="p-5 flex flex-col items-center justify-center w-1/4 relative z-50">
+                    <img id="client_image"
+                        src="{{ $client->image ?? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a4 4 0 1 1-4 4 4 4 0 0 1 4-4zm0 14.5a7.47 7.47 0 0 1-6-3c.05-2 4-3.1 6-3.1s5.95 1.1 6 3.1a7.47 7.47 0 0 1-6 3z'/%3E%3C/svg%3E" }}"
+                        alt="Client Image"
+                        class="w-48 h-48 border border-black-700 cursor-pointer"
+                    >
+
+                    <input type="file" id="upload_image" accept="image/*" style="display: none">
+
+                    {{-- <button class="bg-cyan-500 w-full mt-2" id="upload_image_btn">UPLOAD</button> --}}
                 </div>
 
 
@@ -20,12 +24,12 @@
                 <div class="p-5">
                     <div class="absolute top-5 right-5 flex space-x-1 p-5">
                         <!-- Edit Button -->
-                        <button type="button" class="editClientBtn p-3 text-orange-500 hover:text-orange-700" 
+                        <button type="button" id="editClientBtn" class="editClientBtn p-3 text-orange-500 hover:text-orange-700"
                             data-id="{{ $client->id }}"
                             data-first_name="{{ $client->first_name }}"
                             data-middle_name="{{ $client->middle_name }}"
                             data-last_name="{{ $client->last_name }}"
-                            data-address="{{ $client->address }}" 
+                            data-address="{{ $client->address }}"
                             data-soc="{{ $client->soc_med }}"
                             data-contact_num="{{ $client->contact_number }}"
                             data-age="{{ $client->age }}"
@@ -35,7 +39,7 @@
                             data-relationship_co="{{ $client->relationship_co }}">
 
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" />
                             </svg>
                         </button>
@@ -59,7 +63,7 @@
                     <p class="flex items-center text-gray-700 text-sm mb-2" >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500 mr-2" viewBox="0 0 24 24" fill="currentColor">
                             <path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 4.42 7 11 7 11s7-6.58 7-11c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" clip-rule="evenodd"/>
-                        </svg>  
+                        </svg>
                         {{ $client->address }}
                     </p>
 
@@ -93,19 +97,19 @@
                         <h3 class="text-lg m-2 font-bold text-center text-gray-800">ABOUT</h3>
                         <div class="text-sm p-3">
                             <div class="grid grid-cols-2 gap-x-2 gap-y-5 p-2">
-                                <p class="font-bold text-gray-700">Age:</p> 
+                                <p class="font-bold text-gray-700">Age:</p>
                                 <p class="text-gray-900" >{{ $client->age }}</p>
 
-                                <p class="font-bold text-gray-700">Birthday:</p> 
+                                <p class="font-bold text-gray-700">Birthday:</p>
                                 <p class="text-gray-900" >{{ $client->birthday }}</p>
 
-                                <p class="font-bold text-gray-700">Gender:</p> 
+                                <p class="font-bold text-gray-700">Gender:</p>
                                 <p class="text-gray-900" >{{ $client->gender }}</p>
 
-                                <p class="font-bold text-gray-700">Co-borrower:</p> 
+                                <p class="font-bold text-gray-700">Co-borrower:</p>
                                 <p class="text-gray-900" >{{ $client->co_borrower }}</p>
 
-                                <p class="font-bold text-gray-700">Relationship:</p> 
+                                <p class="font-bold text-gray-700">Relationship:</p>
                                 <p class="text-gray-900" >{{ $client->relationship_co }}</p>
                             </div>
                         </div>
@@ -157,7 +161,7 @@
                             </table>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
 
     </div>
@@ -217,23 +221,6 @@
     </script>
 
     <script>
-        document.getElementById("client_image").addEventListener("click", function() {
-            document.getElementById("upload_image").click();
-        });
-
-        document.getElementById("upload_image").addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById("client_image").src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-    </script>
-    <script>
         $(document).on('click', '#deleteClient', function () {
         let clientId = $(this).data('id');
 
@@ -286,5 +273,56 @@
             this.classList.add('active-tab');
             document.getElementById('loanTab').classList.remove('active-tab');
         });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const uploadBtn = document.getElementById('client_image');
+            const fileInput = document.getElementById('upload_image');
+            const imagePreview = document.getElementById('client_image');
+
+            const clientId = window.location.pathname.split('/')[2];
+
+            uploadBtn.addEventListener('click', function () {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function () {
+                const file = this.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        imagePreview.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(file);
+
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('client_id', clientId);
+
+                    fetch("{{ route('upload.image-client') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // console.log("Upload success:", data);
+                        location.reload()
+
+                    })
+                    .catch(error => {
+                        console.error("Upload failed:", error);
+                    });
+                        }
+                    });
+        });
+
     </script>
     @endsection

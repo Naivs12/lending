@@ -90,5 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investor/submit', [InvestorController::class, 'add_investor'])->name('investor.submit');
 });
 
+Route::post('/upload-image', [ClientController::class, 'upload'])->name('upload.image-client');
+
 
 
