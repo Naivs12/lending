@@ -53,12 +53,38 @@
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">TERM</th>
+                        <th class="border border-gray-300 px-2 py-3">AMOUNT DUE</th>
+                        <th class="border border-gray-300 px-2 py-3">PAYMENT</th>
+                        <th class="border border-gray-300 px-2 py-3">BALANCE</th>
                         <th class="border border-gray-300 px-2 py-3">DUE DATE</th>
                         <th class="border border-gray-300 px-2 py-3">PAYMENT DATE</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    @if($payments->isEmpty())
+                    <tr>
+                        <td colspan="3" class="px-4 py-2 text-gray-500  text-sm">No Transactions Found.</td>
+                    </tr>
+                    @else
+                        @foreach($payments as $payment)
+                        <tr class="cursor-pointer hover:bg-yellow-200 user-row" onclick="redirectToClientDetail('{{ $payment->loan_id }}')">
+                                <td class="px-4 py-2">{{ $payment->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $payment->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $payment->client->first_name }} 
+                                    @if($payment->client->middle_name) {{ $payment->client->middle_name }} @endif 
+                                    {{ $payment->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $payment->term }}</td>
+                                <td class="px-4 py-2">{{ number_format($payment->amount_due,2 ) }}</td>
+                                <td class="px-4 py-2">{{ number_format($payment->amount_pd,2 ) }}</td>
+                                <td class="px-4 py-2">{{ number_format( abs($payment->amount_due - $payment->amount_pd),2)  }}</td>
+                                <td class="px-4 py-2">{{ $payment->due_date }}</td>
+                                <td class="px-4 py-2">{{ $payment->payment_date }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                        
                 </tbody>
             </table>
 

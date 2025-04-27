@@ -57,7 +57,7 @@
                         <th class="border border-gray-300 px-2 py-3">AMOUNT</th>
                         <th class="border border-gray-300 px-2 py-3">TERMS</th>
                         <th class="border border-gray-300 px-2 py-3">INTEREST PER MONTH</th>
-                        <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
+                        
                     </tr>
                 </thead>
                 <tbody class="text-xs">
@@ -67,7 +67,7 @@
                         </tr>
                     @else
                         @foreach($loans as $loan)
-                            <tr>
+                            <tr class="cursor-pointer hover:bg-yellow-200 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
                                 <td class="px-4 py-2">{{ $loan->loan_id }}</td>
                                 <td class="px-4 py-2">{{ $loan->client_id }}</td>
                                 <td class="px-4 py-2">
@@ -78,7 +78,7 @@
                                 <td class="px-4 py-2">{{ number_format($loan->loan_amount, 2) }}</td>
                                 <td class="px-4 py-2">{{ $loan->progress }} / {{$loan->total_progress }}</td>
                                 <td class="px-4 py-2">{{ $loan->interest }}%</td>
-                                <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                            
                             </tr>
                         @endforeach
                     @endif
@@ -152,5 +152,10 @@
             }
         });
     });
+</script>
+<script>
+    function redirectToLoanDetail(loanId) {
+        window.location.href = "/loan-detail/" + loanId;
+    }
 </script>
 @endsection

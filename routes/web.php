@@ -30,6 +30,8 @@ Route::get('/admin/investor', [InvestorController::class, 'index_investor'])->na
 Route::get('/admin/payment_info/client', [ClientPaymentController::class, 'index'])->name('admin.payment_info.client_info');
 Route::post('/client-payment/create', [ClientPaymentController::class, 'create_payment'])->name('client.payment.create');
 
+Route::get('/loan-detail/{loan_id}', [LoanController::class, 'show_loan_details'])->name('loan_detail');
+
 
 });
 // System ADmin
@@ -65,6 +67,7 @@ Route::get('/system-admin/client', [ClientController::class, 'index'])->name('sy
 
 
 Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
+
 Route::delete('/delete-client/{id}', [ClientController::class, 'delete_client']);
 
 //edit client

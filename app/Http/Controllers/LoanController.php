@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Models\Branch;
 use App\Models\Client;
+use App\Models\ClientPayment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -226,15 +227,15 @@ class LoanController extends Controller
             'payment_schedule' => 'required|in:weekly,two_weeks,monthly,interest_only',
             'date_release' => 'required|date',
         ]);
-    
+
         $lastLoan = Loan::orderBy('loan_id', 'desc')->first();
         $newLoanId = $lastLoan 
             ? 'L-' . str_pad((int) substr($lastLoan->loan_id, 2) + 1, 7, '0', STR_PAD_LEFT)
             : 'L-0000001';
-    
+
         $terms = (int) $request->terms;
-    
-        // Total payment count
+
+        // Determine number of payments based on schedule
         switch ($request->payment_schedule) {
             case 'weekly':
                 $totalProgress = $terms * 4;
@@ -250,34 +251,37 @@ class LoanController extends Controller
                 $totalProgress = 0;
         }
 
-        
-        $totalAmountWInterest = $request->amount + ($request->amount * ($request->interest / 100));
-        $paymentPerTerm = $totalAmountWInterest / $terms;
+        $principal = $request->amount;
+        $interestRate = $request->interest / 100;
+
+        $totalAmountWithInterest = $principal + ($principal * $interestRate);
+        $paymentPerTerm = round($totalAmountWithInterest / $totalProgress, 2); // divided by total payments, not term
 
         $loan = Loan::create([
             'loan_id' => $newLoanId,
             'client_id' => $request->client_id,
             'branch_id' => auth()->user()->branch_id,
-            'loan_amount' => $request->amount,
-            'tot_amnt_w_int' => $totalAmountWInterest,
-            'pay_per_term' => $paymentPerTerm, 
-            'rem_balance' => $totalAmountWInterest,
+            'loan_amount' => $principal,
+            'tot_amnt_w_int' => $totalAmountWithInterest,
+            'pay_per_term' => $paymentPerTerm,
+            'rem_balance' => $totalAmountWithInterest,
             'tot_amnt_pd' => 0,
             'interest' => $request->interest,
             'payment_schedule' => $request->payment_schedule,
-            'term' => $terms,
+            'term' => $totalProgress,
             'date_release' => $request->date_release,
             'status' => 'Review',
             'progress' => 0,
             'total_progress' => $totalProgress,
         ]);
-    
+
         return response()->json([
             'success' => true,
             'message' => 'Loan created successfully.',
             'loan' => $loan,
         ], 201);
     }
+
     
     
 
@@ -312,25 +316,38 @@ class LoanController extends Controller
         return response()->json($clients);
     }
     public function search_loan(Request $request)
-{
-    $query = $request->input('query');
-    $clientId = $request->input('client_id');
+    {
+        $query = $request->input('query');
+        $clientId = $request->input('client_id');
 
-    $loans = Loan::where('status', 'loan')
-                 ->where('client_id', $clientId) // ensure loans are filtered by selected client
-                 ->where(function($q) use ($query) {
-                     $q->where('loan_id', 'LIKE', "%$query%");
-                 })
-                 ->get(['loan_id']);
+        $loans = Loan::where('status', 'loan')
+                    ->where('client_id', $clientId) // ensure loans are filtered by selected client
+                    ->where(function($q) use ($query) {
+                        $q->where('loan_id', 'LIKE', "%$query%");
+                    })
+                    ->get(['loan_id']);
 
-    // Format the display text
-    $loans = $loans->map(function ($loan) {
-        $loan->formatted = "{$loan->loan_id}";
-        return $loan;
-    });
+        // Format the display text
+        $loans = $loans->map(function ($loan) {
+            $loan->formatted = "{$loan->loan_id}";
+            return $loan;
+        });
 
-    return response()->json($loans);
-}
+        return response()->json($loans);
+    }
+
+    public function show_loan_details($loan_id)
+    {
+        // Get the loan details by loan_id
+        $loan = Loan::where('loan_id', $loan_id)->firstOrFail();
+    
+        // Get the related payments for the given loan_id
+        $payments = ClientPayment::where('loan_id', $loan_id)->get();
+    
+        // Pass both loan and payments to the view
+        return view('admin.loan_details', compact('loan', 'payments'));
+    }
+    
 
 
 }
