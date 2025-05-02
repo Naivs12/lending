@@ -54,7 +54,6 @@
                         <div class="flex flex-col">
                             <label for="role" class="text-gray-700 font-medium">Role</label>
                             <select id="role" name="role" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
-                                <option value="system-admin">System Admin</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
