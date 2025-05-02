@@ -1,5 +1,5 @@
 <div id="addClientModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80">
-    <div class="bg-white p-5 rounded-lg shadow-lg w-full max-w-5xl">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-5xl">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-semibold text-center fw-bold w-full">CLIENT PERSONAL INFORMATION</h2>
             <button type="button" id="closeModal" class="text-gray-600 hover:text-gray-800">
@@ -8,10 +8,29 @@
         </div>
         <div class="slider-container relative">
             <div class="slide" style="display: block;">
-                <p class="fs-5 fw-bold  mb-3">Personal Details</p>
 
                 <form id="clientForm" action="/client/submit" class="space-y-3">
                     @csrf
+                    @php
+                        $user = auth()->user();
+                    @endphp
+
+                    @if ($user && $user->role === 'system-admin')
+                        <div class="grid grid-cols-1 gap-4 mt-4">
+                            <div class="flex flex-col">
+                                <label for="branch_id" class="text-gray-700 font-medium">Branch</label>
+                                <select id="branch_id" name="branch_id" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" required>
+                                    <option value="">-- Select Branch --</option>    
+                                    @foreach($branches as $branch)
+                                        <option value="{{ $branch->branch_id }}">{{ $branch->branch_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>  
+                        </div>
+                    @endif
+
+                    <p class="fs-5 fw-bold  mb-3">Personal Details</p>
+
                     <div class="grid grid-cols-3 gap-4">
                         <div class="flex flex-col">
                             <label for="first_name" class="text-gray-700 font-medium">First Name</label>
@@ -75,6 +94,8 @@
                             <input type="text" id="relationship_co_borrower" name="relationship_co_borrower" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                         </div>
                     </div>
+
+                    
 
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Submit</button>

@@ -10,37 +10,37 @@ use App\Models\Branch;
 class ClientController extends Controller
 {
     public function index(Request $request)
-{
-    $branches = Branch::all(); // Fetch all branches
+    {
+        $branches = Branch::all(); // Fetch all branches
 
-    // Start the query
-    $query = Client::query();
+        // Start the query
+        $query = Client::query();
 
-    // Filter by branch if selected
-    if ($request->has('branch') && $request->branch != '') {
-        $query->where('branch_id', $request->branch);
+        // Filter by branch if selected
+        if ($request->has('branch') && $request->branch != '') {
+            $query->where('branch_id', $request->branch);
+        }
+
+        // Sort by name if requested
+        if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
+            $query->orderByRaw("CONCAT(first_name, ' ', last_name) " . $request->nameSort);
+        }
+
+        // Paginate the result
+        $clients = $query->paginate(10);
+
+        // Redirect to first page if current page is empty
+        if ($clients->isEmpty() && $request->page > 1) {
+            return redirect()->route('system-admin.client', ['page' => 1]);
+        }
+
+        return view('system-admin.client', compact('clients', 'branches'));
     }
-
-    // Sort by name if requested
-    if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
-        $query->orderByRaw("CONCAT(first_name, ' ', last_name) " . $request->nameSort);
-    }
-
-    // Paginate the result
-    $clients = $query->paginate(10);
-
-    // Redirect to first page if current page is empty
-    if ($clients->isEmpty() && $request->page > 1) {
-        return redirect()->route('system-admin.client', ['page' => 1]);
-    }
-
-    return view('system-admin.client', compact('clients', 'branches'));
-}
 
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -52,20 +52,25 @@ class ClientController extends Controller
             'facebook' => 'nullable|url',
             'co_borrower' => 'nullable|string',
             'relationship_co_borrower' => 'nullable|string',
-        ]);
+        ];
 
-        $branch_id = Auth::user()->branch_id;
-        // Generate client_id starting from CL-0000001
-        $lastClient = Client::orderBy('client_id', 'desc')->first();
-
-        if ($lastClient) {
-            // Extract numeric part and increment
-            $numericPart = (int) substr($lastClient->client_id, 3);
-            $newClientId = 'CL-' . str_pad($numericPart + 1, 7, '0', STR_PAD_LEFT);
-        } else {
-            // If no clients exist, start from CL-0000001
-            $newClientId = 'CL-0000001';
+        // Only system-admins need to provide branch_id manually
+        if (auth()->user()->role === 'system-admin') {
+            $rules['branch_id'] = 'required|string|exists:branches,branch_id';
         }
+
+        $request->validate($rules);
+
+        // Determine branch_id based on user role
+        $branch_id = auth()->user()->role === 'system-admin'
+            ? $request->branch_id
+            : auth()->user()->branch_id;
+
+        // Generate new client ID
+        $lastClient = Client::orderBy('client_id', 'desc')->first();
+        $newClientId = $lastClient
+            ? 'CL-' . str_pad((int) substr($lastClient->client_id, 3) + 1, 7, '0', STR_PAD_LEFT)
+            : 'CL-0000001';
 
         Client::create([
             'client_id' => $newClientId,
@@ -83,7 +88,10 @@ class ClientController extends Controller
             'branch_id' => $branch_id
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Client added successfully!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Client added successfully!'
+        ]);
     }
 
     public function show_client_details($client_id)

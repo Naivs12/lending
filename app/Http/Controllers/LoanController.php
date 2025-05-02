@@ -219,14 +219,21 @@ class LoanController extends Controller
 
     public function create_loan(Request $request)
     {
-        $request->validate([
+        $rules = [
             'client_id' => 'required|string',
             'amount' => 'required|numeric|min:1',
             'interest' => 'required|numeric|min:0',
             'terms' => 'required|numeric|min:1|max:12',
             'payment_schedule' => 'required|in:weekly,two_weeks,monthly,interest_only',
             'date_release' => 'required|date',
-        ]);
+        ];
+
+        // Add branch_id validation for system-admin
+        if (auth()->user()->role === 'system-admin') {
+            $rules['branch_id'] = 'required|string|exists:branches,branch_id';
+        }
+
+        $request->validate($rules);
 
         $lastLoan = Loan::orderBy('loan_id', 'desc')->first();
         $newLoanId = $lastLoan 
@@ -257,10 +264,15 @@ class LoanController extends Controller
         $totalAmountWithInterest = $principal + ($principal * $interestRate);
         $paymentPerTerm = round($totalAmountWithInterest / $totalProgress, 2); // divided by total payments, not term
 
+        // Choose branch_id based on role
+        $branchId = auth()->user()->role === 'system-admin'
+            ? $request->branch_id
+            : auth()->user()->branch_id;
+
         $loan = Loan::create([
             'loan_id' => $newLoanId,
             'client_id' => $request->client_id,
-            'branch_id' => auth()->user()->branch_id,
+            'branch_id' => $branchId,
             'loan_amount' => $principal,
             'tot_amnt_w_int' => $totalAmountWithInterest,
             'pay_per_term' => $paymentPerTerm,
@@ -281,22 +293,26 @@ class LoanController extends Controller
             'loan' => $loan,
         ], 201);
     }
-
-    
-    
-
     
     
     public function search(Request $request)
     {
         $query = $request->query('query');
-        $branchId = auth()->user()->branch_id; // Get the current user's branch ID
+        $selectedBranchId = $request->query('branch_id'); // Get branch from frontend
+        $user = auth()->user();
     
         if (!$query) {
             return response()->json([]);
         }
     
-        // Query by client_id or full name, filtered by branch_id
+        // Determine which branch ID to use
+        $branchId = ($user->role === 'system-admin') ? $selectedBranchId : $user->branch_id;
+    
+        if (!$branchId) {
+            return response()->json([]);
+        }
+    
+        // Filter by branch_id and client info
         $clients = Client::select('client_id', 'first_name', 'middle_name', 'last_name')
             ->where('branch_id', $branchId)
             ->where(function ($q) use ($query) {
@@ -307,7 +323,7 @@ class LoanController extends Controller
             ->limit(5)
             ->get();
     
-        // Format the full name
+        // Format full name
         $clients = $clients->map(function ($client) {
             $client->full_name = trim("{$client->first_name} " . ($client->middle_name ? "{$client->middle_name} " : "") . "{$client->last_name}");
             return $client;
@@ -315,6 +331,8 @@ class LoanController extends Controller
     
         return response()->json($clients);
     }
+    
+
     public function search_loan(Request $request)
     {
         $query = $request->input('query');
@@ -347,7 +365,15 @@ class LoanController extends Controller
         // Pass both loan and payments to the view
         return view('admin.loan_details', compact('loan', 'payments'));
     }
+    public function show_loan_details_sysad($loan_id)
+    {
+        // Get the loan details by loan_id
+        $loan = Loan::where('loan_id', $loan_id)->firstOrFail();
     
-
-
+        // Get the related payments for the given loan_id
+        $payments = ClientPayment::where('loan_id', $loan_id)->get();
+    
+        // Pass both loan and payments to the view
+        return view('system-admin.loan_details', compact('loan', 'payments'));
+    }
 }
