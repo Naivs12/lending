@@ -13,8 +13,8 @@ class ClientController extends Controller
     {
         $branches = Branch::all(); // Fetch all branches
 
-        // Start the query
-        $query = Client::query();
+        // Start the query and filter by status 'active'
+        $query = Client::where('status', 'active');
 
         // Filter by branch if selected
         if ($request->has('branch') && $request->branch != '') {
@@ -72,6 +72,7 @@ class ClientController extends Controller
             ? 'CL-' . str_pad((int) substr($lastClient->client_id, 3) + 1, 7, '0', STR_PAD_LEFT)
             : 'CL-0000001';
 
+        // Create the client
         Client::create([
             'client_id' => $newClientId,
             'first_name' => $request->first_name,
@@ -85,7 +86,8 @@ class ClientController extends Controller
             'soc_med' => $request->facebook,
             'co_borrower' => $request->co_borrower,
             'relationship_co' => $request->relationship_co_borrower,
-            'branch_id' => $branch_id
+            'branch_id' => $branch_id,
+            'status' => 'active', // Default status set to 'active'
         ]);
 
         return response()->json([
@@ -168,17 +170,18 @@ class ClientController extends Controller
         $user = Auth::user(); // Get the logged-in user
         $branchId = $user->branch_id; // Assume your User model has branch_id
 
-        $query = Client::where('branch_id', $branchId); // Filter clients by user's branch
+        // Start the query and filter by branch and status 'active'
+        $query = Client::where('branch_id', $branchId)->where('status', 'active');
 
         // Search filter
         $search = $request->input('query');
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('first_name', 'like', '%' . $search . '%')
-                ->orWhere('last_name', 'like', '%' . $search . '%')
-                ->orWhere('middle_name', 'like', '%' . $search . '%')
-                ->orWhere('client_id', 'like', '%' . $search . '%')
-                ->orWhere('address', 'like', '%' . $search . '%');
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('middle_name', 'like', '%' . $search . '%')
+                    ->orWhere('client_id', 'like', '%' . $search . '%')
+                    ->orWhere('address', 'like', '%' . $search . '%');
             });
         }
 
@@ -201,7 +204,4 @@ class ClientController extends Controller
 
         return view('admin.client', compact('clients', 'branches'));
     }
-
-
-
 }

@@ -78,9 +78,17 @@ class ClientPaymentController extends Controller
         $loan = Loan::where('loan_id', $request->loan_id)->first();
         $dateRelease = Carbon::parse($loan->date_release);
         $paymentSched = strtolower($loan->payment_schedule);
+
+        // Update loan progress and balances
         $loan->progress = $terms;
         $loan->rem_balance = $loan->rem_balance - $request->amount;
         $loan->tot_amnt_pd = $loan->tot_amnt_pd + $request->amount;
+
+        // Check if loan is completed
+        if ($loan->progress >= $loan->total_progress && $loan->rem_balance <= 0) {
+            $loan->status = 'completed';
+        }
+
         $loan->save();
 
         // Determine due date based on schedule

@@ -101,7 +101,6 @@
                                 <td class="px-4 py-2">{{ number_format( abs($client->amount_due - $client->amount_pd),2)  }}</td>
                                 <td class="px-4 py-2">{{ $client->due_date }}</td>
                                 <td class="px-4 py-2">{{ $client->created_at->format('Y-m-d') }}</td>
-
                             </tr>
                         @endforeach
                     @endif

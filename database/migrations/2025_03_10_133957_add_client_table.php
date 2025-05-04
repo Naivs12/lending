@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('co_borrower')->nullable();
             $table->string('relationship_co')->nullable();
             $table->string('branch_id'); // Changed from branch to branch_id
+            $table->string('status')->default('active'); // Add status column with default value 'active'
             $table->timestamps(); // Adds created_at and updated_at columns
 
             // Foreign key
