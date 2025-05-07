@@ -10,6 +10,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ClientPaymentController;
+use App\Http\Controllers\BackupAndRestoreController;
 
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
@@ -91,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/upload-image', [ClientController::class, 'upload'])->name('upload.image-client');
+
+Route::get('/system-admin/maintenance/backup-and-restore', [BackupAndRestoreController::class, 'index'])->name('system-admin.maintenance.backup-and-restore');
+Route::get('/system-admin/maintenance/backup', [BackupAndRestoreController::class, 'backup'])->name('system-admin.maintenance.backup');
 
 
 
