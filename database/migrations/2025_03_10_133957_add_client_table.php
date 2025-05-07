@@ -25,12 +25,13 @@ return new class extends Migration
             $table->string('soc_med')->nullable();
             $table->string('co_borrower')->nullable();
             $table->string('relationship_co')->nullable();
+            $table->longText('image')->nullable();
             $table->string('branch_id'); // Changed from branch to branch_id
             $table->string('status')->default('active'); // Add status column with default value 'active'
             $table->timestamps(); // Adds created_at and updated_at columns
 
             // Foreign key
-            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade'); 
+            $table->foreign('branch_id')->references('branch_id')->on('branches')->onDelete('cascade');
         });
     }
 

@@ -14,7 +14,7 @@
                     <form id="editClientForm" class="space-y-3" action="/client/update" method="POST">
                         @csrf
                         <input type="hidden" id="editClientId" name="editClientId" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                      
+
 
                         <div class="grid grid-cols-3 gap-4">
                             <div class="flex flex-col">
@@ -92,6 +92,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Open modal and populate fields
@@ -118,6 +119,16 @@
                     $('#editClientModal').addClass('hidden');
                 });
             }
+<<<<<<< HEAD
+=======
+        });
+    });
+    </script>
+    <script>
+    document.getElementById("editClientForm").addEventListener("submit", function (event) {
+
+        event.preventDefault();
+>>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
 
             // Close modal when clicking outside
             $(document).on('click', function (e) {

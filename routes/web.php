@@ -10,8 +10,12 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ClientPaymentController;
+<<<<<<< HEAD
 use App\Http\Controllers\ArchiveController;
 
+=======
+use App\Http\Controllers\BackupAndRestoreController;
+>>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
 
 use App\Http\Middleware\SystemAdminMiddleware;
 use App\Http\Middleware\AdminMiddleware;
@@ -68,7 +72,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/client/submit', [ClientController::class, 'store'])->name('client.submit');
     Route::post('/investor/submit', [InvestorController::class, 'add_investor'])->name('investor.submit');
 });
+<<<<<<< HEAD
 Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.submit');
 Route::post('/client-payment/create', [ClientPaymentController::class, 'create_payment'])->name('client.payment.create');
 Route::post('/blocklist-client/{id}', [ClientController::class, 'blocklist'])->name('client.blocklist');
+=======
+
+Route::post('/upload-image', [ClientController::class, 'upload'])->name('upload.image-client');
+
+Route::get('/system-admin/maintenance/backup-and-restore', [BackupAndRestoreController::class, 'index'])->name('system-admin.maintenance.backup-and-restore');
+Route::get('/system-admin/maintenance/backup', [BackupAndRestoreController::class, 'backup'])->name('system-admin.maintenance.backup');
+
+
+>>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
 

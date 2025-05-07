@@ -32,7 +32,8 @@ class Client extends Model
         'soc_med',
         'co_borrower',
         'relationship_co',
-        'branch_id'
+        'branch_id',
+        'image'
     ];
 
     /**
@@ -42,4 +43,10 @@ class Client extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'branch_id');
     }
+
+    public function getImageAttribute($value)
+    {
+        return "http://res.cloudinary.com/dcmgsini6/image/upload/" . $value;
+    }
+
 }
