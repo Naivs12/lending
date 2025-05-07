@@ -17,11 +17,17 @@ class Loan extends Model
     protected $fillable = [
         'loan_id',
         'client_id',
-        'amount',
-        'payment',
+        'loan_amount',
+        'tot_amnt_w_int',
+        'pay_per_term',
+        'rem_balance',
+        'tot_amnt_pd',
+        'payment_schedule',
         'term',
         'interest',
         'date_release',
+        'progress',
+        'total_progress',
         'status',
         'branch_id'
     ];

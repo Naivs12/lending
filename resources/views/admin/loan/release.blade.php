@@ -53,7 +53,7 @@
                                         @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                         {{ $loan->client->last_name }}
                                     </td>
-                                    <td class="px-4 py-2">{{ $loan->amount }}</td>
+                                    <td class="px-4 py-2">{{ number_format($loan->loan_amount, 2) }}</td>
                                     <td class="px-4 py-2">{{ $loan->date_release }}</td>
                                     <td class="px-4 py-2 whitespace-nowrap">
                                         <div class="flex items-center justify-center space-x-2 h-full">

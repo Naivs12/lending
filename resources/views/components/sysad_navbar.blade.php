@@ -47,7 +47,7 @@
 
         <!-- Submodule Links (Hidden by Default) -->
         <div x-show="open" class="ml-6 mt-2 space-y-2 ms-5" x-collapse>
-            <a href="#" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300">
+            <a href="{{ route('system-admin.payment_info.client_info') }}" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300">
                 <span>Client</span>
             </a>
             <a href="#" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300">
@@ -88,9 +88,15 @@
            class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.maintenance.branch') ? 'bg-yellow-300' : '' }}">
             <span>Branch</span>
         </a>
+<<<<<<< HEAD
+        <a href="{{ route('system-admin.maintenance.archive') }}"
+           class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.maintenance.other') ? 'bg-yellow-300' : '' }}">
+            <span>Archive</span>
+=======
         <a href="{{ route('system-admin.maintenance.backup-and-restore') }}"
            class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.maintenance.other') ? 'bg-yellow-300' : '' }}">
             <span>Backup and Restore</span>
+>>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
         </a>
     </div>
 </div>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('client_id');
             $table->string('branch_id');
             $table->string('term');
-            $table->integer('amount');
+            $table->integer('amount_pd');
             $table->integer('amount_due');
             $table->date('payment_date');
             $table->date('due_date');

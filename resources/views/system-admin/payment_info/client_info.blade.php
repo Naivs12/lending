@@ -2,7 +2,7 @@
 @section('title', 'Payment | Client Info')
 
 @section('content')
-    <div class="m-6 h-full">    
+<div class="m-6 h-full" id="main_content">
         <div class="card-container relative overflow-x-auto overflow-y-auto h-full">
             <div>
                 <h1 class="text-3xl font-bold mb-1">CLIENT PAYMENT INFO</h1>
@@ -10,116 +10,164 @@
             </div> 
 
             <div class="flex justify-start mb-3 mt-3 w-full">
-                <div class="grid grid-cols-5 gap-2 ms-1 me-1 w-full">
-                    <div class="flex flex-col col-span-3">
-                        <input type="text" id="search" name="search"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs"
-                            placeholder="Search">
+            <form method="GET" action="{{ route('system-admin.payment_info.client_info') }}" class="w-full">
+                <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
+                    <!-- Search Field -->
+                    <div class="flex flex-col col-span-4">
+                        <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
                     </div>
-                    <div class="flex">
-                        <button class="bg-white text-gray-600 border border-gray-400 py-1 px-3 rounded-full shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.19 3.898l3.705 3.704a1 1 0 11-1.414 1.415l-3.705-3.705A6 6 0 012 8z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
+
+                    <!-- Branch Select Dropdown -->
+                    <div class="flex flex-col col-span-2">
+                        <select name="branch" onchange="this.form.submit()"
+                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                            <option value="">All Branches</option>
+                            @foreach($branches as $branch)
+                                <option value="{{ $branch->branch_id }}" 
+                                    {{ request('branch') == $branch->branch_id ? 'selected' : '' }}>
+                                    {{ $branch->branch_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Name Sort Dropdown -->
+                    <div class="flex flex-col col-span-2">
+                        <select name="nameSort" onchange="this.form.submit()"
+                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                            <option value="">Sort</option>
+                            <option value="asc" {{ request('nameSort') == 'asc' ? 'selected' : '' }}>Name - Asc</option>
+                            <option value="desc" {{ request('nameSort') == 'desc' ? 'selected' : '' }}>Name - Desc</option>
+                        </select>
                     </div>
                 </div>
+            </form>
+
+
+
                 <div class="flex justify-end w-full">
-                    <button class="flex flex-row w-[10em] gap-2 items-center bg-white text-gray-600 border border-gray-400 py-1 px-4 rounded-full shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <button id="openModal"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium 
+                            text-white bg-[#028051] border border-green-600 rounded-full 
+                            hover:bg-[#e7bb34] hover:border-[#e7bb34] transition duration-200">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-white transition duration-200"
+                            viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Add Info
+
+                        ADD PAYMENT
                     </button>
                 </div>
             </div>
             
             <table class="w-full border border-gray-300 text-center text-xs">
-                <thead class="bg-gray-200">
+                 <thead class="bg-[#028051] text-xs text-white">
                     <tr>
+                        <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
                         <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
-                        <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
                         <th class="border border-gray-300 px-2 py-3">TERM</th>
+                        <th class="border border-gray-300 px-2 py-3">AMOUNT DUE</th>
+                        <th class="border border-gray-300 px-2 py-3">PAYMENT</th>
+                        <th class="border border-gray-300 px-2 py-3">BALANCE</th>
                         <th class="border border-gray-300 px-2 py-3">DUE DATE</th>
                         <th class="border border-gray-300 px-2 py-3">PAYMENT DATE</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-101</td>
-                        <td class="px-4 py-2">John Doe</td>
-                        <td class="px-4 py-2">123 Main St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-07-01</td>
-                        <td class="px-4 py-2">2024-06-30</td>
+                    @if($clients->isEmpty())
+                    <tr>
+                        <td colspan="9" class="px-4 py-2 text-gray-500 text-center text-sm">
+                            No Transactions Found.
+                        </td>
                     </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-102</td>
-                        <td class="px-4 py-2">Jane Smith</td>
-                        <td class="px-4 py-2">456 Elm St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-12-01</td>
-                        <td class="px-4 py-2">2024-11-30</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-103</td>
-                        <td class="px-4 py-2">Alice Johnson</td>
-                        <td class="px-4 py-2">789 Oak St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-10-15</td>
-                        <td class="px-4 py-2">2024-09-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-104</td>
-                        <td class="px-4 py-2">Bob Brown</td>
-                        <td class="px-4 py-2">654 Pine St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-08-20</td>
-                        <td class="px-4 py-2">2024-07-20</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-105</td>
-                        <td class="px-4 py-2">Emma White</td>
-                        <td class="px-4 py-2">789 Maple St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-09-05</td>
-                        <td class="px-4 py-2">2024-08-05</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-106</td>
-                        <td class="px-4 py-2">Liam Green</td>
-                        <td class="px-4 py-2">321 Cedar St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-11-10</td>
-                        <td class="px-4 py-2">2024-10-10</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-107</td>
-                        <td class="px-4 py-2">Sophia Black</td>
-                        <td class="px-4 py-2">147 Birch St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2024-12-15</td>
-                        <td class="px-4 py-2">2024-11-15</td>
-                    </tr>
-                    <tr class="cursor-pointer hover:bg-gray-100" onclick="rowClicked(this)">
-                        <td class="px-4 py-2">C-108</td>
-                        <td class="px-4 py-2">Oliver Gray</td>
-                        <td class="px-4 py-2">852 Redwood St</td>
-                        <td class="px-4 py-2">1 / 6</td>
-                        <td class="px-4 py-2">2025-01-20</td>
-                        <td class="px-4 py-2">2024-12-20</td>
-                    </tr>
+                    @else
+                        @foreach($clients as $client)
+                        <tr class="cursor-pointer hover:bg-yellow-200 user-row" onclick="redirectToClientDetail('{{ $client->loan_id }}')">
+                                <td class="px-4 py-2">{{ $client->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $client->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $client->client->first_name }} 
+                                    @if($client->client->middle_name) {{ $client->client->middle_name }} @endif 
+                                    {{ $client->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $client->term }}</td>
+                                <td class="px-4 py-2">{{ number_format($client->amount_due,2 ) }}</td>
+                                <td class="px-4 py-2">{{ number_format($client->amount_pd,2 ) }}</td>
+                                <td class="px-4 py-2">{{ number_format( abs($client->amount_due - $client->amount_pd),2)  }}</td>
+                                <td class="px-4 py-2">{{ $client->due_date }}</td>
+                                <td class="px-4 py-2">{{ $client->created_at->format('Y-m-d') }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                        
                 </tbody>
             </table>
-            <div class="flex justify-end items-center mt-3">
-                <button id="prevPage" class="bg-gray-300 text-gray-700 px-1 rounded-l-lg hover:bg-gray-400"><</button>
-                        <span id="pageNumber" class="px-4 text-xs">1 / 1</span>
-                    <button id="nextPage"class="bg-gray-300 text-gray-700 px-1 rounded-r-lg hover:bg-gray-400">></button>
-            </div>
-            
+
         </div>
     </div>
+
+    @include('components.add_payment_client')
+
+    <script>
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('addClientPaymentModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('addClientPaymentModal').classList.add('hidden');
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const $searchInput = $('#client-search');
+            const $suggestions = $('#suggestions');
+            const $tableRows = $('table tbody tr');
+            const $noResultsMessage = $('.no-results-message');
+
+            // Hide suggestions and filter table on input
+            $searchInput.on('input', function () {
+                let query = $(this).val().toLowerCase(); // Convert to lowercase for case-insensitive search
+                let resultsFound = false;
+
+                if (query.length < 2) {
+                    $suggestions.hide(); // Hide suggestions when typing less than 2 characters
+                } else {
+                    $suggestions.hide(); // Hide suggestions
+                }
+
+                // Filter table rows based on the search query
+                $tableRows.each(function () {
+                    let rowText = $(this).text().toLowerCase(); // Get row text in lowercase
+                    if (rowText.includes(query)) {
+                        $(this).show(); // Show matching rows
+                        resultsFound = true;
+                    } else {
+                        $(this).hide(); // Hide non-matching rows
+                    }
+                });
+
+                // If no results, display the "No results found" row
+                if (!resultsFound) {
+                    $('table tbody').append('<tr><td colspan="9" class="px-4 py-2 text-center text-gray-500">No results found.</td></tr>');
+                } else {
+                    $('table tbody tr:has(td:contains("No results found"))').remove(); // Remove "No results" row if results are found
+                }
+            });
+
+            // Hide suggestion if clicked outside
+            $(document).click(function (e) {
+                if (!$(e.target).closest('#suggestions, #client-search').length) {
+                    $suggestions.hide();
+                }
+            });
+        });
+    </script>
+
 @endsection

@@ -17,7 +17,7 @@ class ClientPayment extends Model
         'client_id',
         'branch_id',
         'term',
-        'amount',
+        'amount_pd',
         'amount_due',
         'payment_date',
         'due_date'

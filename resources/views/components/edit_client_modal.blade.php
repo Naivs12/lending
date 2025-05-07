@@ -89,39 +89,38 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
-    $(document).ready(function() {
-        // Open modal and populate fields
-        $(document).on('click', '.editClientBtn', function() {
-            $('#editClientId').val($(this).data('id'));
-            $('#edit_first_name').val($(this).data('first_name'));
-            $('#edit_middle_name').val($(this).data('middle_name'));
-            $('#edit_last_name').val($(this).data('last_name'));
-            $('#edit_address').val($(this).data('address'));
-            $('#edit_age').val($(this).data('age'));
-            $('#edit_birthday').val($(this).data('birthday'));
-            $('#edit_contact_number').val($(this).data('contact_num'));
-            $('#edit_soc_med').val($(this).data('soc'));
-            $('#edit_co_borrower').val($(this).data('co_borrower'));
-            $('#edit_relationship_co').val($(this).data('relationship'));
+        document.addEventListener('DOMContentLoaded', function () {
+            // Open modal and populate fields
+            $(document).on('click', '.editClientBtn', function () {
+                $('#editClientId').val($(this).data('id'));
+                $('#edit_first_name').val($(this).data('first_name'));
+                $('#edit_middle_name').val($(this).data('middle_name'));
+                $('#edit_last_name').val($(this).data('last_name'));
+                $('#edit_address').val($(this).data('address'));
+                $('#edit_age').val($(this).data('age'));
+                $('#edit_birthday').val($(this).data('birthday'));
+                $('#edit_contact_number').val($(this).data('contact_num'));
+                $('#edit_soc_med').val($(this).data('soc'));
+                $('#edit_co_borrower').val($(this).data('co_borrower'));
+                $('#edit_relationship_co').val($(this).data('relationship_co'));
 
-            $('#editClientModal').removeClass('hidden');
-        });
+                $('#editClientModal').removeClass('hidden');
+            });
 
-        // Close modal
-        $('#closeEditModal').on('click', function() {
-            $('#editClientModal').addClass('hidden');
-        });
-
-        // Close modal when clicking outside
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest("#editClientModal .bg-white, .editClientBtn").length) {
-                $('#editClientModal').addClass('hidden');
+            // Close modal
+            const closeEditModal = document.getElementById('closeEditModal');
+            if (closeEditModal) {
+                closeEditModal.addEventListener('click', function () {
+                    $('#editClientModal').addClass('hidden');
+                });
             }
+<<<<<<< HEAD
+=======
         });
     });
     </script>
@@ -129,53 +128,67 @@
     document.getElementById("editClientForm").addEventListener("submit", function (event) {
 
         event.preventDefault();
+>>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
 
-        let formData = new FormData(this);
+            // Close modal when clicking outside
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('#editClientModal .bg-white, .editClientBtn').length) {
+                    $('#editClientModal').addClass('hidden');
+                }
+            });
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "Do you want to save these changes?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch("/client/update", {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                })
+            // Handle form submission
+            const editClientForm = document.getElementById('editClientForm');
+            if (editClientForm) {
+                editClientForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
 
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            title: "Saved!",
-                            text: "User Updated Successfully.",
-                            icon: "success"
-                        }).then(() => {
+                    let formData = new FormData(this);
 
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error!",
-                            text: data.message,
-                            icon: "error"
-                        });
-                    }
-                })
-                .catch(error => {
                     Swal.fire({
-                        title: "Error!",
-                        text: "Something went wrong.",
-                        icon: "error"
+                        title: "Are you sure?",
+                        text: "Do you want to save these changes?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("/client/update", {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    "Accept": "application/json"
+                                }
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({
+                                            title: "Saved!",
+                                            text: "User Updated Successfully.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error!",
+                                            text: data.message,
+                                            icon: "error"
+                                        });
+                                    }
+                                })
+                                .catch(error => {
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Something went wrong.",
+                                        icon: "error"
+                                    });
+                                    console.error("Error:", error);
+                                });
+                        }
                     });
-                    console.error("Error:", error);
                 });
             }
         });
-    });
-</script>
+    </script>

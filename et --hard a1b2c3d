@@ -1,0 +1,45 @@
+[33m0722758[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: pull origin main: Fast-forward
+[33me1f45f2[m HEAD@{1}: reset: moving to HEAD~1
+[33m7b35a15[m HEAD@{2}: pull origin main: updating HEAD
+[33m7b35a15[m HEAD@{3}: reset: moving to HEAD~1
+[33me97594f[m HEAD@{4}: commit (merge): new
+[33m7b35a15[m HEAD@{5}: commit: /
+[33me1f45f2[m HEAD@{6}: commit: .
+[33m0f004ba[m HEAD@{7}: commit: /
+[33mfb180fe[m HEAD@{8}: commit: /
+[33m69f3ad8[m HEAD@{9}: commit: /
+[33m9328a45[m HEAD@{10}: commit: /
+[33mce6e73b[m HEAD@{11}: commit: /
+[33m2a0debe[m HEAD@{12}: commit: Add Loan display
+[33mb8b4de9[m HEAD@{13}: commit: commit
+[33m033874c[m HEAD@{14}: commit: Client Details and edit
+[33m5ba3a07[m HEAD@{15}: commit: KARL JOSHUA
+[33m6c4086d[m HEAD@{16}: commit: Fix Client table and add client
+[33md96a87f[m HEAD@{17}: commit: Modify edit user
+[33m68b3c64[m HEAD@{18}: commit: Fix issue in Admin System-admin Login
+[33m59c7b36[m HEAD@{19}: commit: ADD BACKEND TO BRANCH
+[33m0c958a4[m HEAD@{20}: commit: ADDED LOGIN_CONTROLLER FOR ADMIN
+[33m4e22f29[m HEAD@{21}: commit: Modify Logo
+[33mfb0eab0[m HEAD@{22}: commit: Add System Admin
+[33md202eda[m HEAD@{23}: commit: Modify all table
+[33m354797d[m HEAD@{24}: commit: Modify review table
+[33mdc09061[m HEAD@{25}: commit: Modify
+[33mbc443ce[m HEAD@{26}: pull: Fast-forward
+[33ma0bcabb[m HEAD@{27}: commit (merge): asd
+[33m8838e47[m HEAD@{28}: commit (merge): Merge branch 'main' of https://github.com/Naivs12/lending
+[33mf368426[m HEAD@{29}: commit: asdasd
+[33mb0bb4da[m HEAD@{30}: commit: Modified Table in Loan
+[33m462fcc5[m HEAD@{31}: commit: Add System Admin Page
+[33mc6b1bbd[m HEAD@{32}: commit: Modified Payment Add Client PAyment Info
+[33m9426db9[m HEAD@{33}: commit: Modify Payment Page
+[33m0be0e7b[m HEAD@{34}: commit: Add Loan Features
+[33m4362a79[m HEAD@{35}: commit: Update Loan Content
+[33m143ccfb[m HEAD@{36}: commit: Adding in Release Review in Loan
+[33m35c866e[m HEAD@{37}: commit: Modified Investor Modal
+[33mc6ed0b5[m HEAD@{38}: commit: Add Investor Button content
+[33m850cdec[m HEAD@{39}: commit: Modified Add client
+[33m4c96c85[m HEAD@{40}: commit: Add Table Client and Investor
+[33m8161e1b[m HEAD@{41}: commit: updated login page
+[33mdc554cf[m HEAD@{42}: Branch: renamed refs/heads/main to refs/heads/main
+[33mdc554cf[m HEAD@{44}: Branch: renamed refs/heads/master to refs/heads/main
+[33mdc554cf[m HEAD@{46}: commit (initial): Initial commit
