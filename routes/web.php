@@ -77,6 +77,7 @@ Route::post('/upload-image', [ClientController::class, 'upload'])->name('upload.
 
 Route::get('/system-admin/maintenance/backup-and-restore', [BackupAndRestoreController::class, 'index'])->name('system-admin.maintenance.backup-and-restore');
 Route::post('/system-admin/maintenance/backup', [BackupAndRestoreController::class, 'backup'])->name('system-admin.maintenance.backup');
+Route::post('/system-admin/maintenance/restore', [BackupAndRestoreController::class, 'restore'])->name('system-admin.maintenance.restore');
 
 
 

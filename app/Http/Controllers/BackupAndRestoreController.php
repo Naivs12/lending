@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BackupAndRestoreController extends Controller
 {
@@ -32,8 +33,10 @@ class BackupAndRestoreController extends Controller
         return view('system-admin.maintenance.backupandrestore', compact('tableArr'));
     }
 
-    public function backUp($table)
+    public function backUp(Request $request)
     {
+        $table = $request->table_name;
+
         $tableData = DB::table($table)->get();
 
         $sqlFile = '';
@@ -74,6 +77,7 @@ class BackupAndRestoreController extends Controller
             }
         }
 
-        return $queries;
+        // return $queries;
+        return redirect()->back();
     }
 }
