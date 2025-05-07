@@ -70,5 +70,5 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post('/loan/submit', [LoanController::class, 'create_loan'])->name('loan.submit');
 Route::post('/client-payment/create', [ClientPaymentController::class, 'create_payment'])->name('client.payment.create');
-
+Route::post('/blocklist-client/{id}', [ClientController::class, 'blocklist'])->name('client.blocklist');
 

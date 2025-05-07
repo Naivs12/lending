@@ -204,4 +204,16 @@ class ClientController extends Controller
 
         return view('admin.client', compact('clients', 'branches'));
     }
+    public function blocklist($id)
+    {
+        try {
+            $client = Client::findOrFail($id);
+            $client->status = 'blocklisted'; // Assuming you have a 'status' column in your 'clients' table
+            $client->save();
+
+            return response()->json(['success' => true, 'message' => 'Client has been blocklisted.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to blocklist the client.']);
+        }
+    }
 }
