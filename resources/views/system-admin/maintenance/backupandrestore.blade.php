@@ -2,13 +2,14 @@
 @section('title', 'Maintenance | Backup and Restore')
 
 @section('content')
-    <div class="m-6 h-full">
+    <div class="m-6 h-full relative"> <!-- Added 'relative' to the parent container -->
         <form method="POST" action="{{ route('system-admin.maintenance.backup') }}">
             @csrf
 
             <label for="table_name" class="block text-sm font-medium text-gray-700 mb-2">Select a Table</label>
             <select name="table_name" id="table_name"
-                class="block w-[20%] px-3 py-2 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4">
+                class="block w-[20%] px-3 py-2 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4"
+                style="z-index: 10; pointer-events: auto;"> <!-- Ensured pointer-events is set to auto -->
                 @foreach($tableArr as $table)
                     <option value="{{ $table['table'] ?? $table->table }}">{{ $table['table'] ?? $table->table }}</option>
                 @endforeach
