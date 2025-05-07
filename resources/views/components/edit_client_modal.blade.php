@@ -119,16 +119,6 @@
                     $('#editClientModal').addClass('hidden');
                 });
             }
-<<<<<<< HEAD
-=======
-        });
-    });
-    </script>
-    <script>
-    document.getElementById("editClientForm").addEventListener("submit", function (event) {
-
-        event.preventDefault();
->>>>>>> a07baa946ddf4aa5c05e3466bce334fc28d12382
 
             // Close modal when clicking outside
             $(document).on('click', function (e) {
