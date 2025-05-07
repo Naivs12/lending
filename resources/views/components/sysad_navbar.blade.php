@@ -88,9 +88,9 @@
            class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.maintenance.branch') ? 'bg-yellow-300' : '' }}">
             <span>Branch</span>
         </a>
-        <a href="#"
+        <a href="{{ route('system-admin.maintenance.backup-and-restore') }}"
            class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.maintenance.other') ? 'bg-yellow-300' : '' }}">
-            <span>Other Maintenance</span>
+            <span>Backup and Restore</span>
         </a>
     </div>
 </div>
