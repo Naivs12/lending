@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branch;
+use App\Models\Loan;
 use Cloudinary\Cloudinary;
 use Cloudinary\Transformation\Image;
 use Cloudinary\Api\Upload\UploadApi;
@@ -102,7 +103,8 @@ class ClientController extends Controller
     public function show_client_details($client_id)
     {
         $client = Client::where('client_id', $client_id)->firstOrFail();
-        return view('system-admin.client_detail', compact('client'));
+        $loans = Loan::where('client_id', $client_id)->paginate(5); // Fetch loans for the client
+        return view('system-admin.client_detail', compact('client', 'loans'));
     }
 
     public function delete_client($id)

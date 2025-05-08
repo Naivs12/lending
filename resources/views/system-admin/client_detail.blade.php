@@ -123,16 +123,34 @@
                                 <table class="w-full border border-gray-300 text-center">
                                     <thead class="bg-[#028051] text-xs text-white">
                                         <tr>
-                                            <th class="border p-2">Loan ID</th>
-                                            <th class="border p-2">Amount</th>
-                                            <th class="border p-2">Due Date</th>
-                                            <th class="border p-2">Term</th>
+                                            <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
+                                            <th class="border border-gray-300 px-2 py-3">AMOUNT</th>
+                                            <th class="border border-gray-300 px-2 py-3">TERMS</th>
+                                            <th class="border border-gray-300 px-2 py-3">INTEREST PER MONTH</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!-- Loan data here -->
+                                    <tbody class="text-xs">
+                                        @if($loans->isEmpty())
+                                            <tr>
+                                                <td colspan="8" class="px-4 py-2 text-center text-gray-500">No results found.</td>
+                                            </tr>
+                                        @else
+                                            @foreach($loans as $loan)
+                                                <tr class="cursor-pointer hover:bg-yellow-200 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
+                                                    <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                                    <td class="px-4 py-2">{{ number_format($loan->loan_amount, 2) }}</td>
+                                                    <td class="px-4 py-2">{{ $loan->progress }} / {{$loan->total_progress }}</td>
+                                                    <td class="px-4 py-2">{{ $loan->interest }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
+
+                                <!-- Pagination Links -->
+                                <div class="mt-2 flex justify-end text-xs">
+                                    {!! $loans->links('vendor.pagination.tailwind') !!}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -284,4 +302,9 @@
         });
 
     </script>
+    <script>
+    function redirectToLoanDetail(loanId) {
+        window.location.href = "/loan-detail/" + loanId;
+    }
+</script>
     @endsection
