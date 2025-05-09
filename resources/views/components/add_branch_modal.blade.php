@@ -24,6 +24,12 @@
                             <input type="text" id="address" name="address" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="" required>
                         </div>
                     </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="flex flex-col">
+                            <label for="contact_number" class="text-gray-700 font-medium">Contact Number</label>
+                            <input type="text" id="contact_number" name="contact_number" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm" placeholder="" required>
+                        </div>
+                    </div>
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="next-btn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Submit</button>
                     </div>

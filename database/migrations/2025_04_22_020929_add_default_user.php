@@ -10,7 +10,7 @@ return new class extends Migration
         // First insert the branch if it doesn't exist
         DB::table('branches')->updateOrInsert(
             ['branch_id' => 'B-001'],
-            ['branch_name' => 'Main Branch', 'created_at' => now(), 'updated_at' => now(), 'address' => 'default']
+            ['branch_name' => 'Main Branch', 'created_at' => now(), 'updated_at' => now(), 'address' => 'default', 'contact_number' => 'default']
         );
 
         // Then insert the user

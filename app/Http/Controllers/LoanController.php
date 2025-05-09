@@ -16,19 +16,18 @@ class LoanController extends Controller
     public function index_loan(Request $request)
     {
         $branches = Branch::all();
-        $query = Loan::with('client')->where('status', 'loan');
+        $query = Loan::with('client')->where('loans.status', 'loan'); // Specify table name for 'status'
 
         // Check if branch filter is applied
         if ($request->has('branch') && $request->branch != '') {
             $query->where('loans.branch_id', $request->branch);
-
         }
 
         // Check if name sort is applied
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*');
+                ->select('loans.*'); // Avoid ambiguous column error
         }
 
         $loans = $query->paginate(10);
@@ -40,60 +39,53 @@ class LoanController extends Controller
         return view('system-admin.loan.loan', compact('loans', 'branches'));
     }
 
-
-
     public function index_review(Request $request)
     {
         $branches = Branch::all();
-        $query = Loan::with('client')->where('status', 'review');
+        $query = Loan::with('client')->where('loans.status', 'review'); // Specify table name for 'status'
 
         // Check if branch filter is applied
         if ($request->has('branch') && $request->branch != '') {
             $query->where('loans.branch_id', $request->branch);
-
         }
 
         // Check if name sort is applied
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*');
+                ->select('loans.*'); // Avoid ambiguous column error
         }
 
         $loans = $query->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.loan.loan', ['page' => 1]);
+            return redirect()->route('system-admin.loan.review', ['page' => 1]);
         }
 
         return view('system-admin.loan.review', compact('loans', 'branches'));
     }
 
-
-
-
     public function index_release(Request $request)
     {
         $branches = Branch::all();
-        $query = Loan::with('client')->where('status', 'release');
+        $query = Loan::with('client')->where('loans.status', 'release'); // Specify table name for 'status'
 
         // Check if branch filter is applied
         if ($request->has('branch') && $request->branch != '') {
             $query->where('loans.branch_id', $request->branch);
-
         }
 
         // Check if name sort is applied
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*');
+                ->select('loans.*'); // Avoid ambiguous column error
         }
 
         $loans = $query->paginate(10);
 
         if ($loans->isEmpty() && $request->page > 1) {
-            return redirect()->route('system-admin.loan.loan', ['page' => 1]);
+            return redirect()->route('system-admin.loan.release', ['page' => 1]);
         }
 
         return view('system-admin.loan.release', compact('loans', 'branches'));
@@ -105,9 +97,8 @@ class LoanController extends Controller
         $admin = auth()->user(); // Assuming admin is authenticated
         $adminBranchId = $admin->branch_id;
 
-        // Start query
         $query = Loan::with('client')
-            ->where('loans.status', 'loan')
+            ->where('loans.status', 'loan') // Specify table name for 'status'
             ->where('loans.branch_id', $adminBranchId);
 
         // Handle search input
@@ -122,13 +113,11 @@ class LoanController extends Controller
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*'); // avoid ambiguous column error
+                ->select('loans.*'); // Avoid ambiguous column error
         }
 
-        // Paginate results
-        $loans = $query->paginate(10)->withQueryString(); // keep query params in pagination
+        $loans = $query->paginate(10)->withQueryString();
 
-        // Redirect if no data found and on a higher page
         if ($loans->isEmpty() && $request->page > 1) {
             return redirect()->route('admin.loan.loan', ['page' => 1]);
         }
@@ -136,66 +125,53 @@ class LoanController extends Controller
         return view('admin.loan.loan', compact('loans', 'branches'));
     }
 
-
     public function index_release_admin(Request $request)
     {
-        // Get the admin's branch ID
         $admin = auth()->user();
         $adminBranchId = $admin->branch_id;
-    
-        // Start query for loans that are in 'release' status and for the admin's branch
+
         $query = Loan::with('client')
-            ->where('status', 'release')
+            ->where('loans.status', 'release') // Specify table name for 'status'
             ->where('loans.branch_id', $adminBranchId);
-    
-        // Handle sorting by client full name (asc or desc)
+
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*'); // avoid ambiguous column error
+                ->select('loans.*'); // Avoid ambiguous column error
         }
-    
-        // Paginate results and keep query parameters in the pagination links
+
         $loans = $query->paginate(10)->withQueryString();
-    
-        // Redirect if no data found and on a higher page
+
         if ($loans->isEmpty() && $request->page > 1) {
             return redirect()->route('admin.loan.release', ['page' => 1]);
         }
-    
+
         return view('admin.loan.release', compact('loans'));
     }
 
     public function index_review_admin(Request $request)
     {
-        // Get the admin's branch ID
         $admin = auth()->user();
         $adminBranchId = $admin->branch_id;
-    
-        // Start query for loans that are in 'review' status and for the admin's branch
+
         $query = Loan::with('client')
-            ->where('status', 'review')
+            ->where('loans.status', 'review') // Specify table name for 'status'
             ->where('loans.branch_id', $adminBranchId);
-    
-        // Handle sorting by client full name (asc or desc)
+
         if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
             $query->join('clients', 'clients.client_id', '=', 'loans.client_id')
                 ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
-                ->select('loans.*'); // avoid ambiguous column error
+                ->select('loans.*'); // Avoid ambiguous column error
         }
-    
-        // Paginate results and keep query parameters in the pagination links
+
         $loans = $query->paginate(10)->withQueryString();
-    
-        // Redirect if no data found and on a higher page
+
         if ($loans->isEmpty() && $request->page > 1) {
             return redirect()->route('admin.loan.review', ['page' => 1]);
         }
-    
+
         return view('admin.loan.review', compact('loans'));
     }
-    
-    
 
     public function updateStatus(Request $request)
     {
@@ -215,7 +191,6 @@ class LoanController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
     public function create_loan(Request $request)
     {
@@ -294,7 +269,6 @@ class LoanController extends Controller
         ], 201);
     }
     
-    
     public function search(Request $request)
     {
         $query = $request->query('query');
@@ -332,7 +306,6 @@ class LoanController extends Controller
         return response()->json($clients);
     }
     
-
     public function search_loan(Request $request)
     {
         $query = $request->input('query');
@@ -365,6 +338,7 @@ class LoanController extends Controller
         // Pass both loan and payments to the view
         return view('admin.loan_details', compact('loan', 'payments'));
     }
+
     public function show_loan_details_sysad($loan_id)
     {
         // Get the loan details by loan_id
@@ -374,6 +348,11 @@ class LoanController extends Controller
         $payments = ClientPayment::where('loan_id', $loan_id)->get();
     
         // Pass both loan and payments to the view
-        return view('system-admin.loan_details', compact('loan', 'payments'));
+        if (auth()->user()->role === 'system-admin') {
+            return view('system-admin.loan_details', compact('loan', 'payments'));
+        }else{
+            return view('admin.loan_details', compact('loan', 'payments'));
+        }
+
     }
 }

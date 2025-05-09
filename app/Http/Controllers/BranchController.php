@@ -22,6 +22,7 @@ class BranchController extends Controller {
         $request->validate([
             'branch_name' => 'required|string|max:100',
             'address' => 'required|string',
+            'contact_number' => 'required|string',
         ]);
 
         // Generate next branch_id
@@ -34,6 +35,7 @@ class BranchController extends Controller {
             'branch_id' => $branch_id,
             'branch_name' => $request->branch_name,
             'address' => $request->address,
+            'contact_number' => $request->contact_number
         ]);
 
         return response()->json(['message' => 'Branch added successfully!']);

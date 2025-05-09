@@ -16,7 +16,29 @@ class ClientPaymentController extends Controller
 
     public function index(Request $request)
     {
-        // Any necessary logic for other user roles can be added here.
+
+        $branches = Branch::where('branch_id', auth()->user()->branch_id)->get(); // Non-admin sees only their branch
+
+        // Start the query for client payments
+        $query = ClientPayment::query();
+
+        // Check if name sorting is applied
+        if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
+            $query->join('clients', 'clients.client_id', '=', 'transactions.client_id')
+                  ->orderBy(DB::raw("CONCAT(clients.first_name, ' ', clients.last_name)"), $request->nameSort)
+                  ->select('transactions.*');
+        }
+
+        // Paginate the results (10 clients per page) and preserve query parameters for pagination
+        $payments = $query->paginate(10)->appends($request->except('page'));
+
+        // Redirect to the first page if the current page is empty
+        if ($payments->isEmpty() && $request->page > 1) {
+            return redirect()->route('admin.payment_info.client_info', ['page' => 1]);
+        }
+
+        // Return the view with payments and branches
+        return view('admin.payment_info.client_info', compact('payments', 'branches'));
     }
     
     public function index_sysad(Request $request)

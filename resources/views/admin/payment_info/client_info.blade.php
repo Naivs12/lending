@@ -10,7 +10,7 @@
             </div> 
 
             <div class="flex justify-start mb-3 mt-3 w-full">
-                <form method="GET" action="{{ route('admin.client') }}" class="w-full">
+                <form method="GET" action="{{ route('admin.payment_info.client_info') }}" class="w-full">
                     <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
                         <div class="flex flex-col col-span-4">
                             <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
@@ -63,7 +63,9 @@
                 <tbody>
                     @if($payments->isEmpty())
                     <tr>
-                        <td colspan="3" class="px-4 py-2 text-gray-500  text-sm">No Transactions Found.</td>
+                        <td colspan="9" class="px-4 py-2 text-gray-500 text-center text-sm">
+                            No Transactions Found.
+                        </td>
                     </tr>
                     @else
                         @foreach($payments as $payment)

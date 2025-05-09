@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SystemAdminController;
 use App\Http\Controllers\AdminController;
@@ -20,6 +21,14 @@ use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
+
+
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/'); 
+})->name('logout');
 
 
 Route::middleware([AdminMiddleware::class])->group(function () {
@@ -48,7 +57,7 @@ Route::middleware([SystemAdminMiddleware::class])->group(function () {
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
     Route::get('/system-admin/client', [ClientController::class, 'index'])->name('system-admin.client');
-    Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
+    
     Route::delete('/delete-client/{id}', [ClientController::class, 'delete_client']);
     Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
     Route::get('/system-admin/investor', [InvestorController::class, 'index'])->name('system-admin.investor');
@@ -58,7 +67,7 @@ Route::middleware([SystemAdminMiddleware::class])->group(function () {
     Route::get('/system-admin/loan/review', [LoanController::class, 'index_review'])->name('system-admin.loan.review');
     Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search');
     Route::get('/system-admin/payment_info/client', [ClientPaymentController::class, 'index_sysad'])->name('system-admin.payment_info.client_info');
-    Route::get('/loan-detail/{loan_id}', [LoanController::class, 'show_loan_details_sysad'])->name('loan_detail');
+    
     Route::get('system-admin/maintenance/archive', [ArchiveController::class, 'index'])->name('system-admin.maintenance.archive');
 });
 
@@ -80,4 +89,5 @@ Route::post('/system-admin/maintenance/backup', [BackupAndRestoreController::cla
 Route::post('/system-admin/maintenance/restore', [BackupAndRestoreController::class, 'restore'])->name('system-admin.maintenance.restore');
 
 
-
+Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
+Route::get('/loan-detail/{loan_id}', [LoanController::class, 'show_loan_details_sysad'])->name('loan_detail');

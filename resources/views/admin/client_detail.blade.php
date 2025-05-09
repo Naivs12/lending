@@ -1,4 +1,4 @@
-@extends('layout.system-admin')
+@extends('layout.admin')
     @section('title', 'Client')
 
     @section('content')
@@ -336,7 +336,7 @@
                     success: function (response) {
                         if (response.success) {
                             Swal.fire("Blocklisted!", response.message, "success").then(() => {
-                                window.location.href = '/system-admin/client'; // Redirect to the client list page
+                                window.location.href = '/admin/client'; // Redirect to the client list page
                             });
                         } else {
                             Swal.fire("Error", response.message, "error");

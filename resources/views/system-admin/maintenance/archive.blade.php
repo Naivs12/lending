@@ -65,7 +65,28 @@
                             <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
                         </tr>
                     </thead>
+                    <tbody class="text-xs">
+                        @forelse ($blocklistedClients as $client)
+                        <tr class="cursor-pointer hover:bg-yellow-300 user-row" onclick="redirectToClientDetail('{{ $client->client_id }}')">
+                                <td class="px-4 py-2">{{ $client->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $client->first_name }}
+                                    @if($client->middle_name) {{ $client->middle_name }} @endif
+                                    {{ $client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $client->address }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="px-4 py-2 text-center text-gray-500">No blocklisted clients found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
                 </table>
+                <!-- Pagination Links -->
+                <div class="mt-2 flex justify-end text-xs">
+                    {!! $blocklistedClients->links('vendor.pagination.tailwind') !!}
+                </div>
             </div>
         </div>
     </div>
@@ -99,5 +120,10 @@
             activateTab(blocklistedTab, completeLoanTab, blocklistedContent, completeLoanContent);
         });
     });
+</script>
+<script>
+    function redirectToClientDetail(clientId) {
+        window.location.href = "/client-detail/" + clientId;
+    }
 </script>
 @endsection
