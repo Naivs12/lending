@@ -273,8 +273,7 @@
                     .then(response => response.json())
                     .then(data => {
                         // console.log("Upload success:", data);
-                        location.reload()
-
+                        location.reload();
                     })
                     .catch(error => {
                         console.error("Upload failed:", error);
