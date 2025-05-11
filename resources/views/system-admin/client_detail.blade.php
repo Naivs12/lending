@@ -23,12 +23,12 @@
                     <div class="flex-1 relative">
                         <div class="absolute top-0 right-0 flex space-x-2">
                             <!-- Edit Button -->
-                            <button type="button" class="editClientBtn p-2 text-orange-500 hover:text-orange-700" 
+                            <button type="button" class="editClientBtn p-2 text-orange-500 hover:text-orange-700"
                                 data-id="{{ $client->id }}"
                                 data-first_name="{{ $client->first_name }}"
                                 data-middle_name="{{ $client->middle_name }}"
                                 data-last_name="{{ $client->last_name }}"
-                                data-address="{{ $client->address }}" 
+                                data-address="{{ $client->address }}"
                                 data-soc="{{ $client->soc_med }}"
                                 data-contact_num="{{ $client->contact_number }}"
                                 data-age="{{ $client->age }}"
@@ -73,7 +73,7 @@
                         <!-- Buttons Section -->
                         <div class="flex gap-2 mt-5">
                             <!-- Download Button -->
-                            <button class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white">
+                            <button class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white" id="download-pdf">
                                 Download
                             </button>
 
@@ -83,9 +83,9 @@
                             </button>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
 
                 <!-- Bottom Section: About and Transaction Details -->
                 <div class="flex gap-4 mt-5">
@@ -95,19 +95,19 @@
                             <h3 class="text-lg m-2 font-bold text-center text-gray-800">ABOUT</h3>
                             <div class="text-sm p-3">
                                 <div class="grid grid-cols-2 gap-x-2 gap-y-5">
-                                    <p class="font-bold text-gray-700">Age:</p> 
+                                    <p class="font-bold text-gray-700">Age:</p>
                                     <p class="text-gray-900">{{ $client->age }}</p>
 
-                                    <p class="font-bold text-gray-700">Birthday:</p> 
+                                    <p class="font-bold text-gray-700">Birthday:</p>
                                     <p class="text-gray-900">{{ $client->birthday }}</p>
 
-                                    <p class="font-bold text-gray-700">Gender:</p> 
+                                    <p class="font-bold text-gray-700">Gender:</p>
                                     <p class="text-gray-900">{{ $client->gender }}</p>
 
-                                    <p class="font-bold text-gray-700">Co-borrower:</p> 
+                                    <p class="font-bold text-gray-700">Co-borrower:</p>
                                     <p class="text-gray-900">{{ $client->co_borrower }}</p>
 
-                                    <p class="font-bold text-gray-700">Relationship:</p> 
+                                    <p class="font-bold text-gray-700">Relationship:</p>
                                     <p class="text-gray-900">{{ $client->relationship_co }}</p>
                                 </div>
                             </div>
@@ -282,6 +282,39 @@
                         }
                     });
         });
+
+        $('#download-pdf').click(function (e) {
+            e.preventDefault();
+
+            const pathSegments = window.location.pathname.split('/');
+            const client_id = pathSegments[pathSegments.length - 1];
+
+            fetch("{{ route('client.download-contract') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    client_id: client_id
+                })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'contract.pdf');
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        });
+
+
 
     </script>
     @endsection
