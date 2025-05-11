@@ -16,6 +16,8 @@ class ArchiveController extends Controller
         // Fetch clients with status 'blocklisted' and paginate with 10 items per page
         $blocklistedClients = Client::where('status', 'blocklisted')->paginate(10);
 
-        return view("system-admin.maintenance.archive", compact('completedLoans', 'blocklistedClients'));
+        $declinedLoans = Loan::where('status', 'decline')->paginate(10);
+
+        return view("system-admin.maintenance.archive", compact('completedLoans', 'blocklistedClients', 'declinedLoans'));
     }
 }

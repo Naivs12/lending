@@ -10,11 +10,14 @@
         <div class="flex justify-start mb-3 mt-3 w-full border-b border-gray-300">
             <!-- Tabs -->
             <div class="flex border-b border-gray-300">
-                <button class="py-2 text-gray-600 hover:text-gray-800 focus:outline-none focus:border-b-2 focus:border-yellow-600" id="complete-loan-tab">
+                <button class="px-2 py-2 text-gray-600 hover:text-gray-800 focus:outline-none focus:border-b-2 focus:border-yellow-600" id="complete-loan-tab">
                     Complete Loan
                 </button>
-                <button class="px-4 py-2 text-gray-600 hover:text-gray-800 focus:outline-none focus:border-b-2 focus:border-yellow-600" id="blocklisted-tab">
+                <button class="px-2 py-2 text-gray-600 hover:text-gray-800 focus:outline-none focus:border-b-2 focus:border-yellow-600" id="blocklisted-tab">
                     Blocklisted
+                </button>
+                <button class="py-2 text-gray-600 hover:text-gray-800 focus:outline-none focus:border-b-2 focus:border-yellow-600" id="declined-loan-tab">
+                    Declined Loan
                 </button>
             </div>
         </div>
@@ -88,6 +91,40 @@
                     {!! $blocklistedClients->links('vendor.pagination.tailwind') !!}
                 </div>
             </div>
+            <div id="declined-loan-content" class="hidden">
+                <table class="w-full border border-gray-300 text-center">
+                    <thead class="bg-[#028051] text-xs text-white">
+                        <tr>
+                            <th class="border border-gray-300 px-2 py-3">LOAN ID</th>
+                            <th class="border border-gray-300 px-2 py-3">CLIENT ID</th>
+                            <th class="border border-gray-300 px-2 py-3">NAME</th>
+                            <th class="border border-gray-300 px-2 py-3">REASON</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs">
+                        @forelse ($declinedLoans as $loan)
+                            <tr>
+                                <td class="px-4 py-2">{{ $loan->loan_id }}</td>
+                                <td class="px-4 py-2">{{ $loan->client_id }}</td>
+                                <td class="px-4 py-2">
+                                    {{ $loan->client->first_name }} 
+                                    @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
+                                    {{ $loan->client->last_name }}
+                                </td>
+                                <td class="px-4 py-2">{{ $loan->reason }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-2">No declined loans found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                <!-- Pagination Links -->
+                <div class="mt-2 flex justify-end text-xs">
+                    {!! $declinedLoans->links('vendor.pagination.tailwind') !!}
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -97,27 +134,33 @@
     document.addEventListener('DOMContentLoaded', function () {
         const completeLoanTab = document.getElementById('complete-loan-tab');
         const blocklistedTab = document.getElementById('blocklisted-tab');
+        const declinedLoanTab = document.getElementById('declined-loan-tab');
         const completeLoanContent = document.getElementById('complete-loan-content');
         const blocklistedContent = document.getElementById('blocklisted-content');
+        const declinedLoanContent = document.getElementById('declined-loan-content');
 
         // Function to activate a tab
-        function activateTab(activeTab, inactiveTab, activeContent, inactiveContent) {
+        function activateTab(activeTab, inactiveTabs, activeContent, inactiveContents) {
             activeTab.classList.add('text-yellow-600', 'border-b-2', 'border-yellow-600');
-            inactiveTab.classList.remove('text-yellow-600', 'border-b-2', 'border-yellow-600');
+            inactiveTabs.forEach(tab => tab.classList.remove('text-yellow-600', 'border-b-2', 'border-yellow-600'));
             activeContent.classList.remove('hidden');
-            inactiveContent.classList.add('hidden');
+            inactiveContents.forEach(content => content.classList.add('hidden'));
         }
 
         // Default to showing the "Complete Loan" tab
-        activateTab(completeLoanTab, blocklistedTab, completeLoanContent, blocklistedContent);
+        activateTab(completeLoanTab, [blocklistedTab, declinedLoanTab], completeLoanContent, [blocklistedContent, declinedLoanContent]);
 
         // Event listeners for tab switching
         completeLoanTab.addEventListener('click', () => {
-            activateTab(completeLoanTab, blocklistedTab, completeLoanContent, blocklistedContent);
+            activateTab(completeLoanTab, [blocklistedTab, declinedLoanTab], completeLoanContent, [blocklistedContent, declinedLoanContent]);
         });
 
         blocklistedTab.addEventListener('click', () => {
-            activateTab(blocklistedTab, completeLoanTab, blocklistedContent, completeLoanContent);
+            activateTab(blocklistedTab, [completeLoanTab, declinedLoanTab], blocklistedContent, [completeLoanContent, declinedLoanContent]);
+        });
+
+        declinedLoanTab.addEventListener('click', () => {
+            activateTab(declinedLoanTab, [completeLoanTab, blocklistedTab], declinedLoanContent, [completeLoanContent, blocklistedContent]);
         });
     });
 </script>

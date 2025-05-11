@@ -47,6 +47,7 @@
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">AMOUNT</th>
                         <th class="border border-gray-300 px-2 py-3">DATE OF RELEASE</th>
+                        <th class="border border-gray-300 px-2 py-3">DOWNLOAD</th>
                         <th class="border border-gray-300 px-2 py-3">ACTION</th>
                     </tr>
                 </thead>
@@ -57,7 +58,7 @@
                         </tr>
                     @else
                         @foreach($loans as $loan)
-                            <tr class="cursor-pointer hover:bg-gray-100 user-row" onclick="redirectToLoanDetail('{{ $loan->loan_id }}')">
+                            <tr>
                                 <td class="px-4 py-2">{{ $loan->loan_id }}</td>
                                 <td class="px-4 py-2">{{ $loan->client_id }}</td>
                                 <td class="px-4 py-2">
@@ -65,8 +66,13 @@
                                     @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                     {{ $loan->client->last_name }}
                                 </td>
-                                <td class="px-4 py-2">{{ $loan->amount }}</td>
+                                <td class="px-4 py-2">PHP {{ number_format($loan->loan_amount, 2) }}</td>
                                 <td class="px-4 py-2">{{ $loan->date_release }}</td>
+                                <td class="px-4 py-2">
+                                    <a href="#" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 transition-all duration-300 ease-in-out">
+                                        Download PDF
+                                    </a>
+                                </td>
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     <div class="flex items-center justify-center space-x-2 h-full">
                                         <button class="group bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 flex items-center transition-all duration-300 ease-in-out" onclick="approveLoan(event, this)">
@@ -118,6 +124,26 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 updateLoanStatus(loanId, 'loan');
+            }
+        });
+    }
+    function denyLoan(event, button) {
+        event.stopPropagation(); // Prevent row click
+
+        const row = button.closest('tr');
+        const loanId = row.querySelector('td').textContent.trim();
+
+        Swal.fire({
+            title: 'Deny Loan?',
+            text: `Are you sure you want to continue?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateLoanStatus(loanId, 'decline');
             }
         });
     }

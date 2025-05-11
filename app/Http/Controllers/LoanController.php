@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Models\Branch;
@@ -10,6 +11,7 @@ use App\Models\ClientPayment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use PDF;
 
 class LoanController extends Controller
 {
@@ -355,4 +357,5 @@ class LoanController extends Controller
         }
 
     }
+
 }
