@@ -83,6 +83,7 @@ Route::post('/client-payment/create', [ClientPaymentController::class, 'create_p
 Route::post('/blocklist-client/{id}', [ClientController::class, 'blocklist'])->name('client.blocklist');
 
 Route::post('/upload-image', [ClientController::class, 'upload'])->name('upload.image-client');
+Route::post('/download-contract', [ClientController::class, 'downloadContract'])->name('client.download-contract');
 
 Route::get('/system-admin/maintenance/backup-and-restore', [BackupAndRestoreController::class, 'index'])->name('system-admin.maintenance.backup-and-restore');
 Route::post('/system-admin/maintenance/backup', [BackupAndRestoreController::class, 'backup'])->name('system-admin.maintenance.backup');

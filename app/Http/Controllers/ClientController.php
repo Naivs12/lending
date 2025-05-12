@@ -10,6 +10,8 @@ use App\Models\Loan;
 use Cloudinary\Cloudinary;
 use Cloudinary\Transformation\Image;
 use Cloudinary\Api\Upload\UploadApi;
+use setasign\Fpdi\Fpdi;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -244,6 +246,80 @@ class ClientController extends Controller
             ->update(['image' => $file]);
 
         return response()->json('Done uploading..');
+    }
+
+    public function downloadContract(Request $request)
+    {
+        $now = Carbon::now();
+        $now = $now->format('F j, Y');
+
+        $client = Client::where('client_id', $request->client_id)->first();
+
+        if(!$client) {
+            return "No Client Found";
+        }
+
+        $branch = Branch::where('branch_id', $client->branch_id)->first();
+        $loan = Loan::where('client_id', $request->client_id)->first();
+
+        $existingPdf = storage_path('app/public/pdf/contract.pdf');
+
+        $outputPdf = storage_path('app/public/pdf/edit_contract.pdf');
+
+        $pdf = new FPDI();
+
+        $pdf->AddPage();
+
+        $pageCount = $pdf->setSourceFile($existingPdf);
+        $template = $pdf->importPage(1);
+
+        $pdf->useTemplate($template);
+
+        $pdf->SetFont('Helvetica', '', 12);
+        $pdf->SetTextColor(0, 0, 0);
+
+        // Branch Address
+        $pdf->SetXY(83, 37);
+        $pdf->Write(0, $branch->address);
+
+        // Branch Contact Number
+        $pdf->SetXY(90, 45);
+        $pdf->Write(0, $branch->contact_number ? $branch->contact_number : '');
+
+        $pdf->SetFont('Helvetica', '', 10); // Set New Font Size
+
+        //  Date Now
+        $pdf->SetXY(126, 63);
+        $pdf->Write(0, $now);
+
+        // Branch Address
+        $pdf->SetXY(25, 74);
+        $pdf->Write(0, $branch->address);
+
+        // Client ID and Name
+        $clientDisplay = $client->client_id . " " . $client->first_name . " " . $client->middle_name . " " . $client->last_name;
+        $pdf->SetXY(25, 80);
+        $pdf->Write(0, $clientDisplay);
+
+        // Client Address
+        $pdf->SetXY(129, 80);
+        $pdf->Write(0, $client->address);
+
+        // Client Contact Number
+        $pdf->SetXY(97, 86);
+        $pdf->Write(0, $client->contact_number);
+
+        // Client Loan Amount
+        $pdf->SetXY(155, 145);
+        $pdf->Write(0, $loan->loan_amount);
+
+        // Date Now
+        $pdf->SetXY(42, 153);
+        $pdf->Write(0, $now);
+
+        $pdf->Output($outputPdf, 'F');
+
+        return response()->download($outputPdf);
     }
 
 
