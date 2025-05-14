@@ -21,7 +21,7 @@
 
                     <!-- Personal Details -->
                     <div class="flex-1 relative">
-                        
+
                         <div class="absolute top-0 right-0 flex space-x-2">
                             @if($client->status === 'active')
                             <!-- Edit Button -->
@@ -42,7 +42,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" />
                                 </svg>
                             </button>
-                            
+
                             <!-- Delete Button -->
                             <button type="button" id="deleteClient" class="p-2 text-red-500 hover:text-red-700" data-id="{{ $client->id }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,12 +77,12 @@
                             <!-- Buttons Section -->
                             <div class="flex gap-2 mt-5">
                                 <!-- Download Button -->
-                                <button class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white">
+                                <button id="download-pdf" class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white">
                                     Download
                                 </button>
 
                                 <!-- Blocklist Button -->
-                                <button id="blocklistClient" data-id="{{ $client->id }}" 
+                                <button id="blocklistClient" data-id="{{ $client->id }}"
                                     class="border border-red-500 text-red-500 px-3 py-1 rounded-md text-sm hover:bg-red-500 hover:text-white">
                                     Blocklist
                                 </button>
@@ -344,7 +344,7 @@
         function redirectToLoanDetail(loanId) {
             window.location.href = "/loan-detail/" + loanId;
         }
-    </script>   
+    </script>
     <script>
     $(document).on('click', '#blocklistClient', function () {
         let clientId = $(this).data('id');
