@@ -263,59 +263,68 @@ class ClientController extends Controller
         $loan = Loan::where('client_id', $request->client_id)->first();
 
         $existingPdf = storage_path('app/public/pdf/contract.pdf');
-
         $outputPdf = storage_path('app/public/pdf/edit_contract.pdf');
 
         $pdf = new FPDI();
 
-        $pdf->AddPage();
-
         $pageCount = $pdf->setSourceFile($existingPdf);
-        $template = $pdf->importPage(1);
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+            // Get the original page dimensions
+            $templateId = $pdf->importPage($pageNo);
+            $size = $pdf->getTemplateSize($templateId);
 
-        $pdf->useTemplate($template);
+            // Add a new page with the same size as the original
+            $pdf->AddPage('P', [$size['width'], $size['height']]);
 
-        $pdf->SetFont('Helvetica', '', 12);
-        $pdf->SetTextColor(0, 0, 0);
+            // Use the template
+            $pdf->useTemplate($templateId);
 
-        // Branch Address
-        $pdf->SetXY(83, 37);
-        $pdf->Write(0, $branch->address);
+            if ($pageNo === 1) {
+                $pdf->SetFont('Helvetica', '', 12);
+                $pdf->SetTextColor(0, 0, 0);
 
-        // Branch Contact Number
-        $pdf->SetXY(90, 45);
-        $pdf->Write(0, $branch->contact_number ? $branch->contact_number : '');
+                // Branch Address
+                $pdf->SetXY(83, 37);
+                $pdf->Write(0, $branch->address);
 
-        $pdf->SetFont('Helvetica', '', 10); // Set New Font Size
+                // Branch Contact Number
+                $pdf->SetXY(90, 45);
+                $pdf->Write(0, $branch->contact_number ? $branch->contact_number : '');
 
-        //  Date Now
-        $pdf->SetXY(126, 63);
-        $pdf->Write(0, $now);
+                $pdf->SetFont('Helvetica', '', 10); // Set New Font Size
 
-        // Branch Address
-        $pdf->SetXY(25, 74);
-        $pdf->Write(0, $branch->address);
+                //  Date Now
+                $pdf->SetXY(126, 63);
+                $pdf->Write(0, $now);
 
-        // Client ID and Name
-        $clientDisplay = $client->client_id . " " . $client->first_name . " " . $client->middle_name . " " . $client->last_name;
-        $pdf->SetXY(25, 80);
-        $pdf->Write(0, $clientDisplay);
+                // Branch Address
+                $pdf->SetXY(25, 74);
+                $pdf->Write(0, $branch->address);
 
-        // Client Address
-        $pdf->SetXY(129, 80);
-        $pdf->Write(0, $client->address);
+                // Client ID and Name
+                $clientDisplay = $client->client_id . " " . $client->first_name . " " . $client->middle_name . " " . $client->last_name;
+                $pdf->SetXY(25, 80);
+                $pdf->Write(0, $clientDisplay);
 
-        // Client Contact Number
-        $pdf->SetXY(97, 86);
-        $pdf->Write(0, $client->contact_number);
+                // Client Address
+                $pdf->SetXY(129, 80);
+                $pdf->Write(0, $client->address);
 
-        // Client Loan Amount
-        $pdf->SetXY(155, 145);
-        $pdf->Write(0, $loan->loan_amount);
+                // Client Contact Number
+                $pdf->SetXY(97, 86);
+                $pdf->Write(0, $client->contact_number);
 
-        // Date Now
-        $pdf->SetXY(42, 153);
-        $pdf->Write(0, $now);
+                // Client Loan Amount
+                $pdf->SetXY(155, 145);
+                $pdf->Write(0, $loan ? $loan->loan_amount : '');
+
+                // Date Now
+                $pdf->SetXY(42, 153);
+                $pdf->Write(0, $now);
+            }
+        }
+
+
 
         $pdf->Output($outputPdf, 'F');
 
