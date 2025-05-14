@@ -70,13 +70,16 @@
         <span>Investor</span>
     </a>
 
-    <!-- Sign out -->
+    <!-- Sign Out -->
     <div class="mt-auto">
-        <a href="#" class="flex items-center px-3 py-2 rounded-md hover:bg-red-600 space-x-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"></path>
-            </svg>
-            <span>Sign out</span>
-        </a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="flex items-center px-3 py-2 rounded-md bg-red-600 hover:bg-red-700 active:bg-red-800 space-x-2 w-full">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
+                </svg>
+                <span>Sign Out</span>
+            </button>
+        </form>
     </div>
 </nav>

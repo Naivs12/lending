@@ -105,7 +105,14 @@ class ClientController extends Controller
     public function show_client_details($client_id)
     {
         $client = Client::where('client_id', $client_id)->firstOrFail();
-        return view('system-admin.client_detail', compact('client'));
+        $loans = Loan::where('client_id', $client_id)->paginate(5); // Fetch loans for the client
+        if (Auth()->user()->role === 'system-admin') {
+            return view('system-admin.client_detail', compact('client', 'loans'));
+        }
+        else{
+            return view('admin.client_detail', compact('client', 'loans'));
+        }
+        
     }
 
     public function delete_client($id)
@@ -214,14 +221,15 @@ class ClientController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
-            $client->status = 'blocklisted'; // Assuming you have a 'status' column in your 'clients' table
+            $client->status = 'blocklisted'; // Change status to blocklisted
             $client->save();
-
-            return response()->json(['success' => true, 'message' => 'Client has been blocklisted.']);
+    
+            return response()->json(['success' => true, 'message' => 'Client blocklisted successfully!']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to blocklist the client.']);
+            return response()->json(['success' => false, 'message' => 'Failed to blocklist client.'], 500);
         }
     }
+    
     public function upload(Request $request)
     {
         // Validate incoming request

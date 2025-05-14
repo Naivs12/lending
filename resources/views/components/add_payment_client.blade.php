@@ -72,7 +72,7 @@
 <!-- Script -->
 <script>
 $(document).ready(function () {
-    // Enable client input when branch is selected
+    // Enable client input when branch is selected (only for system-admin)
     $("#branch_id").on("change", function () {
         if ($(this).val() !== "") {
             $("#client_input").prop("readonly", false).val("").focus();
@@ -88,12 +88,17 @@ $(document).ready(function () {
         }
     });
 
+    // If the user is not a system-admin, ensure the client input is always enabled
+    @if(auth()->user()->role !== 'system-admin')
+        $("#client_input").prop("readonly", false);
+    @endif
+
     // Client search with branch_id
     $("#client_input").on("keyup", function () {
         let query = $(this).val();
         let branchId = $("#branch_id").val();
 
-        if (query.length >= 1 && branchId !== "") {
+        if (query.length >= 1 && (branchId !== "" || $("#branch_id").length === 0)) {
             $.ajax({
                 url: "{{ route('clients.search') }}",
                 method: "GET",
@@ -219,9 +224,10 @@ $(document).ready(function () {
                             text: response.message,
                             icon: 'success',
                             confirmButtonColor: '#028051', // Green button
+                        }).then(() => {
+                            // Reload the page after the success alert is closed
+                            location.reload();
                         });
-                        $("#addClientPaymentModal").addClass("hidden");
-                        // Optionally reload page or clear form fields
                     },
                     error: function(xhr) {
                         Swal.fire({
