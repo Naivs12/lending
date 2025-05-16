@@ -194,16 +194,36 @@ RUN if [ ${INSTALL_RDKAFKA} = true ]; then \
   fi
 
 ###########################################
-# OpenSwoole/Swoole extension
+# OpenSwoole/Swoole extension (manual build with flags)
 ###########################################
 
 ARG INSTALL_SWOOLE=true
 ARG SERVER=openswoole
 
 RUN if [ ${INSTALL_SWOOLE} = true ]; then \
-      apt-get install -yqq --no-install-recommends --show-progress libc-ares-dev \
-      && pecl -q install -o -f -D 'enable-openssl="yes" enable-http2="yes" enable-swoole-curl="yes" enable-mysqlnd="yes" enable-cares="yes"' ${SERVER} \
-      && docker-php-ext-enable ${SERVER}; \
+      apt-get install -yqq --no-install-recommends --show-progress \
+        libc-ares-dev \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libnghttp2-dev \
+        pkg-config \
+        re2c \
+        autoconf \
+        build-essential \
+        git; \
+      \
+      git clone --depth=1 https://github.com/openswoole/swoole-src.git /usr/src/openswoole; \
+      cd /usr/src/openswoole; \
+      phpize; \
+      ./configure \
+        --enable-openssl \
+        --enable-http2 \
+        --enable-swoole-curl \
+        --enable-mysqlnd \
+        --enable-cares; \
+      make -j"$(nproc)" && make install; \
+      docker-php-ext-enable openswoole; \
+      rm -rf /usr/src/openswoole; \
     fi
 
 ###########################################################################
