@@ -11,6 +11,7 @@ php() {
 initialStuff() {
     php artisan optimize:clear; \
     php artisan package:discover --ansi; \
+    php artisan cache:table; \
     php artisan event:cache; \
     php artisan config:cache; \
     php artisan route:cache; \
