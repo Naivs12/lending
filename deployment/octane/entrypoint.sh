@@ -11,7 +11,12 @@ php() {
 initialStuff() {
     php artisan optimize:clear; \
     php artisan package:discover --ansi; \
-    php artisan optimze; \
+    php artisan event:cache; \
+    php artisan config:cache; \
+    php artisan route:cache; \
+    php artisan config:clear; \
+    php artisan cache:clear; \
+    php artisan route:clear; \
     php artisan migrate:fresh --seed;
 }
 
