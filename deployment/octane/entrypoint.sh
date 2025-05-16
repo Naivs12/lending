@@ -9,16 +9,21 @@ php() {
 }
 
 initialStuff() {
-    php artisan optimize:clear; \
-    php artisan package:discover --ansi; \
-    php artisan cache:table; \
-    php artisan event:cache; \
-    php artisan config:cache; \
-    php artisan route:cache; \
-    php artisan config:clear; \
-    php artisan cache:clear; \
-    php artisan route:clear; \
-    php artisan migrate:fresh --seed;
+    echo "Clearing caches before running migrations..."
+    php artisan config:clear
+    php artisan cache:clear
+    php artisan route:clear
+    php artisan view:clear
+
+    echo "Rebuilding config cache..."
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    php artisan event:cache
+    php artisan package:discover --ansi
+
+    echo "Running migrations..."
+    php artisan migrate:fresh --seed
 }
 
 if [ "$1" != "" ]; then
