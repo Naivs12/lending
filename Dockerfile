@@ -14,7 +14,7 @@ COPY package.json package-lock.json /frontend/
 
 RUN npm install
 
-COPY artisan jsconfig.json tailwind.config.js postcss.config.js vite.config.js  /frontend/
+COPY artisan tailwind.config.js postcss.config.js vite.config.js  /frontend/
 COPY app ./app
 COPY bootstrap ./bootstrap
 COPY public ./public
