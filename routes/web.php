@@ -93,7 +93,7 @@ Route::post('/system-admin/maintenance/restore', [BackupAndRestoreController::cl
 Route::get('/client-detail/{client_id}', [ClientController::class, 'show_client_details'])->name('client_detail');
 Route::get('/loan-detail/{loan_id}', [LoanController::class, 'show_loan_details_sysad'])->name('loan_detail');
 
-Route::post('/keep-alive', function () {
+Route::get('/keep-alive', function () {
     return response()->json('ok');
 });
 
