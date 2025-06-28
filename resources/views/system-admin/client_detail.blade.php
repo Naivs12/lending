@@ -77,7 +77,7 @@
                             <!-- Buttons Section -->
                             <div class="flex gap-2 mt-5">
                                 <!-- Download Button -->
-                                <button class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white">
+                                <button id="download-pdf" class="border border-green-500 text-green-500 px-3 py-1 rounded-md text-sm hover:bg-green-500 hover:text-white">
                                     Download
                                 </button>
 

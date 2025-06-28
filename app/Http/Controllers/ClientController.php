@@ -265,7 +265,7 @@ class ClientController extends Controller
         $existingPdf = storage_path('app/public/pdf/contract.pdf');
         $outputPdf = storage_path('app/public/pdf/edit_contract.pdf');
 
-        $pdf = new FPDI();
+        $pdf = new Fdpi();
 
         $pageCount = $pdf->setSourceFile($existingPdf);
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -289,7 +289,7 @@ class ClientController extends Controller
 
                 // Branch Contact Number
                 $pdf->SetXY(90, 45);
-                $pdf->Write(0, $branch->contact_number ? $branch->contact_number : '');
+                $pdf->Write(0, $branch ? $branch->contact_number : '');
 
                 $pdf->SetFont('Helvetica', '', 10); // Set New Font Size
 
