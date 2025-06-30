@@ -84,7 +84,7 @@
                                     @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                     {{ $loan->client->last_name }}
                                 </td>
-                                <td class="px-4 py-2">{{ number_format($loan->loan_amount, 2) }}</td>
+                                <td class="px-4 py-2">PHP {{ number_format($loan->loan_amount, 2) }}</td>
                                 <td class="px-4 py-2">{{ $loan->progress }} / {{$loan->total_progress }}</td>
                                 <td class="px-4 py-2">{{ $loan->interest }}%</td>
                             </tr>

@@ -238,7 +238,7 @@ class LoanController extends Controller
         $principal = $request->amount;
         $interestRate = $request->interest / 100;
 
-        $totalAmountWithInterest = $principal + ($principal * $interestRate);
+        $totalAmountWithInterest = $principal * $interestRate * ($terms/12) + $principal; // Total amount with interest
         $paymentPerTerm = round($totalAmountWithInterest / $totalProgress, 2); // divided by total payments, not term
 
         // Choose branch_id based on role

@@ -59,6 +59,10 @@
             </div>
         </div>
 
+        <a href="{{ route('system-admin.finance') }}" class="mb-2 flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 space-x-2 {{ Request::routeIs('system-admin.finance') ? 'bg-yellow-300' : '' }}">
+            <span>Finance</span>
+        </a>
+
         <!-- Client Link -->
         <a href="{{ route('system-admin.client') }}" class="mb-2 flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 space-x-2 {{ Request::routeIs('system-admin.client') ? 'bg-yellow-300' : '' }}">
             <span>Client</span>

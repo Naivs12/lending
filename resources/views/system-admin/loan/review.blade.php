@@ -66,7 +66,7 @@
                                 @if($loan->client->middle_name) {{ $loan->client->middle_name }} @endif 
                                 {{ $loan->client->last_name }}
                             </td>
-                            <td class="px-4 py-2 whitespace-nowrap items-center">{{ number_format($loan->amount, 2) }}</td>
+                            <td class="px-4 py-2 whitespace-nowrap items-center">PHP {{ number_format($loan->loan_amount, 2) }}</td>
                             <td class="px-4 py-2 whitespace-nowrap items-center">{{ \Carbon\Carbon::parse($loan->created_at)->format('Y-m-d') }}</td>
                             <td class="px-4 py-2 whitespace-nowrap">
                                 <div class="flex items-center justify-center space-x-2 h-full">

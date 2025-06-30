@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ClientPayment extends Model
+class Transaction extends Model
 {
+    use HasFactory;
 
     protected $table = 'transactions';
     protected $primaryKey = 'id';
@@ -19,7 +21,6 @@ class ClientPayment extends Model
         'term',
         'amount_pd',
         'amount_due',
-        'interest_per_payment',
         'payment_date',
         'due_date'
         

@@ -12,6 +12,7 @@ use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ClientPaymentController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\FinanceController;
 
 use App\Http\Controllers\BackupAndRestoreController;
 
@@ -68,7 +69,8 @@ Route::middleware([SystemAdminMiddleware::class])->group(function () {
     Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search');
     Route::get('/system-admin/payment_info/client', [ClientPaymentController::class, 'index_sysad'])->name('system-admin.payment_info.client_info');
     
-    Route::get('system-admin/maintenance/archive', [ArchiveController::class, 'index'])->name('system-admin.maintenance.archive');
+    Route::get('/system-admin/maintenance/archive', [ArchiveController::class, 'index'])->name('system-admin.maintenance.archive');
+    Route::get('/system-admin/finance', [FinanceController::class, 'index'])->name('system-admin.finance');
 });
 
 Route::post('/update-loan-status', [LoanController::class, 'updateStatus']);
