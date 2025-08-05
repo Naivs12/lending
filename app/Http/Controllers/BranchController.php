@@ -30,12 +30,30 @@ class BranchController extends Controller {
         $nextNumber = $lastBranch ? (intval(substr($lastBranch->branch_id, 2)) + 1) : 1;
         $branch_id = 'B-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
+        // Generate next index_client_id
+        $lastIndexClientId = $lastBranch ? $lastBranch->index_client_id : null;
+        if ($lastIndexClientId === 'C-' || $lastIndexClientId === null) {
+            $nextClientIndex = '0';
+        } else {
+            // Get the numeric part after 'C-'
+            $numericPart = substr($lastIndexClientId, 2);
+            // If all characters are '0', add another '0'
+            if (preg_match('/^0+$/', $numericPart)) {
+                $nextClientIndex = $numericPart . '0';
+            } else {
+                // Otherwise, increment as integer
+                $nextClientIndex = strval(intval($numericPart) + 1);
+            }
+        }
+        $index_client_id = 'C-' . $nextClientIndex;
+
         // Create new branch
         Branch::create([
             'branch_id' => $branch_id,
             'branch_name' => $request->branch_name,
             'address' => $request->address,
-            'contact_number' => $request->contact_number
+            'contact_number' => $request->contact_number,
+            'index_client_id' => $index_client_id
         ]);
 
         return response()->json(['message' => 'Branch added successfully!']);

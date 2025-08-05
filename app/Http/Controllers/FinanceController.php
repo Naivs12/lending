@@ -15,86 +15,68 @@ class FinanceController extends Controller
 
     public function index(Request $request)
     {
-        $filter = $request->get('filter', 'daily');
+        // Get filter values from request
+        $selectedYear = $request->get('year');
+        $selectedMonth = $request->get('month');
 
-        // Set date format based on filter
-        if ($filter === 'annually') {
-            $dateFormat = '%Y';
-        } elseif ($filter === 'quarterly') {
-            $dateFormat = 'quarter'; // We'll handle this below
-        } elseif ($filter === 'monthly') {
-            $dateFormat = '%Y-%m'; // monthly
-        } elseif ($filter === 'daily') {
-            $dateFormat = '%Y-%m-%d';
+        // Get all unique year/months from transactions
+        $dateQuery = Transaction::select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"))
+            ->groupBy('ym')
+            ->orderBy('ym', 'asc');
+
+        $allMonths = $dateQuery->pluck('ym')->toArray();
+
+        // If filter is set, use only that year/month
+        if ($selectedYear && $selectedMonth) {
+            $months = [$selectedYear . '-' . str_pad($selectedMonth, 2, '0', STR_PAD_LEFT)];
+        } elseif ($selectedYear) {
+            $months = array_filter($allMonths, fn($m) => strpos($m, $selectedYear . '-') === 0);
+        } else {
+            $months = $allMonths;
         }
 
-        // Get all loans for reference
-        $loans = Loan::select('loan_id', 'loan_amount')->get()->keyBy('loan_id');
+        $monthlyPrincipal = [];
+        $monthlyPaid = [];
+        $monthlyUnpaid = [];
 
-        // Get transactions grouped by date and loan_id
-        $transactions = Transaction::select(
-                DB::raw('DATE(created_at) as date'),
-                'loan_id',
-                DB::raw('SUM(interest_per_payment) as total_paid')
-            )
-            ->groupBy('date', 'loan_id')
-            ->orderBy('date')
-            ->get();
+        foreach ($months as $month) {
+            // Principal: sum of all loan_amounts created in this month
+            $principal = Loan::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), $month)->sum('tot_amnt_w_int');
+            // Paid: sum of all payments made in this month
+            $paid = Transaction::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), $month)->sum('amount_pd');
+            // Unpaid: principal - paid
+            $unpaid = $principal - $paid;
 
-        // Prepare chart data
-        $chart = [];
-        foreach ($transactions as $txn) {
-            $loan = $loans[$txn->loan_id] ?? null;
-            if (!$loan) continue;
-
-            // Grouping by filter
-            $date = $txn->date;
-            if ($filter === 'annually') {
-                $date = date('Y', strtotime($txn->date));
-            } elseif ($filter === 'quarterly') {
-                $month = date('n', strtotime($txn->date));
-                $quarter = ceil($month / 3);
-                $date = date('Y', strtotime($txn->date)) . '-Q' . $quarter;
-            } elseif ($filter === 'daily') {
-                $date = date('Y-m-d', strtotime($txn->date));
-            } else {
-                $date = date('Y-m', strtotime($txn->date));
-            }
-
-            $principal = $loan->loan_amount;
-            $profit = $txn->total_paid;
-
-            $chart[$date]['date'] = $date;
-            $chart[$date]['principal'] = ($chart[$date]['principal'] ?? 0) + $principal;
-            $chart[$date]['profit'] = ($chart[$date]['profit'] ?? 0) + $profit;
-        }
-
-        // Sort by date and prepare for JS
-        ksort($chart);
-        $labels = [];
-        $principalData = [];
-        $profitData = [];
-        foreach ($chart as $row) {
-            $labels[] = $row['date'];
-            $principalData[] = $row['principal'];
-            $profitData[] = $row['profit'];
+            $monthlyPrincipal[] = $principal;
+            $monthlyPaid[] = $paid;
+            $monthlyUnpaid[] = $unpaid;
         }
 
         // For AJAX requests (when filter changes)
         if ($request->ajax()) {
             return response()->json([
-                'labels' => $labels,
-                'profit' => $profitData,
-                'principal' => $principalData,
+                'labels' => $months,
+                'principal' => $monthlyPrincipal,
+                'paid' => $monthlyPaid,
+                'unpaid' => $monthlyUnpaid,
             ]);
         }
 
+        // For filter dropdowns
+        $years = array_unique(array_map(fn($m) => substr($m, 0, 4), $allMonths));
+        $monthsList = array_unique(array_map(fn($m) => substr($m, 5, 2), $allMonths));
+
         // For initial page load
         return view('system-admin.finance', [
-            'labels' => $labels,
-            'profitData' => $profitData,
-            'principalData' => $principalData,
-            'filter' => $filter,
+            'labels' => $months,
+            'principalData' => $monthlyPrincipal,
+            'paidData' => $monthlyPaid,
+            'unpaidData' => $monthlyUnpaid,
+            'filter' => 'monthly',
+            'years' => $years,
+            'monthsList' => $monthsList,
+            'selectedYear' => $selectedYear,
+            'selectedMonth' => $selectedMonth,
         ]);
     }
 }

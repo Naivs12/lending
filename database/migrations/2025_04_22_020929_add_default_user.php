@@ -10,7 +10,7 @@ return new class extends Migration
         // First insert the branch if it doesn't exist
         DB::table('branches')->updateOrInsert(
             ['branch_id' => 'B-001'],
-            ['branch_name' => 'Main Branch', 'created_at' => now(), 'updated_at' => now(), 'address' => 'default', 'contact_number' => 'default']
+            ['branch_name' => 'Main Branch', 'created_at' => now(), 'updated_at' => now(), 'address' => 'default', 'contact_number' => 'default', 'index_client_id' => 'C-']
         );
 
         // Then insert the user
@@ -19,7 +19,7 @@ return new class extends Migration
             'username' => 'system-admin',
             'password' => Hash::make('password'), // Use a secure password
             'role' => 'system-admin',
-            'branch_id' => 'B-001',
+            'branch_id' => 'B-001', // No value
             'created_at' => now(),
             'updated_at' => now(),
         ]);

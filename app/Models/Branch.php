@@ -13,6 +13,6 @@ class Branch extends Model {
     public $incrementing = true; 
     protected $keyType = 'int';
     public $timestamps = true;
-    protected $fillable = ['branch_id', 'branch_name', 'address', 'contact_number']; 
+    protected $fillable = ['branch_id', 'branch_name', 'address', 'contact_number', 'index_client_id']; 
 }
 

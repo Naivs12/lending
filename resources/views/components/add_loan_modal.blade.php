@@ -63,10 +63,11 @@
                         <div class="flex flex-col">
                             <label for="payment_schedule" class="text-gray-700 font-medium">Payment Schedule</label>
                             <select id="payment_schedule" name="payment_schedule" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
+                                <option value="daily">Daily</option>
                                 <option value="weekly">Weekly</option>
                                 <option value="two_weeks">2 Weeks</option>
                                 <option value="monthly">Monthly</option>
-                                <option value="interest_only">Interest Only</option>
+                                <!-- <option value="interest_only">Interest Only</option> -->
                             </select>
                         </div>
                     </div>

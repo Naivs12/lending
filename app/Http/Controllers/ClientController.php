@@ -72,11 +72,34 @@ class ClientController extends Controller
             ? $request->branch_id
             : auth()->user()->branch_id;
 
-        // Generate new client ID
-        $lastClient = Client::orderBy('client_id', 'desc')->first();
-        $newClientId = $lastClient
-            ? 'CL-' . str_pad((int) substr($lastClient->client_id, 3) + 1, 7, '0', STR_PAD_LEFT)
-            : 'CL-0000001';
+        // Get index_client_id from the branch
+        $branch = Branch::where('branch_id', $branch_id)->first();
+        $indexClientId = $branch ? $branch->index_client_id : 'C-';
+
+        // Get the last client for this branch with this prefix
+        $lastClient = Client::where('branch_id', $branch_id)
+            ->where('client_id', 'like', $indexClientId . '%')
+            ->orderBy('client_id', 'desc')
+            ->first();
+
+        $prefixLength = strlen($indexClientId);
+
+        if ($lastClient) {
+            // Get the numeric part after the index_client_id prefix
+            $lastNumber = (int) substr($lastClient->client_id, $prefixLength);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1;
+        }
+
+        // If index_client_id is C-00, C-000, etc., pad to the number of zeros
+        if (preg_match('/^C-+$/', $indexClientId)) {
+            $padLength = $prefixLength - 2; // Number of zeros after C-
+            $newClientId = $indexClientId . str_pad($newNumber, $padLength, '0', STR_PAD_LEFT);
+        } else {
+            // For C-, C-1, etc., just append the number
+            $newClientId = $indexClientId . $newNumber;
+        }
 
         // Create the client
         Client::create([

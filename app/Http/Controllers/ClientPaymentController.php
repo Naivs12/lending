@@ -118,8 +118,14 @@ class ClientPaymentController extends Controller
 
         // Determine due date based on schedule
         switch ($paymentSched) {
+            case 'daily':
+                $dueDate = $dateRelease->copy()->addDay();
+                break;
             case 'weekly':
                 $dueDate = $dateRelease->copy()->addWeek();
+                break;
+            case 'two_weeks':
+                $dueDate = $dateRelease->copy()->addWeeks(2);
                 break;
             case 'monthly':
                 $dueDate = $dateRelease->copy()->addMonth();
