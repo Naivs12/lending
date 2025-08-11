@@ -19,6 +19,7 @@ class ClientPayment extends Model
         'term',
         'amount_pd',
         'amount_due',
+        'interest_per_payment',
         'payment_date',
         'due_date'
         

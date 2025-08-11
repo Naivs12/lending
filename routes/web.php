@@ -11,7 +11,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ClientPaymentController;
+use App\Http\Controllers\InvestorPaymentController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\FinanceController;
 
 use App\Http\Controllers\BackupAndRestoreController;
 
@@ -67,8 +69,14 @@ Route::middleware([SystemAdminMiddleware::class])->group(function () {
     Route::get('/system-admin/loan/review', [LoanController::class, 'index_review'])->name('system-admin.loan.review');
     Route::get('/loan/search', [LoanController::class, 'search'])->name('loan.search');
     Route::get('/system-admin/payment_info/client', [ClientPaymentController::class, 'index_sysad'])->name('system-admin.payment_info.client_info');
+<<<<<<< HEAD
+    Route::get('/system-admin/payment_info/investor', [InvestorPaymentController::class, 'index'])->name('system-admin.payment_info.investor_info');
+    Route::get('/system-admin/maintenance/archive', [ArchiveController::class, 'index'])->name('system-admin.maintenance.archive');
+    Route::get('/system-admin/finance', [FinanceController::class, 'index'])->name('system-admin.finance');
+=======
 
     Route::get('system-admin/maintenance/archive', [ArchiveController::class, 'index'])->name('system-admin.maintenance.archive');
+>>>>>>> a2876a193dfeb26bec935bf395c7881200d4797f
 });
 
 Route::post('/update-loan-status', [LoanController::class, 'updateStatus']);

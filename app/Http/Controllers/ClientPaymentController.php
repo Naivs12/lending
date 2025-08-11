@@ -111,12 +111,21 @@ class ClientPaymentController extends Controller
             $loan->status = 'completed';
         }
 
+        $noInterest = $loan->loan_amount / $loan->term;
+
+        $interestPerPayment = $amount_due - $noInterest;
         $loan->save();
 
         // Determine due date based on schedule
         switch ($paymentSched) {
+            case 'daily':
+                $dueDate = $dateRelease->copy()->addDay();
+                break;
             case 'weekly':
                 $dueDate = $dateRelease->copy()->addWeek();
+                break;
+            case 'two_weeks':
+                $dueDate = $dateRelease->copy()->addWeeks(2);
                 break;
             case 'monthly':
                 $dueDate = $dateRelease->copy()->addMonth();
@@ -129,6 +138,10 @@ class ClientPaymentController extends Controller
         // Use the system-admin's branch_id if available, otherwise use the logged-in user's branch_id
         $branch_id = $request->branch_id ?? $user->branch_id;
 
+
+     
+
+
         // Create payment record
         $payment = new ClientPayment([
             'loan_id' => $request->loan_id,
@@ -139,10 +152,12 @@ class ClientPaymentController extends Controller
             'amount_due' => $amount_due,
             'payment_date' => $today,
             'due_date' => $dueDate->toDateString(),
+            'interest_per_payment' => $interestPerPayment,
         ]);
 
         $payment->save();
 
         return response()->json(['message' => 'Payment successfully recorded.']);
     }
+    
 }

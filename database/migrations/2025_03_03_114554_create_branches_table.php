@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('branch_name');
             $table->string('address');
             $table->string('contact_number');
+            $table->string('index_client_id');
             $table->timestamps();
         });
     }

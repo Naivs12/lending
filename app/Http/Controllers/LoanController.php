@@ -201,7 +201,7 @@ class LoanController extends Controller
             'amount' => 'required|numeric|min:1',
             'interest' => 'required|numeric|min:0',
             'terms' => 'required|numeric|min:1|max:12',
-            'payment_schedule' => 'required|in:weekly,two_weeks,monthly,interest_only',
+            'payment_schedule' => 'required|in:daily,weekly,two_weeks,monthly,interest_only',
             'date_release' => 'required|date',
         ];
 
@@ -221,6 +221,9 @@ class LoanController extends Controller
 
         // Determine number of payments based on schedule
         switch ($request->payment_schedule) {
+            case 'daily':
+                $totalProgress = $terms * 30; // 30 days per month
+                break;
             case 'weekly':
                 $totalProgress = $terms * 4;
                 break;
@@ -238,8 +241,10 @@ class LoanController extends Controller
         $principal = $request->amount;
         $interestRate = $request->interest / 100;
 
-        $totalAmountWithInterest = $principal + ($principal * $interestRate);
-        $paymentPerTerm = round($totalAmountWithInterest / $totalProgress, 2); // divided by total payments, not term
+        // 10% per month, so multiply by terms (months)
+        $totalInterest = $principal * $interestRate * $terms;
+        $totalAmountWithInterest = $principal + $totalInterest;
+        $paymentPerTerm = round($totalAmountWithInterest / $totalProgress, 2);
 
         // Choose branch_id based on role
         $branchId = auth()->user()->role === 'system-admin'

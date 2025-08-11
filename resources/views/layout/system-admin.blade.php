@@ -25,7 +25,7 @@
 
         <div class="flex-1 bg-white p-6 relative">
             <!-- Add silhouette effect for the logo -->
-            <div class="absolute inset-3 bg-cover bg-center opacity-10" style="background-image: url('{{ asset('storage/images/logo.png') }}'); filter: blur(6px);"></div>
+            <div class="absolute inset-3 bg-cover bg-center opacity-10 pointer-events-none" style="background-image: url('{{ asset('storage/images/logo.png') }}'); filter: blur(6px);"></div>
             
             <!-- Content goes here -->
             @yield('content')
@@ -34,7 +34,7 @@
 @else
     <p class="text-center text-red-500">Unauthorized Access</p>
 @endif
-
+@stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>

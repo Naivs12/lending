@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('term');
             $table->integer('amount_pd');
             $table->integer('amount_due');
+            $table->integer('interest_per_payment');// Added interest per payment
             $table->date('payment_date');
             $table->date('due_date');
             $table->timestamps();
