@@ -53,7 +53,7 @@
                 <a href="{{ route('system-admin.payment_info.client_info') }}" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.payment_info.client_info') ? 'bg-yellow-300' : '' }}">
                     <span>Client</span>
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.payment_info.investor_info') ? 'bg-yellow-300' : '' }}">
+                <a href="{{ route('system-admin.payment_info.investor_info') }}" class="flex items-center px-3 py-2 rounded-md bg-[#028051] hover:bg-yellow-300 active:bg-yellow-300 {{ Request::routeIs('system-admin.payment_info.investor_info') ? 'bg-yellow-300' : '' }}">
                     <span>Investor</span>
                 </a>
             </div>

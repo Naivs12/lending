@@ -10,38 +10,38 @@
             </div> 
 
             <div class="flex justify-start mb-3 mt-3 w-full">
-            <form method="GET" action="{{ route('system-admin.payment_info.client_info') }}" class="w-full">
-                <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
-                    <!-- Search Field -->
-                    <div class="flex flex-col col-span-4">
-                        <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
-                    </div>
+                <form method="GET" action="{{ route('system-admin.payment_info.client_info') }}" class="w-full">
+                    <div class="grid grid-cols-10 gap-2 ms-1 me-1 w-full items-center">
+                        <!-- Search Field -->
+                        <div class="flex flex-col col-span-4">
+                            <input type="text" name="query" id="client-search" class="form-control text-sm" placeholder="Search" />
+                        </div>
 
-                    <!-- Branch Select Dropdown -->
-                    <div class="flex flex-col col-span-2">
-                        <select name="branch" onchange="this.form.submit()"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
-                            <option value="">All Branches</option>
-                            @foreach($branches as $branch)
-                                <option value="{{ $branch->branch_id }}" 
-                                    {{ request('branch') == $branch->branch_id ? 'selected' : '' }}>
-                                    {{ $branch->branch_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <!-- Branch Select Dropdown -->
+                        <div class="flex flex-col col-span-2">
+                            <select name="branch" onchange="this.form.submit()"
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                                <option value="">All Branches</option>
+                                @foreach($branches as $branch)
+                                    <option value="{{ $branch->branch_id }}" 
+                                        {{ request('branch') == $branch->branch_id ? 'selected' : '' }}>
+                                        {{ $branch->branch_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <!-- Name Sort Dropdown -->
-                    <div class="flex flex-col col-span-2">
-                        <select name="nameSort" onchange="this.form.submit()"
-                            class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
-                            <option value="">Sort</option>
-                            <option value="asc" {{ request('nameSort') == 'asc' ? 'selected' : '' }}>Name - Asc</option>
-                            <option value="desc" {{ request('nameSort') == 'desc' ? 'selected' : '' }}>Name - Desc</option>
-                        </select>
+                        <!-- Name Sort Dropdown -->
+                        <div class="flex flex-col col-span-2">
+                            <select name="nameSort" onchange="this.form.submit()"
+                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
+                                <option value="">Sort</option>
+                                <option value="asc" {{ request('nameSort') == 'asc' ? 'selected' : '' }}>Name - Asc</option>
+                                <option value="desc" {{ request('nameSort') == 'desc' ? 'selected' : '' }}>Name - Desc</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
 
 
