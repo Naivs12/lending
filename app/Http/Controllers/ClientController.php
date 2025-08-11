@@ -135,7 +135,7 @@ class ClientController extends Controller
         else{
             return view('admin.client_detail', compact('client', 'loans'));
         }
-        
+
     }
 
     public function delete_client($id)
@@ -246,13 +246,13 @@ class ClientController extends Controller
             $client = Client::findOrFail($id);
             $client->status = 'blocklisted'; // Change status to blocklisted
             $client->save();
-    
+
             return response()->json(['success' => true, 'message' => 'Client blocklisted successfully!']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to blocklist client.'], 500);
         }
     }
-    
+
     public function upload(Request $request)
     {
         // Validate incoming request
@@ -285,8 +285,8 @@ class ClientController extends Controller
         $branch = Branch::where('branch_id', $client->branch_id)->first();
         $loan = Loan::where('client_id', $request->client_id)->first();
 
-        $existingPdf = storage_path('app/public/pdf/contract.pdf');
-        $outputPdf = storage_path('app/public/pdf/edit_contract.pdf');
+        $existingPdf = storage_path('app/public/contract.pdf');
+        $outputPdf = storage_path('app/public/edit_contract.pdf');
 
         $pdf = new Fdpi();
 
