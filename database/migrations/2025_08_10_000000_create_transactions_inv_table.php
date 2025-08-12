@@ -11,8 +11,6 @@ class CreateTransactionsInvTable extends Migration
         Schema::create('transactions_inv', function (Blueprint $table) {
             $table->id();
             $table->string('investor_id');
-            $table->string('name');
-            $table->date('due_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->decimal('amount', 15, 2)->nullable();
             $table->timestamps();

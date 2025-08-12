@@ -11,8 +11,7 @@ class InvestorController extends Controller
 {
     public function index(Request $request)
     {
-        $branches = Branch::all(); // Fetch all branches
-        // Start the query builder
+        $branches = Branch::all();
         $query = Investor::query();
 
         // Filter by branch if selected
@@ -20,12 +19,25 @@ class InvestorController extends Controller
             $query->where('branch_id', $request->branch);
         }
 
-        // Example sorting by name (if applicable)
-        if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
-            $query->orderByRaw("CONCAT(first_name, ' ', last_name) " . $request->nameSort);
+        // Search filter
+        if ($request->filled('query')) {
+            $search = $request->input('query');
+            $query->where(function ($q) use ($search) {
+                $q->where('investor_id', 'like', "%{$search}%")
+                  ->orWhere('first_name', 'like', "%{$search}%")
+                  ->orWhere('middle_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('address', 'like', "%{$search}%");
+            });
         }
 
-        // Paginate the results
+        // Sort by full name
+        if ($request->has('nameSort') && in_array($request->nameSort, ['asc', 'desc'])) {
+            $query->orderByRaw("CONCAT_WS(' ', first_name, middle_name, last_name) " . $request->nameSort);
+        } else {
+            $query->orderBy('investor_id', 'asc'); // Default sort
+        }
+
         $investors = $query->paginate(10);
 
         // Redirect if no data found on the requested page
@@ -45,20 +57,21 @@ class InvestorController extends Controller
             'address' => 'required|string',
             'contact_number' => 'required|string',
             'amount_invest' => 'required|numeric',
-            'percentage' => 'required|numeric'
+            'percentage' => 'required|numeric',
+            'payment_every' => 'required|integer|min:1|max:30'
         ]);
 
         $branch_id = Auth::user()->branch_id;
-    
+
         $lastInvestor = Investor::orderBy('investor_id', 'desc')->first();
-    
+
         if ($lastInvestor) {
-            $numericPart = (int) substr($lastInvestor->investor_id, 4); // Fixed variable name
-            $newInvestorId = 'INV-' . str_pad($numericPart + 1, 7, '0', STR_PAD_LEFT);
+            $numericPart = (int) str_replace('INV-', '', $lastInvestor->investor_id);
+            $newInvestorId = 'INV-' . ($numericPart + 1);
         } else {
-            $newInvestorId = 'INV-0000001';
+            $newInvestorId = 'INV-1';
         }
-    
+
         Investor::create([
             'investor_id' => $newInvestorId,
             'first_name' => $request->first_name,
@@ -68,9 +81,10 @@ class InvestorController extends Controller
             'contact_number' => $request->contact_number,
             'amount_invest'  => $request->amount_invest,
             'payment_percent'  => $request->percentage,
+            'payment_every' => $request->payment_every,
             'branch_id' => $branch_id
         ]);
-    
+
         return response()->json(['success' => true, 'message' => 'Investor added successfully!']);
     }
 
@@ -114,6 +128,53 @@ class InvestorController extends Controller
     
         return view('admin.investor', compact('investors'));
     }
-    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $investors = \App\Models\Investor::where('investor_id', 'like', "%{$query}%")
+            ->orWhereRaw("CONCAT_WS(' ', first_name, middle_name, last_name) LIKE ?", ["%{$query}%"])
+            ->limit(10)
+            ->get(['investor_id', 'first_name', 'middle_name', 'last_name']);
+
+        // Format the results for the suggestion box
+        $results = $investors->map(function($inv) {
+            return [
+                'investor_id' => $inv->investor_id,
+                'full_name' => trim("{$inv->first_name} {$inv->middle_name} {$inv->last_name}")
+            ];
+        });
+
+        return response()->json($results);
+    }
+
+    // In InvestorController.php
+public function dueReminder(Request $request)
+{
+    $todayDay = now()->day; // Get today's day number (1-31)
+
+    // Get investors with payment_date matching today
+    $dueInvestors = Investor::where('payment_date', $todayDay)
+        ->select('investor_id', 'first_name', 'middle_name', 'last_name')
+        ->get();
+
+    if ($dueInvestors->isNotEmpty()) {
+        return response()->json([
+            'due_today' => true,
+            'message' => "The following investors have payments due today:",
+            'investors' => $dueInvestors->map(function($inv) {
+                return trim("{$inv->first_name} {$inv->middle_name} {$inv->last_name}");
+            })
+        ]);
+    } else {
+        return response()->json([
+            'due_today' => false,
+            'message' => "No investor payment deadline for today.",
+            'investors' => []
+        ]);
+    }
+}
+
+
+
     
 }

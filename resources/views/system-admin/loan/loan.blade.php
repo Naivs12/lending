@@ -99,6 +99,18 @@
             </div>
         
         </div>
+       <div id="dueReminderModal" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
+        background:#fff; padding:20px; border:1px solid #ccc; box-shadow:0 2px 10px rgba(0,0,0,0.3); z-index:10000; width:350px;">
+            <h3 style="margin-top:0;">Payment Reminder</h3>
+            <p id="dueReminderText"></p>
+            <label style="display:block; margin-top:10px;">
+                <input type="checkbox" id="dontShowAgain"> Do not show this again
+            </label>
+            <div style="margin-top:15px; text-align:right;">
+                <button id="okBtn">OK</button>
+                <button id="remindLaterBtn">Remind Me Later</button>
+            </div>
+        </div>
     </div>
 
 @include('components.add_loan_modal')
@@ -164,5 +176,44 @@
     function redirectToLoanDetail(loanId) {
         window.location.href = "/loan-detail/" + loanId;
     }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('hideDueReminder') === 'true') {
+        return;
+    }
+    if (sessionStorage.getItem('shownAfterLogin') === 'true') {
+        return;
+    }
+
+    fetch('{{ route("investor.dueReminder") }}')
+        .then(res => res.json())
+        .then(data => {
+            const modal = document.getElementById('dueReminderModal');
+            const text = document.getElementById('dueReminderText');
+
+            if (data.due_today) {
+                text.innerHTML = data.message + "<br><b>" + data.investors.join(", ") + "</b>";
+            } else {
+                text.innerHTML = data.message;
+            }
+
+            modal.style.display = 'block';
+
+            document.getElementById('okBtn').onclick = function() {
+                if (document.getElementById('dontShowAgain').checked) {
+                    localStorage.setItem('hideDueReminder', 'true');
+                }
+                modal.style.display = 'none';
+            };
+
+            document.getElementById('remindLaterBtn').onclick = function() {
+                modal.style.display = 'none';
+            };
+
+            sessionStorage.setItem('shownAfterLogin', 'true');
+        });
+});
 </script>
 @endsection

@@ -19,18 +19,6 @@
                         </div>
 
                         <div class="flex flex-col col-span-2">
-                            <select name="branch" onchange="this.form.submit()"
-                                class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
-                                <option value="">All Branches</option>
-                                @foreach($branches as $branch)
-                                    <option value="{{ $branch->branch_id }}" {{ request('branch') == $branch->branch_id ? 'selected' : '' }}>
-                                        {{ $branch->branch_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col col-span-2">
                             <select name="nameSort" onchange="this.form.submit()"
                                 class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-xs">
                                 <option value="">Sort</option>
@@ -64,12 +52,13 @@
                         <th class="border border-gray-300 px-2 py-3">INVESTOR ID</th>
                         <th class="border border-gray-300 px-2 py-3">NAME</th>
                         <th class="border border-gray-300 px-2 py-3">ADDRESS</th>
+                        <th class="border border-gray-300 px-2 py-3">TO BE PAID EVERY</th> <!-- Added column -->
                     </tr>
                 </thead>
                 <tbody>
                     @if($investors->isEmpty())
                         <tr>
-                            <td colspan="3" class="px-4 py-2 text-gray-500 text-sm">No investors found.</td>
+                            <td colspan="4" class="px-4 py-2 text-gray-500 text-sm">No investors found.</td> <!-- Updated colspan -->
                         </tr>
                     @else
                         @foreach($investors as $investor)
@@ -81,6 +70,21 @@
                                     {{ $investor->last_name }}
                                 </td>
                                 <td class="px-4 py-2">{{ $investor->address }}</td>
+                                <td class="px-4 py-2">
+                                    @php
+                                        $i = $investor->payment_date;
+                                        if ($i % 10 == 1 && $i != 11) {
+                                            $suffix = 'st';
+                                        } elseif ($i % 10 == 2 && $i != 12) {
+                                            $suffix = 'nd';
+                                        } elseif ($i % 10 == 3 && $i != 13) {
+                                            $suffix = 'rd';
+                                        } else {
+                                            $suffix = 'th';
+                                        }
+                                    @endphp
+                                    {{ $i }}{{ $suffix }} of the month
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -110,5 +114,36 @@ document.getElementById('closeModal').addEventListener('click', function() {
     function redirectToInvestorDetail(investorId) {
         window.location.href = "/investor-detail/" + investorId;
     }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const $searchInput = $('#client-search');
+        const $tableRows = $('table tbody tr');
+
+        $searchInput.on('input', function () {
+            let query = $(this).val().toLowerCase();
+            let resultsFound = false;
+
+            $tableRows.each(function () {
+                let rowText = $(this).text().toLowerCase();
+                if (rowText.includes(query)) {
+                    $(this).show();
+                    resultsFound = true;
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Show "No results found" if nothing matches
+            if (!resultsFound) {
+                if ($('table tbody tr.no-results').length === 0) {
+                    $('table tbody').append('<tr class="no-results"><td colspan="4" class="px-4 py-2 text-center text-gray-500">No results found.</td></tr>');
+                }
+            } else {
+                $('table tbody tr.no-results').remove();
+            }
+        });
+    });
 </script>
 @endsection
