@@ -12,11 +12,13 @@ class InvestorPayment extends Model
     protected $keyType = 'int';
     public $timestamps = true;
     protected $fillable = [
-        'id',
         'investor_id',
-        'name',
-        'due_date',
         'payment_date',
         'amount',
     ];
+
+    public function investor()
+    {
+        return $this->belongsTo(Investor::class, 'investor_id', 'investor_id');
+    }
 }

@@ -50,6 +50,27 @@
                             <input type="number" id="percentage" name="percentage" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm"  placeholder="%">
                         </div>
                     </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="flex flex-col ">
+                            <label for="payment_every" class="text-gray-700 font-medium">Payment Every</label>
+                            <select id="payment_every" name="payment_every" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-sm">
+                                @for ($i = 1; $i <= 30; $i++)
+                                    @php
+                                        if ($i % 10 == 1 && $i != 11) {
+                                            $suffix = 'st';
+                                        } elseif ($i % 10 == 2 && $i != 12) {
+                                            $suffix = 'nd';
+                                        } elseif ($i % 10 == 3 && $i != 13) {
+                                            $suffix = 'rd';
+                                        } else {
+                                            $suffix = 'th';
+                                        }
+                                    @endphp
+                                    <option value="{{ $i }}">{{ $i }}{{ $suffix }} of the month</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="flex justify-end mt-4">
                         <button type="submit" class="next-btn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 px-5">Submit</button>

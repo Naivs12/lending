@@ -20,6 +20,7 @@ class Investor extends Model
         'middle_name',
         'last_name',
         'address',
+        'payment_date',
         'contact_number',
         'payment_percent',
         'amount_invest',
